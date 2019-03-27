@@ -1,0 +1,113 @@
+page-aidog-add {
+	.toolbar-background{
+		background: #181719;
+		color: #fff;
+	}
+	.toolbar-title {
+	    font-size: 14px;
+	    font-weight: 400;
+	    color: #ffffff;
+	    text-align: center;
+	    line-height: 35px;
+	}
+	
+	.toolbar .left_heder{
+		position: absolute;
+	    left: 0px;
+	    top: 3px;
+	    z-index: 99999;
+        width: 45px;
+	}
+		
+	.toolbar .right_heder,.toolbar .left_heder{
+		background: none;
+		box-shadow: none;
+		margin: 0;
+		padding: 0;
+	}
+	.toolbar .right_heder:hover,.toolbar .left_heder:hover{
+		background: none;
+	}
+	.toolbar .left_heder img{
+		width: 20px;
+	}
+
+	.scroll-content{
+		background: url('../assets/imgs/ai_bg.png') !important;
+	    background-size: cover !important;
+		margin-bottom: 0px !important;
+	}
+	.content_ai .top,.content_ai .center,.content_ai .bottom{
+		position: relative;
+		
+	}
+	.content_ai .top,.content_ai .center{
+		width: 260px;
+		height: 145px;
+		margin: 0 auto;
+		background: url('../assets/imgs/btc_bg.png');
+	    background-size: 100%;
+	    background-repeat: no-repeat;
+	}
+	.content_ai .bottom {
+
+		width: 238px;
+		height: 100px;
+		margin: 0 auto;
+		background: url('../assets/imgs/token_bg.png');
+	    background-size: 100%;
+	    background-repeat: no-repeat;
+	}
+	.content_ai .top .name{
+		position: absolute;
+	    top: 26px;
+	    color: #252323;
+	    font-size: 18px;
+	    left: 117px;
+	}
+	.content_ai .top .amount{
+	    position: absolute;
+	    top: 72px;
+	    color: #ffffff;
+	    font-size: 14px;
+	    left: 94px;
+	}
+	.content_ai .center .name{
+		position: absolute;
+	    top: 26px;
+	    color: #0a750e;
+	    font-size: 18px;
+	    left: 100px;
+	    font-weight: bold;
+	}
+	.content_ai .center .amount{
+	    position: absolute;
+	    top: 72px;
+	    color: #ffffff;
+	    font-size: 14px;
+	    left: 94px;
+	}
+	.content_ai .bottom ion-input input{
+		text-align: center;
+		position: absolute;
+	    left: 0;
+	    top: 10px;
+	    color: #fff;
+	    font-size: 20px;
+	}
+	.content_ai .bottom span{
+		position: absolute;
+	    bottom: 10px;
+	    width: 100%;
+	    left: 0;
+	    height: 40px;
+	}
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+input[type=number] {
+    -moz-appearance:textfield;
+}

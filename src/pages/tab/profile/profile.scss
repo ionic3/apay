@@ -1,0 +1,97 @@
+page-profile {
+	.card_header{
+	    position: relative;
+	    background: url(../assets/imgs/my_head_bg.png);
+	    height: 160px;
+	    background-size: cover;
+	    width: calc(100% - 0px);
+	    margin: 0;
+	}
+	.card_header p{
+	    color: #fff;
+	    font-size: 12px;
+	    font-weight: 500;
+	}
+	.card_header p img{
+		width: 40px;
+	    margin: 0 auto;
+    	margin-top: 39px;
+	}
+	.title-header{
+		background: #557ad0;
+	    height: 60px;
+	    line-height: 50px;
+	    color: #fff;
+	    border-radius: 5px 5px 0 0;
+	    border: 1px solid #1179a9;
+	}
+	.title-header img{
+	    width: 32px;
+	    margin-top: 8px;
+	    margin-left: 15px;
+	    margin-right: 20px;
+	    float: left;
+	}
+	.title-header ion-col{
+		font-size: 12px;
+	}
+	[padding-top-0]{
+		padding-top: 0px !important;
+	}
+	.card_content{
+		width: calc(100% - 0px);
+	    margin: 0;
+	}
+	.card_content ion-col{
+		padding-right: 0px;
+	}
+	.card_content ion-col .left{
+		float: left;
+		width: 20%;
+	}
+	.card_content ion-col .right{
+		float: left;
+		width: 80%;
+	}
+	.card_content ion-col p{
+		font-size: 11px;
+	    margin: 0px;
+	    padding-left: 10px;
+	}
+	.card_content ion-col span{
+		font-size: 10px;
+    	color: #929090;
+    	padding-left: 10px;
+	}
+	    
+	.card_content ion-col img{
+		width: 35px;
+	}
+	.card_content ion-col{
+	    padding: 20px 10px;
+    	border-bottom: 1px solid #eee;
+    	border-right: 1px solid #eee;
+	}
+	.padding-right-none{
+		border-right: none !important;
+	}
+	.padding-bottom-none{
+		border-bottom: none !important;
+	}
+	.bottom_content{
+		margin-top: 20px;
+    	margin-bottom: 15px;
+	}
+	.bottom_content p{
+	    padding: 8px;
+	    background: #16213f;
+	    color: #fff;
+	    border-radius: 5px;
+	    font-size: 12px;
+	}
+	.bottom_content img{
+		width: 14px;
+	    display: inline;
+	    margin-right: 10px;
+	}
+}

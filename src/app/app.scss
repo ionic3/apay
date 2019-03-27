@@ -14,3 +14,43 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
+    padding: 10px 0;
+    background: #f1f1f1;
+}
+.card-md,.card-ios{
+	box-shadow: none;
+	background: #fff;
+}
+.tabs-md .tab-button-text,.tabs-ios .tab-button-text {
+    font-size: 10px;
+}
+.tabs-md .tab-button,.tabs-ios .tab-button {
+    color: #9E9E9E;
+    font-weight: 300;
+}
+.tabs-md .tabbar,.tabs-ios .tabbar {
+    background: #ffffff;
+    border-top: 1px solid #e6e6e6;
+    height: 45px;
+}
+.tabbar.show-tabbar::before{
+	display: none;
+}
+.tabs-md .tab-button-icon,.tabs-ios .tab-button-icon {
+    font-size: 16px;
+}
+.tabs-md .tab-button[aria-selected=true] .tab-button-icon,.tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
+    color: #0a0a0a;
+}
+.tabs-md .tab-button[aria-selected=true] .tab-button-text,.tabs-ios .tab-button[aria-selected=true] .tab-button-text{
+    color: #0a0a0a;
+    transform: none;
+}
+.scroll-content{
+    margin-bottom: 45px;
+}
+.toolbar-md,.toolbar-ios{
+    min-height: 45px;
+}
