@@ -1,0 +1,60 @@
+
+<ion-header>
+	<ion-navbar>
+	  	<button ion-button class="left_heder">
+	      <img  src="assets/imgs/back.png"  />
+	    </button>
+	    <ion-title>Withdraw</ion-title>
+	    <button ion-button  class="right_heder">
+	      <img  src="assets/imgs/qrcode_white_icon.png"  />
+	    </button>
+	  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding class="content_withdraw">
+	<ion-row class="form">
+		<form  (ngSubmit)="SubmitForm()">
+   			
+			<ion-list>
+				<ion-row>
+					<ion-col style="position: relative;">
+						<ion-item>
+						    
+						    <ion-input class="input" [(ngModel)]="form.email" placeholder="Wallet address" name="amount" type="text" required></ion-input>
+					  	</ion-item>
+					  	<img src="assets/imgs/add_contact.png" />
+					</ion-col>
+				</ion-row>
+			 	<ion-row>
+					<ion-col style="position: relative;">
+			 			<ion-item>
+				    
+				    		<ion-input class="input" placeholder="Number of roll-in/roll-out" [(ngModel)]="form.amount"  name="amount" type="number" required></ion-input>
+				    		
+			  			</ion-item>
+			  			<span class="text">Hold amount 5.123</span>
+			  		</ion-col>
+			  	</ion-row>
+			  	<ion-row>
+					<ion-col style="position: relative;">
+					  	<ion-item class="password">
+						   
+						    <ion-input class="input" [(ngModel)]="form.password_transaction"  name="amount" type="password" placeholder="Transaction Password" required></ion-input>
+					  	</ion-item>
+					</ion-col>
+				</ion-row>
+			  	<p class="fee">Miners Free: 0.1%</p>
+			</ion-list>
+			
+
+			<ion-row lass="customer_width">
+			 	<ion-col>
+			    	<button ion-button full type="submit" block>Submit</button>
+			 	</ion-col>
+			</ion-row>
+			
+		</form>
+	</ion-row>
+</ion-content>

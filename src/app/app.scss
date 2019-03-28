@@ -54,3 +54,24 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
 .toolbar-md,.toolbar-ios{
     min-height: 45px;
 }
+.data_history{
+    width: 100%;
+    
+    color: #353434;
+    font-size: 13px;
+}
+.action-sheet-md .action-sheet-group:first-child,.action-sheet-ios .action-sheet-group:first-child{
+    overflow: hidden;
+    padding-top: 0px;
+}
+.select-customer .action-sheet-title,.select-customer .action-sheet-group-cancel{
+    display: none;
+}
+.select-customer .action-sheet-button{
+    text-align: center;
+    border-bottom:  1px solid #847f7f;
+    
+}
+.select-customer .action-sheet-group .button-inner{
+    justify-content: center;
+}

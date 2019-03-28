@@ -1,4 +1,4 @@
-page-payment {
+page-contact {
 	.toolbar-background{
 		background: linear-gradient(to top, #160c56 0%, #052238 100%);
 		color: #fff;
@@ -26,7 +26,7 @@ page-payment {
 	    width: 30px;
 	}
 	.scroll-content{
-		background: #3a3432 !important;
+		background: #ffffff !important;
 		margin-bottom: 0px !important;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
@@ -42,33 +42,20 @@ page-payment {
 		width: 10px;
 	}
 	.toolbar .right_heder img{
-		width: 25px;
+		width: 18px;
 	}
-	.content_payment .top{
-		background: url('../assets/imgs/collection_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
+	.contents{
+		font-size: 12px;
 	}
-	.content_payment .center{
-		background: url('../assets/imgs/pay_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
+	.contents ion-row{
+	    padding: 10px 0;
+    	border-bottom: 1px solid #eee;
 	}
-	.content_payment .bottom{
-		background: url('../assets/imgs/bill_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
+
+	.contents ion-row ion-col{
+		white-space: nowrap; 
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
-	.content_payment h3{
-		line-height: 125px;
-		color: #fff;
-	    font-size: 14px;
-    	font-weight: 400;
-	}
+
 }

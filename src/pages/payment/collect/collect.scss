@@ -1,6 +1,6 @@
 page-collect {
 	.toolbar-background{
-		background: #271A52;
+		background: linear-gradient(to top, #160c56 0%, #052238 100%);
 		color: #fff;
 	}
 	.toolbar-title {
@@ -23,6 +23,7 @@ page-collect {
 	    right: 10px;
 	    top: 5px;
 	    z-index: 99999;
+	    width: 30px;
 	}
 	.scroll-content{
 		background: #403e3e !important;

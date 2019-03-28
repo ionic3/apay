@@ -24,6 +24,23 @@ import { CollectPage } from '../pages/payment/collect/collect';
 import { TransanctionsPage } from '../pages/payment/transanctions/transanctions';
 /*END AI DOG*/
 
+/*CONTACT*/
+import { ContactPage } from '../pages/contact/contact/contact';
+import { AddNewWalletPage } from '../pages/contact/add-new-wallet/add-new-wallet';
+/*END CONTACT*/
+
+/*SINGUP*/
+import { SignupStepOnePage } from '../pages/signup/signup-step-one/signup-step-one';
+import { SignupStepTowPage } from '../pages/signup/signup-step-tow/signup-step-tow';
+/*END SINGUP*/
+
+import { LoginPage } from '../pages/login/login';
+
+import { ExchangePage } from '../pages/exchange/exchange';
+import { DepositPage } from '../pages/deposit/deposit';
+import { WithdrawPage } from '../pages/withdraw/withdraw';
+import { WalletPage } from '../pages/wallet/wallet';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
@@ -44,7 +61,16 @@ import { ServerProvider } from '../providers/server/server';
     AidogRecordPage,
     PaymentPage,
     CollectPage,
-    TransanctionsPage
+    TransanctionsPage,
+    ExchangePage,
+    DepositPage,
+    WithdrawPage,
+    WalletPage,
+    AddNewWalletPage,
+    ContactPage,
+    SignupStepOnePage,
+    SignupStepTowPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -67,7 +93,16 @@ import { ServerProvider } from '../providers/server/server';
     AidogRecordPage,
     PaymentPage,
     CollectPage,
-    TransanctionsPage
+    TransanctionsPage,
+    ExchangePage,
+    DepositPage,
+    WithdrawPage,
+    WalletPage,
+    AddNewWalletPage,
+    ContactPage,
+    SignupStepOnePage,
+    SignupStepTowPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
