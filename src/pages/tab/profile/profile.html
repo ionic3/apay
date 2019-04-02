@@ -4,63 +4,35 @@
 			<img  src="assets/imgs/logo.png" /> 
 		</p>
 		<p text-center>
-			09876541
+			{{infomation.email}}
 		</p>	
-		<div padding padding-top-0>
-			<ion-row class="title-header">
-	       		<ion-col col-6>
-	        		<img  src="assets/imgs/pay_m_icon.png" width="32px" /> Payment
-	        	</ion-col>
-	       		<ion-col col-6>   
-	       			<img  src="assets/imgs/icon_dog.png" style="width: 34px" /> Ai-Dog
-	       		</ion-col>
-	      	</ion-row>
-		</div>
+		
 	</ion-card>
 	
 	<ion-card class="card_content">
 		<ion-row>
-       		<ion-col col-6 class="">
+       		<ion-col col-6 class="" (click)=ViewQrcodeAddPartner()>
        			<div class="left">
-       				<img  src="assets/imgs/apply_vip_icon.png" />
+       				<img  src="assets/imgs/QR_code_for_QRpedia.png" />
        			</div>
         		<div class="right">
-        			<p>Become A VIP</p>
-        			<span>Become A VIP</span>
+        			<p>Qrcode Add Partner</p>
+        			<span>Qrcode Add Partner</span>
         		</div>
         	</ion-col>
-       		<ion-col col-6 class="padding-right-none">   
-       			<div class="left">
-       				<img  src="assets/imgs/candy_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Candy</p>
-        			<span>Candy</span>
-        		</div>
-       		</ion-col>
+
+          <ion-col col-6 class="padding-right-none" (click)="ViewMyPartnerPage()">   
+            <div class="left">
+              <img  src="assets/imgs/business_parter_icon.png" />
+            </div>
+            <div class="right">
+              <p>My Business Partner</p>
+              <span>My Business Partner</span>
+            </div>
+          </ion-col>
       	</ion-row>
-      	<ion-row>
-       		<ion-col col-6 class="">
-       			<div class="left">
-       				<img  src="assets/imgs/security_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Safety guarantee</p>
-        			<span>Safety guarantee</span>
-        		</div>
-        	</ion-col>
-       		<ion-col col-6 class="padding-right-none">   
-       			<div class="left">
-       				<img  src="assets/imgs/business_parter_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>My Business Partner</p>
-        			<span>My Business Partner</span>
-        		</div>
-       		</ion-col>
-      	</ion-row>
-      	<ion-row>
-       		<ion-col col-6 class="">
+      	<ion-row >
+       		<ion-col col-6 class="" (click)="ViewEanings()">
        			<div class="left">
        				<img  src="assets/imgs/income_icon.png" />
        			</div>
@@ -69,7 +41,7 @@
         			<span>Eanings</span>
         		</div>
         	</ion-col>
-       		<ion-col col-6 class="padding-right-none">   
+       		<ion-col col-6 class="padding-right-none" (click)="ViewRecordsExchange()">   
        			<div class="left">
        				<img  src="assets/imgs/record_icon.png" />
        			</div>
@@ -80,16 +52,16 @@
        		</ion-col>
       	</ion-row>
       	<ion-row>
-       		<ion-col col-6 class="">
-       			<div class="left">
-       				<img  src="assets/imgs/m_find_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Discovery</p>
-        			<span>Discovery</span>
-        		</div>
-        	</ion-col>
-       		<ion-col col-6 class="padding-right-none">   
+       		<ion-col col-6 class="" (click)="ViewContactUs()">
+            <div class="left">
+              <img  src="assets/imgs/tel_icon.png" />
+            </div>
+            <div class="right">
+              <p>Contact Us</p>
+              <span>Contact Us</span>
+            </div>
+          </ion-col>
+       		<ion-col col-6 class="padding-right-none" (click)="ViewAddWalletAddress()">   
        			<div class="left">
        				<img  src="assets/imgs/wallet_address_icon.png" />
        			</div>
@@ -100,49 +72,23 @@
        		</ion-col>
       	</ion-row>
       	<ion-row>
-       		<ion-col col-6 class="">
-       			<div class="left">
-       				<img  src="assets/imgs/ore_pool_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Ore Pool</p>
-        			<span>Ore Pool</span>
-        		</div>
-        	</ion-col>
+       		<ion-col col-6 class="" (click)="ViewSettings()">
+            <div class="left">
+              <img  src="assets/imgs/sys_icon.png" />
+            </div>
+            <div class="right">
+              <p>Settings</p>
+              <span>Settings</span>
+            </div>
+          </ion-col>
        		<ion-col col-6 class="padding-right-none">   
-       			<div class="left">
-       				<img  src="assets/imgs/br_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Coin melts</p>
-        			<span>Coin melts</span>
-        		</div>
-       		</ion-col>
-      	</ion-row>
-      	<ion-row>
-       		<ion-col col-6 class="">
-       			<div class="left">
-       				<img  src="assets/imgs/tel_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Contact Us</p>
-        			<span>Contact Us</span>
-        		</div>
-        	</ion-col>
-       		<ion-col col-6 class="padding-right-none">   
-       			<div class="left">
-       				<img  src="assets/imgs/sys_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Settings</p>
-        			<span>Settings</span>
-        		</div>
+       			
        		</ion-col>
       	</ion-row>
 	</ion-card>
 
 	<ion-card class="bottom_content">
-		<p text-center>
+		<p text-center (click)="Logout_Click()">
 			<img  src="assets/imgs/loginout_icon.png" /> Login Out
 		</p>
 	</ion-card>

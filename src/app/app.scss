@@ -75,3 +75,98 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
 .select-customer .action-sheet-group .button-inner{
     justify-content: center;
 }
+.back-button.show-back-button{
+    display: none !important;
+}
+
+.error_form  .toast-wrapper,.success_form .toast-wrapper{
+    bottom: 60px !important;
+    width: 80%;
+    text-align: center;
+    background: #3c3939;
+    border-radius: 10px;
+}
+.success_form .toast-wrapper{
+    background: #8BC34A;
+}
+.error_form .toast-message,.success_form .toast-message{
+    font-size: 13px;
+    color: #fff;
+    padding: 10px;
+    
+}
+.alert-md .alert-title {
+    font-size: 16px;
+    font-weight: 400;
+    color: #FFEB3B;
+}
+.alert-md .alert-wrapper{
+    border-radius: 10px;
+}
+.alert-wrapper .alert-head {
+    border-radius: 10px 10px 0 0;
+    background: #4CAF50;
+}
+.alert-message {
+    margin-top: 15px !important;
+    overflow: hidden !important;
+    border-bottom: 1px solid #eee;
+    color: #000;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 490;
+}
+.alert-ios .alert-message:empty{
+    padding: 0px;
+}
+.alert-md .alert-button{
+    margin: 0px;
+    width: 50%;
+    text-align: center;
+    text-transform: capitalize;
+    font-weight: 400;
+    font-size: 16px;
+}
+.alert-md .alert-button .button-inner{
+    text-align: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+.alert-wrapper .alert-head .alert-title{
+    text-align: center;
+}
+.alert-md .alert-button:first-child{
+    border-right: 1px solid #e0e0e0;
+}
+.loading-md .loading-wrapper{
+    border-radius: 10px;
+}
+.loading-md .loading-spinner + .loading-content {
+    margin-left: 16px;
+    font-weight: bold;
+    color: #292929;
+}
+ion-refresher{
+    top: 40% !important;
+    z-index: 9999999;
+}
+.scroll-content{
+    transform: translateY(0px) translateZ(0px) !important;
+}
+ion-spinner {
+    background: white;
+    border-radius: 50%;
+    padding: 20px;
+    border: 1px solid #eee;
+    box-shadow: 0 1px 1px 0 #eee;
+}
+.refresher-refreshing .spinner-ios line, .refresher-refreshing .spinner-ios-small line, .refresher-refreshing .spinner-crescent circle {
+    stroke: #4CAF50;
+}
+
+.loading-wrapper ion-spinner{
+    border:none;
+    box-shadow: none;
+    background: none;
+}

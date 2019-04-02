@@ -50,6 +50,7 @@ page-payment {
 	    width: 345px;
     	height: 125px;
     	margin: 10px auto;
+    	margin-top: 30px;
 	}
 	.content_payment .center{
 		background: url('../assets/imgs/pay_bg.png');
@@ -71,4 +72,66 @@ page-payment {
 	    font-size: 14px;
     	font-weight: 400;
 	}
+}
+.prompt_alert_customer.customs .alert-message{
+	padding: 0px;
+	background: #fff;
+}
+.prompt_alert_customer.customs .alert-wrapper .alert-head {
+    background: #fff;
+   
+}
+.prompt_alert_customer.customs .alert-input-group {
+    background: #ffffff;
+}
+
+.prompt_alert_customer.customs .top h3{
+	width: 100%;
+	border-top: 1px solid #eee; 
+	margin-top: 0px;
+	padding-top: 15px;
+	margin-bottom: 10px;
+}
+.prompt_alert_customer.customs  .top p{
+	border-bottom: 1px solid #eee;
+	margin-top: 5px;
+    margin-bottom: 0px;
+}
+.prompt_alert_customer.customs .item{
+	padding: 15px 15px;
+	border-bottom: 1px solid #eee;
+}
+.prompt_alert_customer.customs .item .left{
+	float: left;
+}
+.prompt_alert_customer.customs .item .right{
+	float: right;
+    color: #3c3a3a;
+}
+.prompt_alert_customer.customs .alert-input-wrapper input {
+    background: #cacaca;
+    margin-top: 30px;
+}
+.prompt_alert_customer.customs .alert-button-group{
+	background: #fff;
+	padding: 0px;
+	display: inline;
+}
+
+.prompt_alert_customer.customs .alert-button {
+    width: 50%;
+    margin-bottom: 0px;
+    border: 1px solid #b7b7b7;
+    border-radius: 0px;
+}
+
+.prompt_alert_customer.customs .alert-button:first-child {
+    
+    background: #d6d6d6;
+    
+    float: left;
+}
+.prompt_alert_customer.customs .alert-title {
+   
+    color: #FF5722;
 }

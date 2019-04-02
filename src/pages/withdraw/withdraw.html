@@ -1,11 +1,11 @@
 
 <ion-header>
 	<ion-navbar>
-	  	<button ion-button class="left_heder">
+	  	<button (click)="goback()" ion-button class="left_heder">
 	      <img  src="assets/imgs/back.png"  />
 	    </button>
-	    <ion-title>Withdraw</ion-title>
-	    <button ion-button  class="right_heder">
+	    <ion-title>Withdraw {{currency}}</ion-title>
+	    <button (click)="scanCode()" ion-button  class="right_heder">
 	      <img  src="assets/imgs/qrcode_white_icon.png"  />
 	    </button>
 	  </ion-navbar>
@@ -22,9 +22,9 @@
 					<ion-col style="position: relative;">
 						<ion-item>
 						    
-						    <ion-input class="input" [(ngModel)]="form.email" placeholder="Wallet address" name="amount" type="text" required></ion-input>
+						    <ion-input class="input" [(ngModel)]="form.address" placeholder="Wallet address" name="address" type="text" required></ion-input>
 					  	</ion-item>
-					  	<img src="assets/imgs/add_contact.png" />
+					  	<img (click)="ViewContact()" src="assets/imgs/add_contact.png" />
 					</ion-col>
 				</ion-row>
 			 	<ion-row>
@@ -34,18 +34,18 @@
 				    		<ion-input class="input" placeholder="Number of roll-in/roll-out" [(ngModel)]="form.amount"  name="amount" type="number" required></ion-input>
 				    		
 			  			</ion-item>
-			  			<span class="text">Hold amount 5.123</span>
+			  			<span class="text">Hold amount {{balance}}</span>
 			  		</ion-col>
 			  	</ion-row>
 			  	<ion-row>
 					<ion-col style="position: relative;">
 					  	<ion-item class="password">
 						   
-						    <ion-input class="input" [(ngModel)]="form.password_transaction"  name="amount" type="password" placeholder="Transaction Password" required></ion-input>
+						    <ion-input class="input" [(ngModel)]="form.password_transaction"  name="password_transaction" type="password" placeholder="Transaction Password" required></ion-input>
 					  	</ion-item>
 					</ion-col>
 				</ion-row>
-			  	<p class="fee">Miners Free: 0.1%</p>
+			  	<p class="fee">Miners Free: 0.01%</p>
 			</ion-list>
 			
 

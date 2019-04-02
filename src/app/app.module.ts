@@ -13,9 +13,12 @@ import { ProfilePage } from '../pages/tab/profile/profile';
 
 /*AI DOG*/
 import { AidogPage } from '../pages/aidog/aidog/aidog';
+import { AidogHomePage } from '../pages/aidog/aidog-home/aidog-home';
 import { AidogAddPage } from '../pages/aidog/aidog-add/aidog-add';
 import { AidogRewardPage } from '../pages/aidog/aidog-reward/aidog-reward';
 import { AidogRecordPage } from '../pages/aidog/aidog-record/aidog-record';
+import { AidogRewardRecordPage } from '../pages/aidog/aidog-reward-record/aidog-reward-record';
+
 /*END AI DOG*/
 
 /*AI DOG*/
@@ -30,11 +33,44 @@ import { AddNewWalletPage } from '../pages/contact/add-new-wallet/add-new-wallet
 /*END CONTACT*/
 
 /*SINGUP*/
-import { SignupStepOnePage } from '../pages/signup/signup-step-one/signup-step-one';
-import { SignupStepTowPage } from '../pages/signup/signup-step-tow/signup-step-tow';
+import { RegisterPage } from '../pages/register/register';
 /*END SINGUP*/
 
 import { LoginPage } from '../pages/login/login';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+
+/*PROFILE*/
+import { QrcodePartnerPage } from '../pages/profile/qrcode-partner/qrcode-partner';
+import { MyPartnerPage } from '../pages/profile/my-partner/my-partner';
+import { RecordsExchangePage } from '../pages/profile/records-exchange/records-exchange';
+
+/*END PROFILE*/
+
+/*eanings*/
+import { EaningsPage } from '../pages/eanings/eanings/eanings';
+import { ProfitDailyPage } from '../pages/eanings/profit-daily/profit-daily';
+import { SystemCommissionPage } from '../pages/eanings/system-commission/system-commission';
+import { DirectCommissionPage } from '../pages/eanings/direct-commission/direct-commission';
+import { LeaderCommissionPage } from '../pages/eanings/leader-commission/leader-commission';
+
+/*end eanings*/
+
+/*Setting*/
+import { SettingsPage } from '../pages/settings/settings/settings';
+import { VerifyEmailPage } from '../pages/settings/verify-email/verify-email';
+import { ModifyPasswordPage } from '../pages/settings/modify-password/modify-password';
+import { AuthenticatorPage } from '../pages/settings/authenticator/authenticator';
+import { AuthenticatorLoginPage } from '../pages/settings/authenticator-login/authenticator-login';
+import { AboutUsPage } from '../pages/settings/about-us/about-us';
+
+/*end Setting*/
+
+/*Contact us*/
+import { ContactUsPage } from '../pages/contact-us/contact-us/contact-us';
+import { AddNewContactusPage } from '../pages/contact-us/add-new-contactus/add-new-contactus';
+import { DetailContactusPage } from '../pages/contact-us/detail-contactus/detail-contactus';
+
+/*end contact us*/
 
 import { ExchangePage } from '../pages/exchange/exchange';
 import { DepositPage } from '../pages/deposit/deposit';
@@ -46,6 +82,16 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
 import { ServerProvider } from '../providers/server/server';
+import { AccountProvider } from '../providers/server/account';
+import { WalletProvider } from '../providers/server/wallet';
+import { ExchangeProvider } from '../providers/server/exchange';
+import { ContactProvider } from '../providers/server/contact';
+import { AidogProvider } from '../providers/server/aidog';
+
+
+import { Clipboard } from '@ionic-native/clipboard';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { Screenshot } from '@ionic-native/screenshot';
 @NgModule({
   declarations: [
     MyApp,
@@ -68,9 +114,28 @@ import { ServerProvider } from '../providers/server/server';
     WalletPage,
     AddNewWalletPage,
     ContactPage,
-    SignupStepOnePage,
-    SignupStepTowPage,
-    LoginPage
+    RegisterPage,
+    LoginPage,
+    ForgotPasswordPage,
+    AidogHomePage,
+    AidogRewardRecordPage,
+    QrcodePartnerPage,
+    MyPartnerPage,
+    EaningsPage,
+    SettingsPage,
+    RecordsExchangePage,
+    ProfitDailyPage,
+    SystemCommissionPage,
+    DirectCommissionPage,
+    LeaderCommissionPage,
+    ContactUsPage,
+    AddNewContactusPage,
+    DetailContactusPage,
+    VerifyEmailPage,
+    ModifyPasswordPage,
+    AuthenticatorPage,
+    AuthenticatorLoginPage,
+    AboutUsPage
   ],
   imports: [
     BrowserModule,
@@ -100,15 +165,42 @@ import { ServerProvider } from '../providers/server/server';
     WalletPage,
     AddNewWalletPage,
     ContactPage,
-    SignupStepOnePage,
-    SignupStepTowPage,
-    LoginPage
+    RegisterPage,
+    LoginPage,
+    ForgotPasswordPage,
+    AidogHomePage,
+    AidogRewardRecordPage,
+    QrcodePartnerPage,
+    MyPartnerPage,
+    EaningsPage,
+    SettingsPage,
+    RecordsExchangePage,
+    ProfitDailyPage,
+    SystemCommissionPage,
+    DirectCommissionPage,
+    LeaderCommissionPage,
+    ContactUsPage,
+    AddNewContactusPage,
+    DetailContactusPage,
+    VerifyEmailPage,
+    ModifyPasswordPage,
+    AuthenticatorPage,
+    AuthenticatorLoginPage,
+    AboutUsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ServerProvider
+    ServerProvider,
+    AccountProvider,
+    WalletProvider,
+    ExchangeProvider,
+    ContactProvider,
+    AidogProvider,
+    Clipboard,
+    BarcodeScanner,
+    Screenshot
   ]
 })
 export class AppModule {}

@@ -1,47 +1,36 @@
 <ion-header>
   <ion-navbar>
-  	<button ion-button class="left_heder">
+  	<button (click)="goback()" ion-button class="left_heder">
       <img  src="assets/imgs/back.png"  />
     </button>
-    <ion-title>Smart dog startup record</ion-title>
+    <ion-title>Ai-trade record</ion-title>
     
   </ion-navbar>
 </ion-header>
 
 
 <ion-content class="content_record">
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+    	<ion-refresher-content></ion-refresher-content>
+  	</ion-refresher>
 	<ion-list>
-	  	<ion-item >
+	  	<ion-item *ngFor="let item of history">
 		    <div class="left">
-		    	<p>2019-01-01 09:09:09 Open</p>
-		    	<span>BTC</span>
+		    	<p>{{item.date_added}} 
+		    		
+		    	</p>
+		    	<span>{{item.package}} {{item.currency}}</span>
 		    </div>
 		    <div class="right">
-		    	<p>0.000013</p>
-		    	<span>Status: <span class="open">Open</span></span>
+		    	<p>{{item.amount}}</p>
+		    	<span>Status: <span *ngIf="item.status == 1" class="open">Open</span>
+		    		<span *ngIf="item.status == 0" class="close">Close</span></span>
 		    </div>
 	  	</ion-item>
-
-	  	<ion-item >
-		    <div class="left">
-		    	<p>2019-01-01 09:09:09 Open</p>
-		    	<span>BTC</span>
-		    </div>
-		    <div class="right">
-		    	<p>0.000013</p>
-		    	<span>Status: <span class="open">Open</span></span>
-		    </div>
-	  	</ion-item>
-
-	  	<ion-item >
-		    <div class="left">
-		    	<p>2019-01-01 09:09:09 Open</p>
-		    	<span>BTC</span>
-		    </div>
-		    <div class="right">
-		    	<p>0.000013</p>
-		    	<span>Status: <span class="open">Open</span></span>
-		    </div>
-	  	</ion-item>
+	  	<p text-center class="data_history" *ngIf="count_history == 0">There is no data</p>
+	  	
 	</ion-list>
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="count_history > 0">
+	   	<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
 </ion-content>

@@ -1,19 +1,22 @@
 <ion-header>
   <ion-navbar>
-  	<button ion-button class="left_heder">
+  	<button (click)="goback()" ion-button class="left_heder">
       <img  src="assets/imgs/back.png"  />
     </button>
-    <ion-title>ETH</ion-title>
+    <ion-title>{{currency}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content class="content_wallet">
-	<ion-row class="top">
+<ion-content class="content_wallet" >
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+    	<ion-refresher-content></ion-refresher-content>
+  	</ion-refresher>
+	<ion-row class="top top_wallet">
 		<ion-col col-12 >
-			<h3>5.357</h3>
-			<p>~ $337.47</p>
+			<h3>{{amount}}</h3>
+			<p>~ $ {{amount_usd}}</p>
 		</ion-col>
 	</ion-row>
 	<ion-row class="center">
@@ -21,39 +24,38 @@
 			<h3>Deposit/Withdraw</h3>
 		</ion-col>
 		<ion-list>
-		  	<ion-item >
+		  	<ion-item *ngFor="let item of history">
 			    <div class="left">
-			    	<img  src="assets/imgs/roll_out.png"  />
+			    	<img *ngIf="item.type == 'deposit'"  src="assets/imgs/roll_in.png"  />
+			    	<img *ngIf="item.type == 'withdraw'"  src="assets/imgs/roll_out.png"  />
 			    </div>
 			    <div class="right">
-			    	<p class="top" text-left>0b308645c87b22d99897e6f8d7a09d51c7e157ea736eecec6d44560b2a7cba74</p>
-			    	<p class="center send"  text-right>-9.6234231</p>
-			    	<p class="bottom"  text-left>2019-01-12 12:12:12</p>
+			    	<p class="top" text-left>{{item.txt_id}}</p>
+			    	<p *ngIf="item.type == 'withdraw'" class="center send"  text-right>-{{item.amount}}</p>
+			    	<p *ngIf="item.type == 'deposit'" class="center receive"  text-right>+{{item.amount}}</p>
+			    	<p class="bottom"  text-left>{{item.date_added}}</p>
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item >
-			    <div class="left">
-			    	<img  src="assets/imgs/roll_in.png"  />
-			    </div>
-			    <div class="right">
-			    	<p class="top" text-left>0b308645c87b22d99897e6f8d7a09d51c7e157ea736eecec6d44560b2a7cba74</p>
-			    	<p class="center receive"  text-right>+9.6234231</p>
-			    	<p class="bottom"  text-left>2019-01-12 12:12:12</p>
-			    </div>
-		  	</ion-item>
 		</ion-list>
-		<p text-center class="data_history">There is no date</p>
+		<p text-center class="data_history" *ngIf="count_history == 0">There is no data</p>
+
+		
+		
+
 	</ion-row>
-	<ion-row class="bottoms">
-		<ion-col col-4 class="left" text-center>
+	<ion-row class="bottoms" ion-fixed>
+		<ion-col col-4 class="left" text-center (click)="ViewWithdraw()">
 			Withdraw
 		</ion-col>
-		<ion-col col-4 class="center"  text-center>
+		<ion-col col-4 class="center"  text-center (click)="ViewExchange()">
 			Exchange
 		</ion-col>
-		<ion-col col-4 class="right"  text-center>
+		<ion-col col-4 class="right"  text-center (click)="ViewDeposit()">
 			Deposit
 		</ion-col>
 	</ion-row>
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="count_history > 0">
+		   	<ion-infinite-scroll-content></ion-infinite-scroll-content>
+		</ion-infinite-scroll>
 </ion-content>

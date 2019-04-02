@@ -6,7 +6,7 @@ page-markets {
 		color: #fff;
 	    font-size: 15px;
 	    font-weight: 400;
-	    margin-bottom: 15px;
+	    margin-bottom: 26px;
         margin-top: 10px !important;
 	}
 	.top_market{
@@ -62,11 +62,13 @@ page-markets {
 	    border-radius: 5px;
 	    color: #fff;
    	}
-   	.item_markets .price_color.up{
+   	.up.item_markets  .price_color{
    		color: #00C79C;
    	}
-   	.item_markets .change .left.up{
+   	.up.item_markets .change  .left{
    		background: #00C79C;
    	}
-   	
+   	.content_markets .item_markets{
+      border-bottom: 1px solid #131313;
+    }
 }

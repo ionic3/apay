@@ -1,17 +1,17 @@
 <ion-header>
   <ion-navbar>
-  	<button ion-button class="left_heder">
+  	<button (click)="goback()" ion-button class="left_heder">
       <img  src="assets/imgs/back.png"  />
     </button>
-    <ion-title>Deposit</ion-title>
+    <ion-title>Deposit {{currency}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding class="content_deposit" text-center>
-	<img class="chart" src="https://blockchain.info/qr?data=3HTuCfpQ2Lbanjij54fZH4C9ZfjuVFVx29&size=200">
-	<p>3HTuCfpQ2Lbanjij54fZH4C9ZfjuVFVx29</p>
-	<button ion-button>Replicating address</button>
+	<img class="chart" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl={{address}}&message={{currency}}">
+	<p>{{address}}</p>
+	<button ion-button (click)="CopyWallet(address)">Replicating address</button>
 	<img class="background" src="assets/imgs/qr_bottom_bg.png" />
 </ion-content>

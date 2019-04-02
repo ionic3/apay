@@ -45,7 +45,7 @@ page-add-new-wallet {
 		width: 25px;
 	}
 	.content_withdraw form{
-		width: 95%;
+		width: 100%;
 		margin: 0 auto;
 		margin-top: 30px;
 	}
@@ -61,6 +61,7 @@ page-add-new-wallet {
 	.text-input-md,.text-input-ios{
 		margin: 15px 8px;
 		font-size: 12px;
+		padding-left: 0px;
 	}
 	
 	.content_withdraw .fee{
@@ -122,4 +123,29 @@ page-add-new-wallet {
 		max-width: 60%;
 	    font-size: 14px;
 	}
+}
+.select-customer .action-sheet-title{
+	height: 40px;
+	border-bottom:  1px solid #e4e4e4;
+}
+.select-customer .action-sheet-group{
+	border-radius: 10px;
+    
+    width: 85%;
+    margin: 5px auto;
+}
+.select-customer .action-sheet-button{
+	border-bottom:  1px solid #e4e4e4;
+	font-size: 12px;
+    color: #03A9F4;
+    text-align: center;
+}
+.select-customer .action-sheet-group .button-inner{
+	justify-content: center;
+}
+.select-customer .action-sheet-selected{
+	font-weight: 400;
+}
+.select-customer .action-sheet-group:last-child{
+	padding-bottom: 0px;
 }

@@ -50,4 +50,17 @@ page-transanctions {
 	.content_transaction ion-row ion-col{
 		padding: 12px 0;
 	} 
+
+	.content_transaction ion-row{
+		border-bottom: 1px solid #eee;
+	}
+	.content_transaction ion-row .label-md,.content_transaction ion-row .label-ios {
+	    margin: 1px 8px 1px 0;
+	}
+	.content_transaction ion-row .send{
+		color: #FF5722;
+	}
+	.content_transaction ion-row .receive{
+		color: #4CAF50;
+	}
 }

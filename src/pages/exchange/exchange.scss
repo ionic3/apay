@@ -41,10 +41,13 @@ page-exchange {
 		background: linear-gradient(to top, #140a50 0%, #021625 100%);
 		height: 85px;
 	}
-	.content_exchange .top .left h3{
+	.content_exchange .top .left h3,.content_exchange .top .left  ion-select{
 		color: #8BC34A;
 	    font-size: 18px;
 	    margin-bottom: 0px;
+	    max-width: 100%;
+	    font-weight: bold;
+        padding-bottom: 0px;
 	}
 	.content_exchange .top .left{
 		border-right: 1px solid #6f6c6c;
@@ -53,10 +56,13 @@ page-exchange {
 		color: #fff;
     	margin-top: 2px;
     }
-    .content_exchange .top .right h3{
+    .content_exchange .top .right h3,.content_exchange .top .right  ion-select{
 		color: #FFC107;
 	    font-size: 18px;
 	    margin-bottom: 0px;
+	    max-width: 100%;
+	    font-weight: bold;
+        padding-bottom: 0px;
 	}
 	.content_exchange .center{
 	    background: linear-gradient(to top, #032704 0%, #8BC34A 100%);
@@ -100,6 +106,10 @@ page-exchange {
 		margin: 0 auto;
 	    margin-top: 0px !important;
 	}
+	
+	ion-select .select-icon-inner{
+	 	display: none;
+	}
 }
 .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner, .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
 .item-md.item-input.item-input-has-focus .item-inner, .item-md.item-input.input-has-focus .item-inner,.item-md.item-input.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
@@ -113,4 +123,12 @@ page-exchange {
 }
 form .input{
 	font-size: 14px;
+}
+input, textarea {
+    -webkit-user-select: auto !important;
+    -khtml-user-select: auto !important;
+    -moz-user-select: auto !important;
+    -ms-user-select: auto !important;
+    -o-user-select: auto !important;
+    user-select: auto !important;
 }

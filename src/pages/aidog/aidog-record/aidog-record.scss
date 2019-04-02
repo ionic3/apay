@@ -59,8 +59,11 @@ page-aidog-record {
 		color: #6f6f6f;
 		font-size: 14px;
 	}
-	.content_record .right span.open{
+	.content_record .right span .open{
 		color: #8fc320;
+	}
+	.content_record .right span .close{
+		color: #FF5722;
 	}
 	.content_record ion-item{
 		border-bottom: 1px solid #eee;

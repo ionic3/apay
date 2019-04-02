@@ -2,5 +2,7 @@
   "name": "plustoken/",
   "app_id": "c32113d1",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

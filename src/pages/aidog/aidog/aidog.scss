@@ -1,6 +1,6 @@
 page-aidog {
 	.toolbar-background{
-		background: linear-gradient(to top, #160c56 0%, #052238 100%);
+		background: #0c0b0b;
 		color: #fff;
 	}
 	.toolbar-title {
@@ -28,6 +28,7 @@ page-aidog {
 	.scroll-content{
 		background: #0c0b0b !important;
 		margin-bottom: 0px !important;
+		padding-top: 20px;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
 		background: none;
@@ -64,7 +65,7 @@ page-aidog {
 	.content_ai .center{
 		font-size: 13px;
 	}
-	.content_ai .center.active{
+	.content_ai .center .active{
 	    color: #8fc320;
 	}
 	.content_ai .right img{
@@ -75,4 +76,54 @@ page-aidog {
 	.item-block .item-inner{
 		border-bottom: none !important;
 	}
+}
+.prompt_alert_customer .alert-wrapper{
+	width: 300px;
+	max-width: 300px;
+}
+.prompt_alert_customer .alert-wrapper .alert-head{
+	background: #484646;
+	padding: 15px;
+	border-radius: 0px;
+}
+.prompt_alert_customer .alert-message{
+	border-bottom: none;
+	margin-top: 0px !important;
+}
+.prompt_alert_customer .alert-input-group{
+	background: #484646;
+   
+}
+.prompt_alert_customer .alert-input-wrapper input{
+	text-align: center;
+    background: #ffffff;
+    font-size: 12px;
+    padding: 10px;
+    height: 45px;
+    margin-top: 10px;
+    border-radius: 3px;
+    color: #000000;
+    margin-bottom: 5px;
+}
+.prompt_alert_customer .alert-input-wrapper .alert-input:focus {
+    margin-bottom: 5px;
+    border-bottom: none;
+}
+.prompt_alert_customer .alert-button-group{
+	padding: 0px;
+	background: #484646;
+	padding: 0 24px 5px 24px;
+}
+.prompt_alert_customer .alert-button{
+	width: 100%;
+	margin-bottom: 5px;
+}
+.prompt_alert_customer .alert-button:first-child {
+    border-right: none;
+    background: white;
+    color: #000000;
+}
+.prompt_alert_customer .alert-button:last-child {
+    color: #000000;
+    background: #CDDC39;
 }

@@ -29,17 +29,25 @@ import { AddNewWalletPage } from '../pages/contact/add-new-wallet/add-new-wallet
 /*END CONTACT*/
 
 /*SINGUP*/
-import { SignupStepOnePage } from '../pages/signup/signup-step-one/signup-step-one';
-import { SignupStepTowPage } from '../pages/signup/signup-step-tow/signup-step-tow';
+import { RegisterPage } from '../pages/register/register';
+
 /*END SINGUP*/
 
 import { LoginPage } from '../pages/login/login';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
+
+import { QrcodePartnerPage } from '../pages/profile/qrcode-partner/qrcode-partner';
+import { MyPartnerPage } from '../pages/profile/my-partner/my-partner';
+
+/*eanings*/
+import { EaningsPage } from '../pages/eanings/eanings/eanings';
+/*end eanings*/
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = LoginPage; 
+  rootPage:any = TabsPage; 
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {

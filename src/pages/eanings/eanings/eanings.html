@@ -1,0 +1,85 @@
+
+<ion-header>
+
+  <ion-navbar>
+  	
+    <button (click)="goback()" ion-button class="left_heder" >
+      <img  src="assets/imgs/back.png"  />
+    </button>
+    <ion-title>Earnings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="content_earnings">
+	<ion-card class="card_capit_header">
+		<div class="top">
+	    	<p text-left>Total Revenues</p>
+	    </div>
+	    <div class="center">
+	    	<span float-left>$ {{(wallet.total_earn *1).toFixed(2)}}</span> <span float-right class="member">● {{wallet.level}}</span>
+	    </div>
+	    <div class="bottom">
+	    	<p float-left>Total value: {{wallet.percent_daily}}%</p>	
+	    </div>
+  	</ion-card>
+	<ion-card class="content_ea">
+	   <ion-list>
+  			<ion-item (click)="ViewProfitDaily()">
+			    <ion-avatar item-start>
+			      <img src="assets/imgs/asipay.png">
+			    </ion-avatar>
+			    
+			    <div float-left text-left>
+			    	<h6>Ai-Trade revenues history</h6>
+			    	
+			    </div>
+			    <div float-right text-right>
+			    	<h6>$ {{(wallet.d_wallet *1).toFixed(2)}}</h6>
+			    </div>
+		  	</ion-item>
+
+		  	<ion-item (click)="ViewProfitSystem()">
+			    <ion-avatar item-start>
+			      <img src="assets/imgs/asipay.png">
+			    </ion-avatar>
+			    
+			    <div float-left text-left>
+			    	<h6>Linking revenues history</h6>
+			    	
+			    </div>
+			    <div float-right text-right>
+			    	<h6>$ {{(wallet.s_wallet*1).toFixed(2)}}</h6>
+			    </div>
+		  	</ion-item>
+
+		  	<ion-item (click)="ViewProfitLeader()">
+			    <ion-avatar item-start>
+			      <img src="assets/imgs/asipay.png">
+			    </ion-avatar>
+			    
+			    <div float-left text-left>
+			    	<h6>Team leader's revenues history</h6>
+			    </div>
+			    <div float-right text-right>
+			    	<h6>$ {{(wallet.l_wallet*1).toFixed(2)}}</h6>
+			    </div>
+		  	</ion-item>
+
+		  	<ion-item (click)="ViewProfitReffral()">
+			    <ion-avatar item-start>
+			      <img src="assets/imgs/asipay.png">
+			    </ion-avatar>
+			    
+			    <div float-left text-left>
+			    	<h6>Reffral revenues history</h6>
+			    </div>
+			    <div float-right text-right>
+			    	<h6>$ {{(wallet.r_wallet*1).toFixed(2)}}</h6>
+			    </div>
+		  	</ion-item>
+		</ion-list>
+	</ion-card>
+	
+</ion-content>
