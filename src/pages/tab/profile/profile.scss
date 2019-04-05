@@ -95,4 +95,20 @@ page-profile {
 	    display: inline;
 	    margin-right: 10px;
 	}
+	.border-image{
+		position: relative;
+		width: 80px;
+    	margin: 0 auto;
+	}
+	.icon-img{ 
+		position: absolute;
+	    bottom: 2px;
+    	right: 2px;
+	    color: #525151;
+	    background: #e2e1e1;
+	    padding: 3px;
+	    border-radius: 50%;
+	    border: 1px solid #eee;
+	    font-size: 13px;
+	}
 }

@@ -72,6 +72,11 @@ import { DetailContactusPage } from '../pages/contact-us/detail-contactus/detail
 
 /*end contact us*/
 
+/*notification*/
+import { ListNotificationPage } from '../pages/notification/list-notification/list-notification';
+import { NotificationPage } from '../pages/notification/notification/notification';
+/*end notification*/
+
 import { ExchangePage } from '../pages/exchange/exchange';
 import { DepositPage } from '../pages/deposit/deposit';
 import { WithdrawPage } from '../pages/withdraw/withdraw';
@@ -92,6 +97,12 @@ import { AidogProvider } from '../providers/server/aidog';
 import { Clipboard } from '@ionic-native/clipboard';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { Screenshot } from '@ionic-native/screenshot';
+import { Network } from '@ionic-native/network';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
+
+import { Camera } from '@ionic-native/camera';
+import { FileTransfer } from '@ionic-native/file-transfer'; 
 @NgModule({
   declarations: [
     MyApp,
@@ -135,7 +146,9 @@ import { Screenshot } from '@ionic-native/screenshot';
     ModifyPasswordPage,
     AuthenticatorPage,
     AuthenticatorLoginPage,
-    AboutUsPage
+    AboutUsPage,
+    ListNotificationPage,
+    NotificationPage
   ],
   imports: [
     BrowserModule,
@@ -186,7 +199,9 @@ import { Screenshot } from '@ionic-native/screenshot';
     ModifyPasswordPage,
     AuthenticatorPage,
     AuthenticatorLoginPage,
-    AboutUsPage
+    AboutUsPage,
+    ListNotificationPage,
+    NotificationPage
   ],
   providers: [
     StatusBar,
@@ -200,7 +215,11 @@ import { Screenshot } from '@ionic-native/screenshot';
     AidogProvider,
     Clipboard,
     BarcodeScanner,
-    Screenshot
+    Screenshot,
+    Network,
+    InAppBrowser,
+    Camera,
+    FileTransfer
   ]
 })
 export class AppModule {}

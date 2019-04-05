@@ -1,4 +1,4 @@
-page-authenticator-login {
+page-notification {
 	.toolbar-background{
 		background: linear-gradient(to top, #160c56 0%, #052238 100%);
 		color: #fff;
@@ -88,7 +88,14 @@ page-authenticator-login {
 		padding-right: 0px;
 	}
 
-	
+	.content_settings ion-item.background{
+
+	    background: url(../assets/imgs/icon_right.png);
+	    background-size: 8px;
+	    background-repeat: no-repeat;
+	    background-position: 10px;
+	    background-position-x: 98%;
+	}
 	.content_settings h6{
 		font-size: 12px;
 	}
@@ -114,14 +121,10 @@ page-authenticator-login {
 	.content_settings .not_active{
 		color: #656363;
 	}
-	.content_settings ion-label{
-		margin: 16px 10px 16px 10px;
-	}
-	.content_settings .left{
+	.content_settings .left.customer{
 		width: 100%;
-		float: left;
 	}
-	.content_settings .left img{
-		    width: 18px;
+	.content_settings .left.customer img{
+		width: 38px;
 	}
 }

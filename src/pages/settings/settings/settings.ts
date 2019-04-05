@@ -33,36 +33,39 @@ export class SettingsPage {
 
 	ionViewDidLoad() {
 		
-		let loading = this.loadingCtrl.create({
-	    	content: 'Please wait...'
-	  	});
-	  	loading.present();
+		
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
-				this.AccountServer.GetInfomationUser(this.customer_id)
-		        .subscribe((data) => {
-		        	loading.dismiss();	
-					if (data.status == 'complete')
-					{
-						this.infomation = data;
-						this.infomation['status_verited'] = data.security.email.status;
-						console.log(this.infomation);
-					}
-					else
-					{
-						this.AlertToast(data.message,'error_form');
-					}
-				})
+
 			}
 		})
 				
 	}
 
 	ionViewWillEnter() {
-		
+		let loading = this.loadingCtrl.create({
+	    	content: 'Please wait...'
+	  	});
+	  	loading.present();
+		this.AccountServer.GetInfomationUser(this.customer_id)
+	        .subscribe((data) => {
+	        	loading.dismiss();	
+				if (data.status == 'complete')
+				{
+					this.infomation = data;
+					this.infomation['status_verited'] = data.security.email.status;
+					this.infomation['status_2fa'] = data.security.authenticator.status;
+					
+					console.log(this.infomation);
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+			})
 		let elements = document.querySelectorAll(".tabbar.show-tabbar");
 		if (elements != null) {
 	        Object.keys(elements).map((key) => {

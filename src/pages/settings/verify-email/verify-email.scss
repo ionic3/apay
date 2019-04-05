@@ -45,80 +45,88 @@ page-verify-email {
 		width: 20px;
 	}
 
-	.card_capit_header{
-	    position: relative;
-	    background: url(../assets/imgs/vip_bg.png);
-	    height: 110px;
-	    width: calc(100% - 0px);
-	    background-size: cover;
-	    margin:0px;
-	}	
-	.card_capit_header div{
-		width: 100%;
-		float: left;
-	}
-	.card_capit_header div p{
-		
-		color: #8BC34A;
+	ion-card{
+	    margin: 0px !important;
     	
+    	width: calc(100% - 0px) !important;
 	}
-	.card_capit_header div span{
-		color: #FFFFFF;
-    	
+	.contents .button_customer  button{
+		background: #000;
+	    height: 40px;
+	    border-radius: 4px;
+	    color: #fff;
+	    width: 70%;
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    margin-bottom: 20px;
 	}
-	.card_capit_header .center{
-		padding: 5px 15px;
-	}
-	.card_capit_header .top,.card_capit_header .bottom{
-		padding: 10px 15px;
+	.item-md,
+	.item-ios {
+		background: transparent;
 		
+		
+		margin-bottom: 15px;
 	}
-	.card_capit_header .member{
-		color: red;
+	.contents .button-md:hover:not(.disable-hover),.contents .button-ios:hover:not(.disable-hover),{
+		background: #000;
 	}
-	.content_settings ion-card{
-		 width: calc(100% - 0px);
-	    
-	    margin:0px;
-	}
-	
-	.content_settings ion-item{
-		border-bottom: 1px solid #eee;
-		padding: 0px 10px;
-		padding-right: 0px;
-	}
-
-	.content_settings ion-item.background{
-
-	    background: url(../assets/imgs/icon_right.png);
-	    background-size: 8px;
-	    background-repeat: no-repeat;
-	    background-position: 10px;
-	    background-position-x: 98%;
-	}
-	.content_settings h6{
-		font-size: 12px;
-	}
-	.content_settings .infomation{
-		position: absolute;
-		width: 100%;
-	}
-	.content_settings .infomation h6{
-	    margin-left: 10px;
-	    color: #656363;
+	.contend_send label{
+	    margin-top: 30px !important;
 	    float: left;
-	    font-size: 10px;
-	    text-align: center;
-	    width: 100%;
+	    padding-left: 25px;
+	    color: #676464;
+	    margin-bottom: 5px;
 	}
-	.content_settings .right{
-		position: relative;
-		z-index: 9999999;
+	.contend_send ion-input{
+		border: 1px solid #eee;
+    	border-radius: 5px;
+    	font-size: 12px;
+	    background: #efefef;
 	}
-	.content_settings .right .active{
-		color: #00BCD4;
+	.step_2{
+		padding: 20px;
 	}
-	.content_settings .not_active{
-		color: #656363;
+	.step_2 .input_code{
+		border: 1px solid #6d6d6d !important;
+		float: left;
+    	margin-right: 2%;
+    	width: 15%;
+    	
+	}
+	.step_2 p,.step_3 p{
+		text-align: center;
+		color: #080808;
+	    font-size: 12px;
+	    margin-bottom: 30px;
+	}
+	.step_2 .input_code input{
+		text-align: center;
+	}
+	.step_2 .input_code:last-child{
+		margin-right: 0;
+	}
+	.step_2 .button,.step_3 .button{
+		width: 100%;
+	    float: left;
+	    margin-top: 20px;
+	}
+	.contents .step_2 button,.contents .step_3 button{
+		background: #000;
+	    height: 40px;
+	    border-radius: 4px;
+	    color: #fff;
+	    
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    margin-bottom: 20px;
+	    margin: 0 auto;
+	}
+
+	.step_3 .input_password{
+		border: 1px solid #d17530 !important;
+		float: left;
+    	margin-top: 20px;
+    	width: 100%;
+    	
 	}
 }

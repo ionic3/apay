@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-
+import { LoginPage } from '../../../pages/login/login';
 @IonicPage()
 @Component({
   selector: 'page-modify-password',
@@ -12,7 +11,6 @@ import { Storage } from '@ionic/storage';
 })
 export class ModifyPasswordPage {
 	customer_id : any;
-	infomation = {};
 	form = {};
 	selectOptions : any;
 	constructor(
@@ -23,8 +21,7 @@ export class ModifyPasswordPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		public AccountServer : AccountProvider
 	) {
 		this.selectOptions = {
 		  title: ' ',
@@ -34,28 +31,12 @@ export class ModifyPasswordPage {
 
 	ionViewDidLoad() {
 		this.form['types'] = 'Login password';
-		let loading = this.loadingCtrl.create({
-	    	content: 'Please wait...'
-	  	});
-	  	loading.present();
+		
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
-				this.AccountServer.GetInfomationUser(this.customer_id)
-		        .subscribe((data) => {
-		        	loading.dismiss();	
-					if (data.status == 'complete')
-					{
-						this.infomation = data;
-						this.infomation['status_verited'] = data.security.email.status;
-					}
-					else
-					{
-						this.AlertToast(data.message,'error_form');
-					}
-				})
 			}
 		})
 				
@@ -78,8 +59,69 @@ export class ModifyPasswordPage {
 	        });
 	    }
   	}
+  	validatePassword(password) {
+	  var regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+	  return regex.test(password);
+	}
+  	SubmitForm(){
+  		if (this.form['password'] == '' || this.form['password'] == undefined)
+		{
+			this.AlertToast('Please enter the old password','error_form');
+		}
+		else
+		{
+			if (this.form['new_password'] == '' || this.form['new_password'] == undefined || !this.validatePassword(this.form['new_password']))
+			{
+				this.AlertToast('The password minimum eight characters, at least one letter and one number','error_form');
+			}
+			else
+			{
+				if (this.form['new_password'] != this.form['re_password'])
+				{
+					this.AlertToast('The two login passwords do not match','error_form');
+				}
+				else
+				{	
+					let loading = this.loadingCtrl.create({
+					    content: 'Please wait...'
+				  	});
 
-  	
+				  	loading.present();
+					this.AccountServer.UpdatePassword_User(this.customer_id,this.form['types'],this.form['password'],this.form['new_password'])
+			        .subscribe((data) => {
+			        	loading.dismiss();
+						if (data.status == 'complete')
+						{ 
+							if (this.form['types'] == 'Transaction password')
+							{
+								this.AlertToast(data.message,'success_form');
+							}
+							else
+							{
+								this.AlertUpdatePassLogin();
+							}
+							this.form['password'] = '';
+							this.form['new_password'] = '';
+							this.form['re_password'] = '';
+						}
+						else
+						{
+							this.AlertToast(data.message,'error_form');
+						}
+			        },
+			        (err) => {
+			        	
+			        	if (err)
+			        	{
+			        		loading.dismiss();
+			        		this.SeverNotLogin();
+			        	}
+			        })
+				}
+				
+			}
+		}
+	}
   	
 
 	AlertToast(message,class_customer) {
@@ -90,6 +132,29 @@ export class ModifyPasswordPage {
 	      cssClass : class_customer
 	    });
 	    toast.present();
+  	}
+
+  	AlertUpdatePassLogin(){
+  		const confirm = this.alertCtrl.create({
+		title: 'Update password',
+		message: 'You have successfully changed the password',
+		buttons: [
+		{
+		  text: 'Cancel',
+		  handler: () => {
+		    
+		  }
+		},
+		{
+		  text: 'Login',
+		  handler: () => {
+		  	this.storage.remove('customer_id');
+		   	this.navCtrl.setRoot(LoginPage);
+		  }
+		}
+		]
+		});
+		confirm.present();
   	}
 
   	SeverNotLogin(){

@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { AccountProvider } from '../../providers/server/account';
-import { LoginPage } from '../login/login';
+import { AccountProvider } from '../../../providers/server/account';
+import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-import { Clipboard } from '@ionic-native/clipboard';
+import { NotificationPage } from '../notification/notification';
 
 @IonicPage()
 @Component({
-  selector: 'page-deposit',
-  templateUrl: 'deposit.html',
+  selector: 'page-list-notification',
+  templateUrl: 'list-notification.html',
 })
-export class DepositPage {
+export class ListNotificationPage {
 	customer_id : any;
-	currency: any;
-	address : any;
+	count_history : any;
+	history : any;
+	history_load_no : any;
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -24,66 +25,41 @@ export class DepositPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private clipboard: Clipboard
+		private screenshot: Screenshot
 	) {
+		
 	}
 
 	ionViewDidLoad() {
-		this.currency = this.navParams.get("currency");
+		
 		let loading = this.loadingCtrl.create({
-	    	content: 'Please wait...'
+	    content: 'Please wait...'
 	  	});
 	  	loading.present();
-
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
-
-				this.AccountServer.GetAddressUser(this.customer_id,this.currency)
+				this.AccountServer.GetListNotification(this.customer_id,0,20)
 		        .subscribe((data) => {
 		        	loading.dismiss();
-					if (data.status == 'complete')
+					if (data)
 					{
-						this.address = data.address;
+						
+				  		this.history =  data;
+				  		this.count_history = data.length;
 					}
-					else
-					{
-						this.navCtrl.pop();
-						this.AlertToast(data.message,'error_form');
-					}
-				},
-		        (err) => {
-		        	loading.dismiss();
-		        	if (err)
-		        	{
-		        		this.SeverNotLogin();
-		        	}
+					
 		        })
 			}
 		})
-	}
-
-	goback() {
-		this.navCtrl.pop();
-	}
-
-	CopyWallet(address){
-    
-		this.clipboard.copy(address);
-
-		this.clipboard.paste().then(
-			(resolve: string) => {
-				this.AlertToast('Coppy success','success_form');
-			},
-			(reject: string) => {
-				console.log('Error: ' + reject);
-			}
-		);
+				
+		
 	}
 
 	ionViewWillEnter() {
+		
 		let elements = document.querySelectorAll(".tabbar.show-tabbar");
 		if (elements != null) {
 	        Object.keys(elements).map((key) => {
@@ -100,7 +76,47 @@ export class DepositPage {
 	    }
   	}
 
-  	AlertToast(message,class_customer) {
+  	doRefresh(refresher: Refresher) {
+  		this.AccountServer.GetListNotification(this.customer_id,0,20)
+        .subscribe((data) => {
+			if (data)
+			{
+				
+		  		this.history =  data;
+		  		this.count_history = data.length;
+			}
+			refresher.complete();
+        })
+  	}
+
+  	ViewDetailNotification(_id){
+		this.navCtrl.push(NotificationPage,{'_id' : _id});
+	}
+
+  	doInfinite(infiniteScroll : InfiniteScroll) {
+		this.AccountServer.GetListNotification(this.customer_id,this.history.length,5)
+        .subscribe((data) => {
+			if (data.length > 0)
+			{
+				for(let item of data) {
+				  	this.history.push({
+				  		"_id" : item._id,
+				  		"username" : item.username,
+				        "content" : item.content,
+				        "type" : item.type,
+				        "read" : item.read,
+				        "status" : item.status,
+				        "date_added" : item.date_added
+				  	})
+				}
+			}
+			infiniteScroll.complete();
+        }) 	
+	}
+
+	
+
+	AlertToast(message,class_customer) {
 	    let toast = this.toastCtrl.create({
 	      message: message,
 	      position: 'bottom',
@@ -131,4 +147,9 @@ export class DepositPage {
 		});
 		confirm.present();
   	}
+
+  	goback() {
+		this.navCtrl.pop();
+	}
+	
 }

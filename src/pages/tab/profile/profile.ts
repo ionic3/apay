@@ -13,6 +13,10 @@ import { SettingsPage } from '../../settings/settings/settings';
 import { RecordsExchangePage } from '../../profile/records-exchange/records-exchange';
 
 import { ContactUsPage } from '../../contact-us/contact-us/contact-us';
+
+import { Camera } from '@ionic-native/camera';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
+
 @IonicPage()
 @Component({
   selector: 'page-profile',
@@ -21,6 +25,7 @@ import { ContactUsPage } from '../../contact-us/contact-us/contact-us';
 export class ProfilePage {
 	customer_id : any;
 	infomation = {};
+	img_camera = '';
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -29,10 +34,12 @@ export class ProfilePage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider
+		public AccountServer : AccountProvider,
+		private camera: Camera,
+    	private transfer: FileTransfer,
 		) {
 	}
-
+	private fileTransfer: FileTransferObject = this.transfer.create();
 	ionViewDidLoad() {
 
 		let loading = this.loadingCtrl.create({
@@ -51,11 +58,44 @@ export class ProfilePage {
 					if (data.status == 'complete')
 					{
 						this.infomation['email'] = data.email;
+						this.infomation['img_profile'] =  data.img_profile;
 					}
 				})
 			}
 		})
 	}
+
+	clickImage() {
+    this.camera.getPicture({
+        quality: 50,
+        destinationType: this.camera.DestinationType.FILE_URI,
+        sourceType: this.camera.PictureSourceType.CAMERA,
+        encodingType: this.camera.EncodingType.JPEG
+    }).then((imageData) => {
+        let options: FileUploadOptions = {
+            fileKey: "file",
+            fileName: imageData.substr(imageData.lastIndexOf('/') + 1),
+            chunkedMode: false,
+            mimeType: "image/jpg"
+        }
+        let loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+        });
+        loading.present();
+
+        this.fileTransfer.upload(imageData, 'https://api.buy-sellpro.co/api/upload-img-profile/' + this.customer_id, options)
+            .then((data) => {
+                loading.dismiss();
+                this.AlertComplete('Successful update.');
+                this.img_camera = 'https://api.buy-sellpro.co/static/img/upload/' + options.fileName;
+            }, (err) => {
+                loading.dismiss();
+                this.AlertToast('Please try again.')
+            })
+    }, (err) => {
+        this.AlertToast('Please try again.')
+    });
+}
 
 	ViewQrcodeAddPartner(){
 		this.navCtrl.push(QrcodePartnerPage ,{'email' : this.infomation['email']});
@@ -109,6 +149,25 @@ export class ProfilePage {
     });
     confirm.present();
 
-    
-  }
+   
+  	}
+
+  	 AlertComplete(message) {
+	    let toast = this.toastCtrl.create({
+	      message: message,
+	      position: 'bottom',
+	      duration : 2000,
+	      cssClass : 'success_form'
+	    }); 
+	    toast.present();
+	}
+	AlertToast(message) {
+      let toast = this.toastCtrl.create({
+        message: message,
+        position: 'bottom',
+        duration : 2000,
+        cssClass : 'error_form'
+      });
+      toast.present();
+    }
 }

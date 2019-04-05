@@ -87,8 +87,9 @@ page-register {
   }
   .content-md,
   .content-ios {
-    background: url('../assets/imgs/giphy.gif') center;
+    background: url('../assets/imgs/original.gif') center;
     position: relative;
+    background-size: cover !important;
   }
   .content-md::before,
   .content-ios::before {
@@ -98,7 +99,7 @@ page-register {
     left: 0;
     top: 0;
     content: '';
-    background: rgba(2, 30, 37, 0.92);
+    background: rgba(4, 32, 39, 0.92);
   }
   .item-md,
   .item-ios {

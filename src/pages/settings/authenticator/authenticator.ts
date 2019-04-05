@@ -4,7 +4,7 @@ import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-
+import { SettingsPage } from '../settings/settings';
 @IonicPage()
 @Component({
   selector: 'page-authenticator',
@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 export class AuthenticatorPage {
 	customer_id : any;
 	infomation = {};
+	form = {};
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -38,13 +39,13 @@ export class AuthenticatorPage {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
-				this.AccountServer.GetInfomationUser(this.customer_id)
+				this.AccountServer.Get2FACode(this.customer_id)
 		        .subscribe((data) => {
 		        	loading.dismiss();	
 					if (data.status == 'complete')
 					{
 						this.infomation = data;
-						this.infomation['status_verited'] = data.security.email.status;
+						
 					}
 					else
 					{
@@ -74,8 +75,87 @@ export class AuthenticatorPage {
 	    }
   	}
 
-  	
-  	
+  	SubmitForm_Enlable(){
+
+  		if (this.form['code_enlable'] == '' || this.form['code_enlable'] == undefined)
+		{
+			this.AlertToast('Please enter code google authenticator ','error_form');
+		}
+		else
+		{
+			
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+		  	});
+
+		  	loading.present();
+			this.AccountServer.Enlable2FA(this.customer_id,this.infomation['otp_secret'],this.form['code_enlable'])
+	        .subscribe((data) => {
+	        	loading.dismiss();
+				if (data.status == 'complete')
+				{ 
+					this.AlertToast(data.message,'success_form');
+					this.form['code_enlable'] = '';
+					
+					this.navCtrl.setRoot(SettingsPage);
+					
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+	        },
+	        (err) => {
+	        	
+	        	if (err)
+	        	{
+	        		loading.dismiss();
+	        		this.SeverNotLogin();
+	        	}
+	        })
+				
+		}
+  	}
+
+  	SubmitForm_Disable(){
+  		if (this.form['code_disable'] == '' || this.form['code_disable'] == undefined)
+		{
+			this.AlertToast('Please enter code google authenticator ','error_form');
+		}
+		else
+		{
+			
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+		  	});
+
+		  	loading.present();
+			this.AccountServer.Disable2FA(this.customer_id,this.form['code_disable'])
+	        .subscribe((data) => {
+	        	loading.dismiss();
+				if (data.status == 'complete')
+				{ 
+					this.AlertToast(data.message,'success_form');
+					this.form['code_enlable'] = '';
+					this.navCtrl.setRoot(SettingsPage);
+					
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+	        },
+	        (err) => {
+	        	
+	        	if (err)
+	        	{
+	        		loading.dismiss();
+	        		this.SeverNotLogin();
+	        	}
+	        })
+				
+		}
+  	}
 
 	AlertToast(message,class_customer) {
 	    let toast = this.toastCtrl.create({

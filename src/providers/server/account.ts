@@ -11,7 +11,7 @@ import *  as MyConfig from '../../providers/myConfig';
 export class AccountProvider {
 
 	constructor(public http: Http) {
-		console.log('Hello SettingServerProvider Provider');
+		//console.log('Hello SettingServerProvider Provider');
 	}
 
 	
@@ -79,13 +79,13 @@ export class AccountProvider {
 		.catch(this.catchError)
 	}
 
-	GetListNotification(customer_id : string,start: number,limit: number){
-  		let body = {customer_id : customer_id,start: start,limit: limit};
-		return this.http.post(MyConfig.data.url+'/api/get-notification',body)
-		.do(this.logResponse)
-		.map(this.extractData)
-		.catch(this.catchError)
-	}
+	 GetNotificationID(_id: string){
+      let body = {_id: _id};
+      return this.http.post(MyConfig.data.url+'/api/exchange/get-notification-id',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
 
 	GetAddressUser(customer_id : string,currency: string){
   		let body = {customer_id : customer_id,currency: currency};
@@ -282,25 +282,94 @@ export class AccountProvider {
       .map(this.extractData)
       .catch(this.catchError)
     }
-    GetNotificationID(_id: string){
-      let body = {_id: _id};
-      return this.http.post(MyConfig.data.url+'/api/exchange/get-notification-id',body)
+     
+    UpdatePassword_User(customer_id:string,types: string,password: string,new_password : string){
+      let body = {customer_id: customer_id,types: types,password: password,new_password : new_password};
+      return this.http.post(MyConfig.data.url+'/api/update-password-user',body)
       .do(this.logResponse)
       .map(this.extractData)
       .catch(this.catchError)
     }
 
-	private catchError(error : Response){
-		console.log(error);
-		return Observable.throw(error.json().error || "server login error");
-	}
+    SendMailVerify(customer_id: string){
+      let body = {customer_id: customer_id};
+      return this.http.post(MyConfig.data.url+'/api/send-mail-verify',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+    CheckCoceVerifyEmail(customer_id:string,code: string){
+      let body = {customer_id: customer_id,code: code};
+    return this.http.post(MyConfig.data.url+'/api/check-code-verify-email',body)
+    .do(this.logResponse)
+    .map(this.extractData)
+    .catch(this.catchError)
+  }
 
-	private logResponse(res : Response){
-		console.log(res);
-	}
+    Get2FACode(customer_id:string){
+        let body = {customer_id: customer_id};
+      return this.http.post(MyConfig.data.url+'/api/get-2fa-code',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
 
-	private extractData(res : Response){
-		
-		return res.json();
-	}
+    Enlable2FA(customer_id:string,otp_secret: string,code : string){
+        let body = {customer_id: customer_id,otp_secret : otp_secret,code: code};
+      return this.http.post(MyConfig.data.url+'/api/enlable-2fa',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+    Disable2FA(customer_id:string,code : string){
+        let body = {customer_id: customer_id,code: code};
+      return this.http.post(MyConfig.data.url+'/api/disable-2fa',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+
+
+    CheckStatus2FA(customer_id:string){
+        let body = {customer_id: customer_id};
+      return this.http.post(MyConfig.data.url+'/api/check-status-2fa',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+
+    CheckCode2fA(customer_id:string,code_2fa: string){
+        let body = {customer_id: customer_id,code_2fa: code_2fa};
+      return this.http.post(MyConfig.data.url+'/api/check-code-2fa',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+    GetVersionApp(){
+      let body = {};
+      return this.http.post(MyConfig.data.url+'/api/get-version-app',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+     GetListNotification(customer_id: string,start : number, limit : number){
+      let body = {customer_id: customer_id, start: start,  limit: limit};
+      return this.http.post(MyConfig.data.url+'/api/exchange/get-notification',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+  	private catchError(error : Response){
+  		//console.log(error);
+  		return Observable.throw(error.json().error || "server login error");
+  	}
+
+  	private logResponse(res : Response){
+  		//console.log(res);
+  	}
+
+  	private extractData(res : Response){
+  		
+  		return res.json();
+  	}
 }

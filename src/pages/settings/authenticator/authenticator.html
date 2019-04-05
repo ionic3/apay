@@ -14,8 +14,55 @@
 
 <ion-content class="content_settings">
 	
-	<ion-card class="">
-	   
+	<ion-card class="contents" *ngIf="infomation.status_authen == 0">
+    <ion-row  >
+      <h3 class="title" text-center>Enlable 2FA</h3>
+      <ion-col col-12 class="">
+        <img class="img_qrcode" src="https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl={{infomation.url_otp}}}" />
+      </ion-col>
+    </ion-row>
+
+    <form  (ngSubmit)="SubmitForm_Enlable()">
+    <ion-row >
+      <ion-col col-12 class="">
+        <p class="code">{{infomation.otp_secret}}</p>
+        <p class="text">If you have any problem with scanning the QR code enter this code manually into the APP.</p>
+      </ion-col>
+      
+        <ion-col col-6>
+          
+            <ion-item>
+              <ion-input class="input" [(ngModel)]="form.code_enlable" placeholder="Code 2FA" name="code_enlable" type="text" required></ion-input>
+            </ion-item>
+          
+        </ion-col>
+
+        <ion-col col-6>
+          <button class="button_cus" ion-button full type="submit" block>Enlable 2FA</button>
+        </ion-col>
+      
+    </ion-row>
+    </form>
+  </ion-card>
+  <ion-card class="contents" *ngIf="infomation.status_authen == 1">
+    <form  (ngSubmit)="SubmitForm_Disable()">
+      <ion-row >
+        <h3 class="title disable" text-center>Disable 2FA</h3>
+        <ion-col col-6>
+          
+            <ion-item>
+              <ion-input class="input" [(ngModel)]="form.code_disable" placeholder="Code 2FA" name="code_disable" type="text" required></ion-input>
+            </ion-item>
+          
+        </ion-col>
+
+        <ion-col col-6>
+          <button class="button_cus" ion-button full type="submit" block>Disable 2FA</button>
+        </ion-col>
+            
+      </ion-row>
+	  </form> 
+     
 	</ion-card>
 	
 </ion-content>

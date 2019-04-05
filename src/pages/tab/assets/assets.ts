@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { LoginPage } from '../../../pages/login/login';
+import { LoginPage } from '../../login/login';
 import { Storage } from '@ionic/storage';
-import { WalletPage } from '../../../pages/wallet/wallet';
+import { WalletPage } from '../../wallet/wallet';
+import { ListNotificationPage } from '../../notification/list-notification/list-notification';
 @IonicPage()
 @Component({
   selector: 'page-assets',
@@ -104,6 +105,13 @@ export class AssetsPage {
 		})
 	}
 
+
+	ionViewWillEnter() {
+		
+		
+   	}
+  	
+
 	ViewWallet(currency,amount,amount_usd){
 		this.navCtrl.push(WalletPage,{'customer_id' : this.customer_id, 'currency' : currency,'amount' : amount,'amount_usd' : amount_usd});
 	}
@@ -122,6 +130,10 @@ export class AssetsPage {
 		
 	}
 
+
+	ViewListNotification(){
+		this.navCtrl.push(ListNotificationPage);
+	}
 
 	doInfinite(infiniteScroll : InfiniteScroll) {
 	  	

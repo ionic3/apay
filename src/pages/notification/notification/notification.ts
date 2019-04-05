@@ -1,20 +1,22 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
-import { AccountProvider } from '../../providers/server/account';
-import { LoginPage } from '../login/login';
+import { AccountProvider } from '../../../providers/server/account';
+import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-import { Clipboard } from '@ionic-native/clipboard';
-
+import { VerifyEmailPage } from '../../settings/verify-email/verify-email';
+import { ModifyPasswordPage } from '../../settings/modify-password/modify-password';
+import { AuthenticatorPage } from '../../settings/authenticator/authenticator';
+import { AuthenticatorLoginPage } from '../../settings/authenticator-login/authenticator-login';
+import { AboutUsPage } from '../../settings/about-us/about-us';
 @IonicPage()
 @Component({
-  selector: 'page-deposit',
-  templateUrl: 'deposit.html',
+  selector: 'page-notification',
+  templateUrl: 'notification.html',
 })
-export class DepositPage {
+export class NotificationPage {
 	customer_id : any;
-	currency: any;
-	address : any;
+	history = {};
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -24,66 +26,33 @@ export class DepositPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private clipboard: Clipboard
+		private screenshot: Screenshot
 	) {
+		
 	}
 
 	ionViewDidLoad() {
-		this.currency = this.navParams.get("currency");
+		
 		let loading = this.loadingCtrl.create({
 	    	content: 'Please wait...'
 	  	});
 	  	loading.present();
-
-		this.storage.get('customer_id')
-		.then((customer_id) => {
-			if (customer_id) 
+		this.AccountServer.GetNotificationID(this.navParams.get("_id"))
+        .subscribe((data) => {
+        	loading.dismiss();
+			if (data)
 			{
-				this.customer_id = customer_id;
-
-				this.AccountServer.GetAddressUser(this.customer_id,this.currency)
-		        .subscribe((data) => {
-		        	loading.dismiss();
-					if (data.status == 'complete')
-					{
-						this.address = data.address;
-					}
-					else
-					{
-						this.navCtrl.pop();
-						this.AlertToast(data.message,'error_form');
-					}
-				},
-		        (err) => {
-		        	loading.dismiss();
-		        	if (err)
-		        	{
-		        		this.SeverNotLogin();
-		        	}
-		        })
+				
+		  		this.history =  data;
 			}
-		})
-	}
-
-	goback() {
-		this.navCtrl.pop();
-	}
-
-	CopyWallet(address){
-    
-		this.clipboard.copy(address);
-
-		this.clipboard.paste().then(
-			(resolve: string) => {
-				this.AlertToast('Coppy success','success_form');
-			},
-			(reject: string) => {
-				console.log('Error: ' + reject);
-			}
-		);
+			
+        })
+				
 	}
 
 	ionViewWillEnter() {
+		
+		
 		let elements = document.querySelectorAll(".tabbar.show-tabbar");
 		if (elements != null) {
 	        Object.keys(elements).map((key) => {
@@ -100,14 +69,17 @@ export class DepositPage {
 	    }
   	}
 
-  	AlertToast(message,class_customer) {
+  	
+  	
+
+	AlertToast(message,class_customer) {
 	    let toast = this.toastCtrl.create({
 	      message: message,
 	      position: 'bottom',
 	      duration : 2000,
 	      cssClass : class_customer
 	    });
-	    toast.present();
+	    toast.present(); 
   	}
 
   	SeverNotLogin(){
@@ -131,4 +103,9 @@ export class DepositPage {
 		});
 		confirm.present();
   	}
+
+  	goback() {
+		this.navCtrl.pop();
+	}
+	
 }

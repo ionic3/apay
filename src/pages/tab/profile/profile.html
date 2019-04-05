@@ -1,12 +1,26 @@
 <ion-content>
 	<ion-card class="card_header" >
-		<p text-center>
+		<!-- <p text-center>
 			<img  src="assets/imgs/logo.png" /> 
 		</p>
 		<p text-center>
 			{{infomation.email}}
-		</p>	
-		
+		</p>	 -->
+		<ion-card-content>
+      <ion-grid>
+        <ion-row text-center>
+          <ion-col col-12 text-center>
+            <div class="border-image">
+              <img *ngIf="img_camera == ''" (click)="clickImage()" class="img-profile"  src="{{infomation.img_profile}}" />
+              <img *ngIf="img_camera != ''" (click)="clickImage()" class="img-profile" src="{{img_camera}}">
+              <ion-icon (click)="clickImage()" class="icon-img" name="camera"></ion-icon>
+            </div>
+            <p text-center>{{infomation.email}}</p>
+          </ion-col>
+        </ion-row>
+        
+      </ion-grid>
+    </ion-card-content>
 	</ion-card>
 	
 	<ion-card class="card_content">

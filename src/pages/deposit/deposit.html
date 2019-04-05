@@ -9,7 +9,7 @@
 </ion-header>
 
 
-<ion-content padding class="content_deposit" text-center>
+<ion-content padding class="content_deposit" text-center *ngIf="address">
 	<img class="chart" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl={{address}}&message={{currency}}">
 	<p>{{address}}</p>
 	<button ion-button (click)="CopyWallet(address)">Replicating address</button>

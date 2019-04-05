@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component,ViewChild } from '@angular/core';
+import { Nav, Platform, AlertController ,ToastController,LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -43,16 +43,329 @@ import { MyPartnerPage } from '../pages/profile/my-partner/my-partner';
 /*eanings*/
 import { EaningsPage } from '../pages/eanings/eanings/eanings';
 /*end eanings*/
+
+
+/*Setting*/
+import { SettingsPage } from '../pages/settings/settings/settings';
+import { VerifyEmailPage } from '../pages/settings/verify-email/verify-email';
+import { ModifyPasswordPage } from '../pages/settings/modify-password/modify-password';
+import { AuthenticatorPage } from '../pages/settings/authenticator/authenticator';
+import { AuthenticatorLoginPage } from '../pages/settings/authenticator-login/authenticator-login';
+import { AboutUsPage } from '../pages/settings/about-us/about-us';
+
+/*end Setting*/
+
+import { Network } from '@ionic-native/network';
+import { Storage } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { AccountProvider } from '../providers/server/account';
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = TabsPage; 
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
-    });
-  }
+	@ViewChild(Nav) nav: Nav;
+
+	rootPage:any = TabsPage; 
+	infomation : any = {};
+	customer_id : any = '';
+	versionApp : any;
+	platform: any;
+	splashScreen : any;
+	counter=0;
+	count_submit_2fa = 0;
+	constructor(
+		platform: Platform, 
+		statusBar: StatusBar, 
+		splashScreen: SplashScreen,
+		private network: Network,
+		public alertCtrl: AlertController,
+    	public storage: Storage,
+    	public toastCtrl: ToastController,
+    	public AccountServer : AccountProvider,
+    	public loadingCtrl: LoadingController,
+    	private iab: InAppBrowser,
+    	
+	){
+		this.platform = platform;
+		this.splashScreen = splashScreen;
+		this.count_submit_2fa = 0;
+		this.versionApp = 2;
+
+		platform.ready().then(() => {
+			statusBar.styleDefault();
+			splashScreen.hide();
+
+
+			//check version app
+			this.AccountServer.GetVersionApp()
+		    .subscribe((data) => {
+		        if (data) {
+		            if (parseInt(this.versionApp) < parseInt(data.version)) {
+		                this.UpdateVersion(data.link_app);
+		            }
+		        }
+		    })
+
+			//exit app
+			let pree_back = false;
+			platform.registerBackButtonAction(() => { 
+			    if (this.counter == 0) {
+			        this.counter++;
+			        if (pree_back == false) {
+			            this.presentToast();
+			        }
+			        setTimeout(() => {
+			            this.counter = 0
+			        }, 1500)
+			    } else {
+			        if (pree_back == false) {
+			            pree_back = true;
+			            const confirm = this.alertCtrl.create({
+			                title: 'Confirm Exit?',
+			                message: 'Are you sure to exit the application.',
+			                buttons: [{
+			                        text: 'Cancel',
+			                        handler: () => {
+			                            pree_back = false;
+			                        }
+			                    },
+			                    {
+			                        text: 'Exit',
+			                        handler: () => {
+			                            this.platform.exitApp();
+			                        }
+			                    }
+			                ]
+			            });
+			            confirm.present();
+			        }
+			    }
+			});
+
+			//check network
+			if (this.network.type == "none") {
+			    let confirm = this.alertCtrl.create({
+			        title: 'Notification',
+			        message: 'We were unable to connect to the server to verify the SSL certificate. Please check your device\'s network connection before proceeding.',
+			        buttons: [{
+			                text: 'Exit',
+			                handler: () => {
+			                    this.platform.exitApp();
+			                }
+			            }
+
+			        ],
+
+			    });
+
+			    confirm.onDidDismiss(data => {
+			        this.platform.exitApp();
+			    });
+			    confirm.present();
+
+			}
+
+			//Check Login
+			this.storage.get('customer_id')
+		    .then((customer_id) => {
+		        if (customer_id) {
+		        	this.customer_id = customer_id;
+		            this.AccountServer.CheckStatus2FA(customer_id)
+			        .subscribe((data) => {
+						if (data.status == 'complete')
+						{
+							if (parseInt(data.status_authen)==1)
+							{
+								this.AuthenLoginPopup();
+							}
+							else
+							{
+								this.nav.setRoot(TabsPage);
+							}
+						}
+						else
+						{
+							this.AlertToast(data.message,'error_form');
+							this.platform.exitApp();
+						}
+			        },
+			        (err) => {
+			        	this.SeverNotLogin();
+			        })
+
+		        }
+		        this.platformReady()
+		    });
+
+
+		});
+
+	}
+
+	AuthenLoginPopup()
+	{
+		let alert = this.alertCtrl.create({
+	    title: 'Google authenticator',
+	    cssClass: 'prompt_alert_customer',
+	    enableBackdropDismiss: false,
+	    inputs: [{
+	            name: 'code_2fa',
+	            placeholder: 'Please enter your code.',
+	            type: 'number'
+	        }
+	    ],
+	    buttons: [{
+	            text: 'Exit App',
+	            role: 'cancel',
+	            handler: data => {
+	                this.platform.exitApp();
+	            }
+	        },
+	        {
+	            text: 'Confirm',
+	            handler: data => {
+	            	this.count_submit_2fa ++;
+	            	if (this.count_submit_2fa >=6)
+                    {
+                    	this.AlertToast('You have entered the wrong number too many times', 'error_form');
+                    	this.storage.remove('customer_id');
+                    	setTimeout(function() {
+                    		this.platform.exitApp();
+                    	}.bind(this), 3000);
+                    	
+                    }
+                    else
+                    {
+		                if (data.code_2fa == '' || data.code_2fa == undefined) {
+		                    this.AlertToast('Please enter your code.', 'error_form');
+		                    return false;
+		                } 
+		                else 
+		                {
+		                    
+	                        let loading = this.loadingCtrl.create({
+	                            content: 'Please wait...'
+	                        });
+
+	                        loading.present();
+
+	                        this.AccountServer.CheckCode2fA(this.customer_id,data.code_2fa)
+	                        .subscribe((data) => {
+	                            loading.dismiss();
+	                            if (data.status == 'complete') {
+	                               	this.nav.setRoot(TabsPage);
+	                                return true;
+
+	                            } else {
+	                                this.AlertToast(data.message, 'error_form');
+	                                this.AuthenLoginPopup();
+	                                return false;
+	                            }
+	                        },
+	                        (err) => {
+	                            loading.dismiss();
+	                            if (err) {
+	                                this.SeverNotLogin_2fa();
+
+	                                return false;
+	                            }
+	                        })
+		                }
+		            }
+	            }
+	        }
+	    ]
+	});
+	alert.present();
+	}
+
+	platformReady() {
+	    this.platform.ready().then(() => {
+	        this.splashScreen.hide();
+	    });
+	}
+
+	UpdateVersion(linl_app) {
+	    const confirm = this.alertCtrl.create({
+	        title: 'Update System',
+	        message: 'The latest version is available. Please update the application.',
+	        buttons: [{
+	                text: 'Exit',
+	                handler: () => {
+	                    this.platform.exitApp();
+	                }
+	            },
+	            {
+	                text: 'Update',
+	                handler: () => {
+	                    this.iab.create(linl_app);
+	                }
+	            }
+	        ]
+	    });
+	    confirm.present();
+	}
+
+	SeverNotLogin() {
+	    const confirm = this.alertCtrl.create({
+	        title: 'System maintenance',
+	        message: 'The system is updating. Please come back after a few minutes',
+	        buttons: [{
+	                text: 'Cancel',
+	                handler: () => {
+
+	                }
+	            },
+	            {
+	                text: 'Exit',
+	                handler: () => {
+	                    this.platform.exitApp();
+	                }
+	            }
+	        ]
+	    });
+	    confirm.present();
+	}
+
+	SeverNotLogin_2fa() {
+	    const confirm = this.alertCtrl.create({
+	        title: 'System maintenance',
+	        message: 'The system is updating. Please come back after a few minutes',
+	        buttons: [{
+	                text: 'Cancel',
+	                handler: () => {
+	                	this.AuthenLoginPopup();
+	                }
+	            },
+	            {
+	                text: 'Exit',
+	                handler: () => {
+	                    this.platform.exitApp();
+	                }
+	            }
+	        ]
+	    });
+	    confirm.present();
+	}
+
+	presentToast() {
+	    let toast = this.toastCtrl.create({
+	        message: "Press again to exit.",
+	        duration: 2000,
+	        position: "bottom",
+	        cssClass : 'error_form'
+	    });
+	    toast.present();
+	}
+
+	AlertToast(message,class_customer) {
+	    let toast = this.toastCtrl.create({
+	      message: message,
+	      position: 'bottom',
+	      duration : 2000,
+	      cssClass : class_customer
+	    });
+	    toast.present();
+  	}
 }

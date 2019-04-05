@@ -43,24 +43,26 @@
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item  class="">
+		  	<ion-item  class="" >
 			    <div float-left text-left class="left customer">
 			    	<h6 float-left>Fingerprint login</h6>
 			    	<img src="assets/imgs/off.png" float-right>
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item  class="background" (click)="ViewAuthenticator()">
-			    <div float-left text-left class="left">
-			    	<h6>Binding Google Setings</h6>
+		  	<ion-item  class="" (click)="ViewAuthenticator()">
+			    <div float-left text-left class="left customer">
+			    	<h6 float-left>Login google authenticator</h6> 
+			    	<img *ngIf="infomation.status_2fa == 0" src="assets/imgs/off.png" float-right>
+			    	<img *ngIf="infomation.status_2fa == 1" src="assets/imgs/on.png" float-right>
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item  class="background" (click)="AuthenticatorLogin()">
+		  	<!-- <ion-item  class="background" (click)="AuthenticatorLogin()">
 			    <div float-left text-left class="left">
 			    	<h6>Logon Authentication Setting</h6>
 			    </div>
-		  	</ion-item>
+		  	</ion-item> -->
 
 		  	<ion-item  class="background" (click)="AboutUs()">
 			    <div float-left text-left class="left">

@@ -38,7 +38,7 @@ page-exchange {
 	}
 
 	.content_exchange .top{
-		background: linear-gradient(to top, #140a50 0%, #021625 100%);
+		background: linear-gradient(to top, #350b08 0%, #c7362b 100%);
 		height: 85px;
 	}
 	.content_exchange .top .left h3,.content_exchange .top .left  ion-select{
@@ -65,13 +65,13 @@ page-exchange {
         padding-bottom: 0px;
 	}
 	.content_exchange .center{
-	    background: linear-gradient(to top, #032704 0%, #8BC34A 100%);
+	    background: linear-gradient(to top, #3F51B5 0%, #03A9F4 100%);
 	    padding: 15px 0;
 	}
 	.content_exchange .center p{
 		margin: 0px;
 	    font-size: 13px;
-	    color: #eac34e;
+	    color: #FFEB3B;
 
 	}
 	.content_exchange .form form{
@@ -106,7 +106,17 @@ page-exchange {
 		margin: 0 auto;
 	    margin-top: 0px !important;
 	}
-	
+	.content_exchange .fee{
+		font-size: 12px;
+    	margin-top: 0px;
+    	margin-bottom: 20px;
+	}	
+	.content_exchange ion-item.bottom{
+		margin-bottom: 0px;
+	}
+	.content_exchange ion-list{
+		margin-bottom: 0px;
+	}
 	ion-select .select-icon-inner{
 	 	display: none;
 	}

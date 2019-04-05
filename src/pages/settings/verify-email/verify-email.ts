@@ -1,18 +1,30 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-
+import { SettingsPage } from '../settings/settings';
 @IonicPage()
 @Component({
   selector: 'page-verify-email',
   templateUrl: 'verify-email.html',
 })
 export class VerifyEmailPage {
+	@ViewChild('passcode1') passcode1;
+	@ViewChild('passcode2') passcode2;
+	@ViewChild('passcode3') passcode3;
+	@ViewChild('passcode4') passcode4;
+	@ViewChild('passcode5') passcode5;
+	@ViewChild('passcode6') passcode6;
+	form = {};
+	code_forgot:any=[];
+	code : any;
 	customer_id : any;
 	infomation = {};
+	status_step1 : any;
+	status_step2 : any;
+	
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -28,7 +40,8 @@ export class VerifyEmailPage {
 	}
 
 	ionViewDidLoad() {
-		
+		this.status_step1 = true;
+		this.status_step2 = false;
 		let loading = this.loadingCtrl.create({
 	    	content: 'Please wait...'
 	  	});
@@ -44,7 +57,6 @@ export class VerifyEmailPage {
 					if (data.status == 'complete')
 					{
 						this.infomation = data;
-						this.infomation['status_verited'] = data.security.email.status;
 					}
 					else
 					{
@@ -55,6 +67,114 @@ export class VerifyEmailPage {
 		})
 				
 	}
+
+	SendCodeVerifyEmail(){
+		let loading = this.loadingCtrl.create({
+		    content: 'Please wait...'
+	  	});
+
+	  	loading.present();
+
+	  	this.AccountServer.SendMailVerify(this.customer_id)
+        .subscribe((data) => {
+        	loading.dismiss();
+			if (data.status == 'complete')
+			{ 
+
+				this.status_step1 = false;
+				this.status_step2 = true;
+			}
+			else
+			{
+				this.AlertToast(data.message,'error_form');
+			}
+        },
+        (err) => {
+        	loading.dismiss();
+        	if (err)
+        	{
+        		this.SeverNotLogin();
+        	}
+        })
+	}
+
+
+	SubmitForm_Verify(){
+		let code = this.form['passcode1']+''+this.form['passcode2']+''+this.form['passcode3']+''+this.form['passcode4']+''+this.form['passcode5']+''+this.form['passcode6'];
+		if (code.length == 6)
+		{
+			this.code = code;
+			let loading = this.loadingCtrl.create({
+			    content: 'Please wait...'
+		  	});
+
+		  	loading.present();
+
+		  	this.AccountServer.CheckCoceVerifyEmail(this.customer_id,code)
+	        .subscribe((data) => {
+	        	loading.dismiss();
+				if (data.status == 'complete')
+				{ 
+					this.AlertToast('Verify email successfully','success_form');
+					this.navCtrl.setRoot(SettingsPage);
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+	        },
+	        (err) => {
+	        	loading.dismiss();
+	        	if (err)
+	        	{
+	        		this.SeverNotLogin();
+	        	}
+	        })
+
+			//console.log(this.form['email'],this.form['types']);
+			
+		}
+		else
+		{
+			this.AlertToast('The code you entered is incorrect. Please try again','error_form');
+		}
+
+		
+	}
+
+	onKeyUp(event,index){  
+		if(event.target.value.length !=1){
+			this.setFocus(index-2);  
+			//this.form['passcode'+(index-1)] = '';
+		}else{
+			this.code_forgot.push(event.target.value);  
+			this.setFocus(index);   
+		}
+		event.stopPropagation();
+	}
+	setFocus(index){
+       
+       switch(index){
+         case 0:
+         this.passcode1.setFocus();
+         break;
+         case 1:
+         this.passcode2.setFocus();
+         break;
+         case 2:
+         this.passcode3.setFocus();
+         break;
+         case 3:
+         this.passcode4.setFocus();
+         break;
+         case 4:
+         this.passcode5.setFocus();
+         break;
+         case 5:
+         this.passcode6.setFocus();
+         break;
+         }
+    }
 
 	ionViewWillEnter() {
 		

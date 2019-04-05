@@ -83,7 +83,7 @@ page-authenticator {
 	}
 	
 	.content_settings ion-item{
-		border-bottom: 1px solid #eee;
+		border: 1px solid #eee;
 		padding: 0px 10px;
 		padding-right: 0px;
 	}
@@ -121,4 +121,42 @@ page-authenticator {
 	.content_settings .not_active{
 		color: #656363;
 	}
+
+	.contents .img_qrcode{
+		width: 130px;
+		margin: 0 auto;
+		margin-top: 10px;
+	}
+	.contents p.code{
+	    text-align: center;
+	    color: #FF5722;
+	    font-size: 13px;
+	}
+	.contents p.text{
+		width: 80%;
+		margin: 0 auto;
+		font-size: 12px;
+	}
+	.contents .button_cus:hover{
+		background: #000;
+	}
+	.contents .button_cus{
+	    margin: 0;
+	    height: 45px;
+	    background: #000;
+	    text-transform: capitalize;
+        margin-bottom: 30px;
+	}
+	.contents .title{
+		width: 100%;
+	    margin-top: 20px;
+	    color: #4CAF50;
+	    font-size: 18px;
+	    text-transform: uppercase;
+	}
+	.contents .title.disable{
+	    color: #FF5722;
+	    margin-bottom: 20px;
+	}
+	
 }

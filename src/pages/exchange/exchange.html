@@ -54,7 +54,7 @@
 				<ion-list>
 					<ion-item>
 					    <ion-label fixed>Enter Amount:</ion-label>
-					    <ion-input class="input" (keyup)='onChangeInput($event.target.value)' [(ngModel)]="form.amount"  name="amount" type="number" required></ion-input>
+					    <ion-input autofocus class="input" (keyup)='onChangeInput($event.target.value)' [(ngModel)]="form.amount"  name="amount" type="number" required></ion-input>
 				  	</ion-item>
 				 	
 				 	<ion-item>
@@ -62,13 +62,13 @@
 					    <ion-input class="input" [(ngModel)]="form.estimate"  name="estimate" type="text" required readonly="true"></ion-input>
 				  	</ion-item>
 
-				  	<ion-item>
+				  	<ion-item class="bottom">
 					    <ion-label fixed>Level II Password:</ion-label>
 					    <ion-input class="input" [(ngModel)]="form.password_transaction"  name="password_transaction" type="password" placeholder="Transaction Password" required></ion-input>
 				  	</ion-item>
 				</ion-list>
 			</ion-col>
-
+			<p class="fee">Miners Free: 0.001 ASIC</p>
 			<ion-row lass="customer_width">
 			 	<ion-col>
 			    	<button ion-button full type="submit" block>Exchange</button>

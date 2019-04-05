@@ -12,8 +12,8 @@ import { AidogHomePage } from '../aidog/aidog-home/aidog-home';
 export class TabsPage {
   tab1Root = ProfilePage;
   tab2Root = MarketsPage;
-  tab3Root = AidogHomePage;
-  tab4Root = PaymentPage;
+  tab3Root = PaymentPage;
+  tab4Root = AidogHomePage;
   tab5Root = AssetsPage; 
 
   constructor() {
