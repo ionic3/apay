@@ -10,11 +10,11 @@ import { AidogHomePage } from '../aidog/aidog-home/aidog-home';
   templateUrl: 'tabs.html'
 })
 export class TabsPage {
-  tab1Root = ProfilePage;
+  tab1Root = AssetsPage;
   tab2Root = MarketsPage;
   tab3Root = PaymentPage;
   tab4Root = AidogHomePage;
-  tab5Root = AssetsPage; 
+  tab5Root = ProfilePage; 
 
   constructor() {
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
@@ -27,7 +27,7 @@ export class PaymentPage {
   	}
 
 	ionViewDidLoad() {
-		//this.PaymentSubmit('1LmjfhrnJcq9Te3h7x7cDQcXPneqS1jTJc','BTC',0.1);
+		//this.PaymentSubmit('35k7m2fgn6tY1crs7qb7eLgofQKKBsmAhG','BTC',0.1);
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
@@ -35,6 +35,7 @@ export class PaymentPage {
 				this.customer_id = customer_id;
 			}
 		})
+		//this.PaymentSubmit('address','currency',1000);
 	}
 
 
@@ -80,21 +81,25 @@ export class PaymentPage {
 	PaymentSubmit(address,currency,amount) {
 	
 	  let alert = this.alertCtrl.create({
-	    title: 'Confirm the payment',
+	    title: 'Confirm the payment '+currency,
 	    cssClass:'prompt_alert_customer customs',
 	    enableBackdropDismiss : false,
+
 	    message: '<div class"contentpaymentpopup">' +
-  			'<div class="top"><h3>'+amount+'</h3><p>Service charge: 0 AISC</p></div>' +
-  			'<div class="item"><span class="left">Terms of payment</span><span class="right">'+currency+'</span></div>' +
-  			'<div class="item"><span class="left">Trading address</span><span class="right">'+address+'</span></div>' +
-  			'<div class="item"><span class="left">Trading infomation</span><span class="right">Transfer</span></div>' +
+  			'<div class="item"><span class="left">Address</span><span class="right">'+address+'</span></div>' +
   		'</div>',       
 	    inputs: [
-	      {
-	        name: 'password_transaction',
-	        placeholder: 'Please input the transaction password',
-	        type: 'password'
-	      }
+	    	{
+				name: 'amount',
+				placeholder: 'Please input amount',
+				type: 'number',
+				value : amount
+			},
+			{
+				name: 'password_transaction',
+				placeholder: 'Please input the transaction password',
+				type: 'password'
+			}
 	    ],
 	    buttons: [
 	      {
@@ -107,47 +112,54 @@ export class PaymentPage {
 	      {
 	        text: 'OK',
 	        handler: data => {
-	        	
-        		if (data.password_transaction == '' || data.password_transaction == undefined)
+	        	if (data.amount == '' || data.amount == undefined)
 	        	{
-	        		this.AlertToast('Please enter a password transaction','error_form');
+	        		this.AlertToast('Please enter a amount','error_form');
 	        		return false;
 	        	}
 	        	else
 	        	{
-	        		let loading = this.loadingCtrl.create({
-				    content: 'Please wait...'
-				  	});
+	        		if (data.password_transaction == '' || data.password_transaction == undefined)
+		        	{
+		        		this.AlertToast('Please enter a password transaction','error_form');
+		        		return false;
+		        	}
+		        	else
+		        	{
+		        		let loading = this.loadingCtrl.create({
+					    content: 'Please wait...'
+					  	});
 
-				  	loading.present();
+					  	loading.present();
 
-				  	this.AccountServer.SubmitPayment(this.customer_id,currency,address,amount,data.password_transaction)
-			        .subscribe((data) => {
-			        	loading.dismiss();
-						if (data.status == 'complete')
-						{
-							this.AlertToast(data.message,'success_form');
-							
-							return true;
+					  	this.AccountServer.SubmitPayment(this.customer_id,currency,address,data.amount,data.password_transaction)
+				        .subscribe((data) => {
+				        	loading.dismiss();
+							if (data.status == 'complete')
+							{
+								this.AlertToast(data.message,'success_form');
+								
+								return true;
 
-						}
-						else
-						{
-							this.AlertToast(data.message,'error_form');
-							
-							return false;
-						}
-			        },
-			        (err) => {
-			        	loading.dismiss();
-			        	if (err)
-			        	{
-			        		this.SeverNotLogin();
-			        		return false;
-			        	}
-			        })
+							}
+							else
+							{
+								this.AlertToast(data.message,'error_form');
+								
+								return false;
+							}
+				        },
+				        (err) => {
+				        	loading.dismiss();
+				        	if (err)
+				        	{
+				        		this.SeverNotLogin();
+				        		return false;
+				        	}
+				        })
 
-	        	}
+		        	}
+		        }
 	        	
 	        }
 	      }

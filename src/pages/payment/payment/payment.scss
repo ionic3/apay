@@ -46,32 +46,37 @@ page-payment {
 	}
 	.content_payment .top{
 		background: url('../assets/imgs/collection_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
-    	margin-top: 30px;
+	    background-size: 100%;
+	    width: 300px;
+	    height: 115px;
+	    margin: 10px auto;
+	    margin-top: 10px;
+	    background-repeat: no-repeat;
 	}
 	.content_payment .center{
 		background: url('../assets/imgs/pay_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
+	    background-size: 100%;
+	    width: 300px;
+	    height: 115px;
+	    margin: 10px auto;
+	    margin-top: 10px;
+	    background-repeat: no-repeat;
 	}
 	.content_payment .bottom{
 		background: url('../assets/imgs/bill_bg.png');
-	    background-size: cover;
-	    width: 345px;
-    	height: 125px;
-    	margin: 10px auto;
+	    background-size: 100%;
+	    width: 300px;
+	    height: 115px;
+	    margin: 10px auto;
+	    margin-top: 10px;
+	    background-repeat: no-repeat;
 	}
 	.content_payment h3{
-		line-height: 125px;
+		line-height: 110px;
 		color: #fff;
 	    font-size: 14px;
     	font-weight: 400;
-	}
+	} 
 }
 .prompt_alert_customer.customs .alert-message{
 	padding: 0px;
@@ -103,14 +108,16 @@ page-payment {
 }
 .prompt_alert_customer.customs .item .left{
 	float: left;
+	font-size: 10px;
 }
 .prompt_alert_customer.customs .item .right{
 	float: right;
     color: #3c3a3a;
+    font-size: 10px;
 }
 .prompt_alert_customer.customs .alert-input-wrapper input {
     background: #cacaca;
-    margin-top: 30px;
+    
 }
 .prompt_alert_customer.customs .alert-button-group{
 	background: #fff;

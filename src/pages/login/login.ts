@@ -45,7 +45,23 @@ export class LoginPage {
 		this.navCtrl.setRoot(ForgotPasswordPage);
 	}
 
-
+	ionViewWillEnter() {
+		
+		let elements = document.querySelectorAll(".tabbar.show-tabbar");
+		if (elements != null) {
+	        Object.keys(elements).map((key) => {
+	            elements[key].style.display = 'none';
+	        });
+	    }
+   	}
+  	ionViewWillLeave() {
+  		let elements = document.querySelectorAll(".tabbar.show-tabbar");
+		if (elements != null) {
+	        Object.keys(elements).map((key) => {
+	            elements[key].style.display = 'flex';
+	        });
+	    }
+  	}
 	SubmitForm() {
 		this.count_login ++;
 		if (this.count_login <6)

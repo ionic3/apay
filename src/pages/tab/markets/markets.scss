@@ -13,7 +13,7 @@ page-markets {
 		margin-bottom: 10px;
 	}
 	.top_market img{
-		width: 14px;
+		width: 10px;
 		margin-bottom: -1px;
 	}
 	.top_market p {
@@ -22,7 +22,7 @@ page-markets {
     .top_market .left{
     	
     	color: #f39a38;
-    	font-size: 13px;
+    	font-size: 11px;
     }
     .top_market .right{
     	margin-top: 3px;
@@ -37,7 +37,7 @@ page-markets {
    	.item_markets .name img{
    		width: 20px;
 	    margin-right: 10px;
-	    margin-bottom: -3px;
+	    margin-bottom: -5px;
 
    	}
    	.item_markets .change img{
@@ -57,10 +57,14 @@ page-markets {
    		color: #FF574F;
    	}
    	.item_markets .change .left{
-   		background: #FF574F;
-	    padding: 8px 20px;
-	    border-radius: 5px;
-	    color: #fff;
+   		border-radius: 5px;
+      color: #fff;
+      font-size: 13px;
+      width: 72px;
+      float: left;
+      height: 35px;
+      line-height: 35px;
+      margin-top: 8px;
    	}
    	.up.item_markets  .price_color{
    		color: #00C79C;

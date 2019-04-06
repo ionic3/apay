@@ -43,7 +43,7 @@ page-register {
   }
 	.logo {
     padding: 10px 0;
-    min-height: 150px;
+    min-height: 100px;
     text-align: center;
     
     width: 100%;
@@ -76,9 +76,11 @@ page-register {
   .customer_width .button-md,
   .customer_width .button-ios {
     background: transparent;
-      height: 45px;
-      border: 1px solid #d17530;
-      color: #d17530;
+    height: 40px;
+    border: 1px solid #d17530;
+    color: #d17530;
+    border-radius: 0px;
+    font-size: 12px;
   }
   .list-md .item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child,
   .list-md .item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus):last-child {
@@ -143,6 +145,7 @@ page-register {
   ion-list {
     width: 80%;
     margin: 0 auto !important;
+    margin-bottom: 30px !important;
   }
   .item-md.item-input.ng-valid.item-input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner,
   .item-md.item-input.ng-valid.input-has-value:not(.input-has-focus):not(.item-input-has-focus) .item-inner {

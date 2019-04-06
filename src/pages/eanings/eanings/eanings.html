@@ -13,6 +13,9 @@
 
 
 <ion-content class="content_earnings">
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+    	<ion-refresher-content></ion-refresher-content>
+  	</ion-refresher>
 	<ion-card class="card_capit_header">
 		<div class="top">
 	    	<p text-left>Total Revenues</p>

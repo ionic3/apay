@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
+
 import { Storage } from '@ionic/storage';
 import { VerifyEmailPage } from '../../settings/verify-email/verify-email';
 import { ModifyPasswordPage } from '../../settings/modify-password/modify-password';
@@ -25,8 +25,7 @@ export class SettingsPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		public AccountServer : AccountProvider
 	) {
 		
 	}
@@ -34,14 +33,7 @@ export class SettingsPage {
 	ionViewDidLoad() {
 		
 		
-		this.storage.get('customer_id')
-		.then((customer_id) => {
-			if (customer_id) 
-			{
-				this.customer_id = customer_id;
-
-			}
-		})
+		
 				
 	}
 
@@ -50,22 +42,30 @@ export class SettingsPage {
 	    	content: 'Please wait...'
 	  	});
 	  	loading.present();
-		this.AccountServer.GetInfomationUser(this.customer_id)
-	        .subscribe((data) => {
-	        	loading.dismiss();	
-				if (data.status == 'complete')
-				{
-					this.infomation = data;
-					this.infomation['status_verited'] = data.security.email.status;
-					this.infomation['status_2fa'] = data.security.authenticator.status;
-					
-					console.log(this.infomation);
-				}
-				else
-				{
-					this.AlertToast(data.message,'error_form');
-				}
-			})
+	  	this.storage.get('customer_id')
+		.then((customer_id) => {
+			if (customer_id) 
+			{
+				this.customer_id = customer_id;
+				this.AccountServer.GetInfomationUser(this.customer_id)
+		        .subscribe((data) => {
+		        	loading.dismiss();	
+					if (data.status == 'complete')
+					{
+						this.infomation = data;
+						this.infomation['status_verited'] = data.security.email.status;
+						this.infomation['status_2fa'] = data.security.authenticator.status;
+						
+						console.log(this.infomation);
+					}
+					else
+					{
+						this.AlertToast(data.message,'error_form');
+					}
+				})
+			}
+		})
+				
 		let elements = document.querySelectorAll(".tabbar.show-tabbar");
 		if (elements != null) {
 	        Object.keys(elements).map((key) => {

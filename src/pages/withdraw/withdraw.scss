@@ -79,8 +79,12 @@ page-withdraw {
 		margin-top: 20px !important;
 		padding: 5px 80px !important;
 		border-radius: 5px  !important;
-		width: 85%;
+		width: 80%;
 		margin: 0 auto;
+	    margin-top: 0px !important;
+	    height: 35px;
+    	font-size: 12px;
+    	line-height: 35px;
 	}
 	.list-md .item-input:last-child,.list-ios .item-input:last-child{
 		border-bottom: none !important;

@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll, Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../providers/server/account';
-import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { DepositPage } from '../deposit/deposit';
 import { WithdrawPage } from '../withdraw/withdraw';

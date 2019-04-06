@@ -86,12 +86,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpModule } from '@angular/http';
 import { IonicStorageModule } from '@ionic/storage';
-import { ServerProvider } from '../providers/server/server';
+
 import { AccountProvider } from '../providers/server/account';
-import { WalletProvider } from '../providers/server/wallet';
-import { ExchangeProvider } from '../providers/server/exchange';
-import { ContactProvider } from '../providers/server/contact';
-import { AidogProvider } from '../providers/server/aidog';
 
 
 import { Clipboard } from '@ionic-native/clipboard';
@@ -103,6 +99,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer'; 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -207,12 +204,9 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ServerProvider,
+    
     AccountProvider,
-    WalletProvider,
-    ExchangeProvider,
-    ContactProvider,
-    AidogProvider,
+  
     Clipboard,
     BarcodeScanner,
     Screenshot,
@@ -220,6 +214,7 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     InAppBrowser,
     Camera,
     FileTransfer
+    
   ]
 })
 export class AppModule {}

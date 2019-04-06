@@ -1,15 +1,10 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
+
 import { Storage } from '@ionic/storage';
-import { VerifyEmailPage } from '../../settings/verify-email/verify-email';
-import { ModifyPasswordPage } from '../../settings/modify-password/modify-password';
-import { AuthenticatorPage } from '../../settings/authenticator/authenticator';
-import { AuthenticatorLoginPage } from '../../settings/authenticator-login/authenticator-login';
-import { AboutUsPage } from '../../settings/about-us/about-us';
-@IonicPage()
+
 @Component({
   selector: 'page-notification',
   templateUrl: 'notification.html',
@@ -25,8 +20,8 @@ export class NotificationPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		public AccountServer : AccountProvider
+		
 	) {
 		
 	}

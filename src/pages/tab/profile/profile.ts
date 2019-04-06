@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
@@ -13,7 +13,7 @@ import { SettingsPage } from '../../settings/settings/settings';
 import { RecordsExchangePage } from '../../profile/records-exchange/records-exchange';
 
 import { ContactUsPage } from '../../contact-us/contact-us/contact-us';
-
+import *  as MyConfig from '../../../providers/myConfig';
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
@@ -26,6 +26,8 @@ export class ProfilePage {
 	customer_id : any;
 	infomation = {};
 	img_camera = '';
+	selectOptions : any;
+	form = {};
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -36,8 +38,13 @@ export class ProfilePage {
 		public storage: Storage,
 		public AccountServer : AccountProvider,
 		private camera: Camera,
-    	private transfer: FileTransfer,
+    	private transfer: FileTransfer
+    	
 		) {
+		this.selectOptions = {
+		  title: ' ',
+		  cssClass : 'select-customer'
+		};
 	}
 	private fileTransfer: FileTransferObject = this.transfer.create();
 	ionViewDidLoad() {
@@ -46,7 +53,7 @@ export class ProfilePage {
 	    	content: 'Please wait...'
 	  	});
 	  	loading.present();
-	  	
+	  	loading.dismiss();	
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
@@ -54,7 +61,7 @@ export class ProfilePage {
 				this.customer_id = customer_id;
 				this.AccountServer.GetInfomationUser(this.customer_id)
 		        .subscribe((data) => {
-		        	loading.dismiss();	
+		        	
 					if (data.status == 'complete')
 					{
 						this.infomation['email'] = data.email;
@@ -64,36 +71,50 @@ export class ProfilePage {
 			}
 		})
 	}
+	onChangeSelectFrom(value){
+		this.clickImage(value);
+	}
 
-	clickImage() {
+	clickImage(sourceType:number) {
+
     this.camera.getPicture({
         quality: 50,
         destinationType: this.camera.DestinationType.FILE_URI,
-        sourceType: this.camera.PictureSourceType.CAMERA,
-        encodingType: this.camera.EncodingType.JPEG
+        sourceType: sourceType == 1 ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+        encodingType: this.camera.EncodingType.JPEG,
+        allowEdit : true,
+        targetWidth : 200,
+        targetHeight : 200,
+        mediaType: this.camera.MediaType.PICTURE,
+		correctOrientation: true
+		//sourceType:sourceType
     }).then((imageData) => {
-        let options: FileUploadOptions = {
+
+    	
+		let options: FileUploadOptions = {
             fileKey: "file",
             fileName: imageData.substr(imageData.lastIndexOf('/') + 1),
             chunkedMode: false,
             mimeType: "image/jpg"
         }
+    	
+	        
         let loading = this.loadingCtrl.create({
             content: 'Please wait...'
         });
         loading.present();
 
-        this.fileTransfer.upload(imageData, 'https://api.buy-sellpro.co/api/upload-img-profile/' + this.customer_id, options)
+        this.fileTransfer.upload(imageData, MyConfig.data.url+'/api/upload-img-profile/' + this.customer_id, options)
             .then((data) => {
-                loading.dismiss();
-                this.AlertComplete('Successful update.');
-                this.img_camera = 'https://api.buy-sellpro.co/static/img/upload/' + options.fileName;
-            }, (err) => {
-                loading.dismiss();
-                this.AlertToast('Please try again.')
-            })
+            loading.dismiss();
+            this.AlertComplete('Successful update.');
+            this.img_camera = MyConfig.data.url+'/static/img/upload/' + options.fileName;
+        }, (err) => {
+            loading.dismiss();
+            this.AlertToast('Please try again.')
+        })
     }, (err) => {
-        this.AlertToast('Please try again.')
+        //this.AlertToast('Please try again.')
     });
 }
 
@@ -140,8 +161,7 @@ export class ProfilePage {
           text: 'Logout',
           handler: () => {
             this.storage.remove('customer_id');
-            this.storage.remove('PinStorage');
-            this.storage.remove('StatusPinStorage');
+           
             this.navCtrl.setRoot(LoginPage);
           }
         }

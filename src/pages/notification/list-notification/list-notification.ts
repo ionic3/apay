@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,Refresher,InfiniteScroll} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
+
 import { Storage } from '@ionic/storage';
 import { NotificationPage } from '../notification/notification';
 
@@ -24,8 +24,8 @@ export class ListNotificationPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		public AccountServer : AccountProvider
+	
 	) {
 		
 	}

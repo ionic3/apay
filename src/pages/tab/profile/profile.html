@@ -14,6 +14,11 @@
               <img *ngIf="img_camera == ''" (click)="clickImage()" class="img-profile"  src="{{infomation.img_profile}}" />
               <img *ngIf="img_camera != ''" (click)="clickImage()" class="img-profile" src="{{img_camera}}">
               <ion-icon (click)="clickImage()" class="icon-img" name="camera"></ion-icon>
+
+              <ion-select [(ngModel)]="form.type_photo" [selectOptions]="selectOptions"  (ionChange)="onChangeSelectFrom($event)" class="selecte_coin" interface="action-sheet" name="currency" >
+                <ion-option value="1" selected="true">Take Photo</ion-option>
+                <ion-option value="0">Photo library</ion-option>
+              </ion-select>
             </div>
             <p text-center>{{infomation.email}}</p>
           </ion-col>

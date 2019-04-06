@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { LoginPage } from '../../login/login';
+
 import { Storage } from '@ionic/storage';
 import { WalletPage } from '../../wallet/wallet';
 import { ListNotificationPage } from '../../notification/list-notification/list-notification';

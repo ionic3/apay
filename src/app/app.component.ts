@@ -6,52 +6,52 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 
 /*AI DOG*/
-import { AidogPage } from '../pages/aidog/aidog/aidog';
+/*import { AidogPage } from '../pages/aidog/aidog/aidog';
 import { AidogAddPage } from '../pages/aidog/aidog-add/aidog-add';
 import { AidogRewardPage } from '../pages/aidog/aidog-reward/aidog-reward';
-import { AidogRecordPage } from '../pages/aidog/aidog-record/aidog-record';
+import { AidogRecordPage } from '../pages/aidog/aidog-record/aidog-record';*/
 /*END AI DOG*/
 
 /*AI DOG*/
-import { PaymentPage } from '../pages/payment/payment/payment';
+/*import { PaymentPage } from '../pages/payment/payment/payment';
 import { CollectPage } from '../pages/payment/collect/collect';
-import { TransanctionsPage } from '../pages/payment/transanctions/transanctions';
+import { TransanctionsPage } from '../pages/payment/transanctions/transanctions';*/
 /*END AI DOG*/
 
-import { ExchangePage } from '../pages/exchange/exchange';
+/*import { ExchangePage } from '../pages/exchange/exchange';
 import { DepositPage } from '../pages/deposit/deposit';
 import { WithdrawPage } from '../pages/withdraw/withdraw';
-import { WalletPage } from '../pages/wallet/wallet';
+import { WalletPage } from '../pages/wallet/wallet';*/
 
 /*CONTACT*/
-import { ContactPage } from '../pages/contact/contact/contact';
-import { AddNewWalletPage } from '../pages/contact/add-new-wallet/add-new-wallet';
+/*import { ContactPage } from '../pages/contact/contact/contact';
+import { AddNewWalletPage } from '../pages/contact/add-new-wallet/add-new-wallet';*/
 /*END CONTACT*/
 
 /*SINGUP*/
-import { RegisterPage } from '../pages/register/register';
+/*import { RegisterPage } from '../pages/register/register';*/
 
 /*END SINGUP*/
 
 import { LoginPage } from '../pages/login/login';
-import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+//import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 
 
-import { QrcodePartnerPage } from '../pages/profile/qrcode-partner/qrcode-partner';
-import { MyPartnerPage } from '../pages/profile/my-partner/my-partner';
+/*import { QrcodePartnerPage } from '../pages/profile/qrcode-partner/qrcode-partner';
+import { MyPartnerPage } from '../pages/profile/my-partner/my-partner';*/
 
 /*eanings*/
-import { EaningsPage } from '../pages/eanings/eanings/eanings';
+//import { EaningsPage } from '../pages/eanings/eanings/eanings';
 /*end eanings*/
 
 
 /*Setting*/
-import { SettingsPage } from '../pages/settings/settings/settings';
+/*import { SettingsPage } from '../pages/settings/settings/settings';
 import { VerifyEmailPage } from '../pages/settings/verify-email/verify-email';
 import { ModifyPasswordPage } from '../pages/settings/modify-password/modify-password';
 import { AuthenticatorPage } from '../pages/settings/authenticator/authenticator';
 import { AuthenticatorLoginPage } from '../pages/settings/authenticator-login/authenticator-login';
-import { AboutUsPage } from '../pages/settings/about-us/about-us';
+import { AboutUsPage } from '../pages/settings/about-us/about-us';*/
 
 /*end Setting*/
 
@@ -66,7 +66,7 @@ export class MyApp {
 
 	@ViewChild(Nav) nav: Nav;
 
-	rootPage:any = TabsPage; 
+	rootPage:any = LoginPage; 
 	infomation : any = {};
 	customer_id : any = '';
 	versionApp : any;
@@ -94,9 +94,7 @@ export class MyApp {
 
 		platform.ready().then(() => {
 			statusBar.styleDefault();
-			splashScreen.hide();
-
-
+			
 			//check version app
 			this.AccountServer.GetVersionApp()
 		    .subscribe((data) => {
@@ -169,10 +167,12 @@ export class MyApp {
 			//Check Login
 			this.storage.get('customer_id')
 		    .then((customer_id) => {
-		        if (customer_id) {
+		        if (customer_id) 
+		        {
 		        	this.customer_id = customer_id;
 		            this.AccountServer.CheckStatus2FA(customer_id)
 			        .subscribe((data) => {
+			        	splashScreen.hide();
 						if (data.status == 'complete')
 						{
 							if (parseInt(data.status_authen)==1)
@@ -191,11 +191,16 @@ export class MyApp {
 						}
 			        },
 			        (err) => {
+			        	splashScreen.hide();
 			        	this.SeverNotLogin();
 			        })
 
 		        }
-		        this.platformReady()
+		        else
+		        {
+		        	splashScreen.hide();
+		        }
+		        //this.platformReady()
 		    });
 
 

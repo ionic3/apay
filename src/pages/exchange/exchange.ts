@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../providers/server/account';
-import { LoginPage } from '../login/login';
-import { ContactPage } from '../contact/contact/contact';
 import { Storage } from '@ionic/storage';
 
 @IonicPage()

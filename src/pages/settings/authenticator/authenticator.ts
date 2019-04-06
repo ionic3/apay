@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
+
 import { Storage } from '@ionic/storage';
 import { SettingsPage } from '../settings/settings';
+import { Clipboard } from '@ionic-native/clipboard';
 @IonicPage()
 @Component({
   selector: 'page-authenticator',
@@ -23,7 +24,8 @@ export class AuthenticatorPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		private clipboard: Clipboard
+		
 	) {
 		
 	}
@@ -55,6 +57,19 @@ export class AuthenticatorPage {
 			}
 		})
 				
+	}
+
+	CopyCode2FA(code){ 
+    
+		this.clipboard.copy(code);
+		this.clipboard.paste().then(
+			(resolve: string) => {
+				this.AlertToast('Coppy success','success_form');
+			},
+			(reject: string) => {
+				console.log('Error: ' + reject);
+			}
+		);
 	}
 
 	ionViewWillEnter() {

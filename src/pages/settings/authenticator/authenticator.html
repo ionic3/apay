@@ -18,15 +18,15 @@
     <ion-row  >
       <h3 class="title" text-center>Enlable 2FA</h3>
       <ion-col col-12 class="">
-        <img class="img_qrcode" src="https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl={{infomation.url_otp}}}" />
+        <img (click)="CopyCode2FA(infomation.otp_secret)" class="img_qrcode" src="https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl={{infomation.url_otp}}}" />
       </ion-col>
     </ion-row>
 
     <form  (ngSubmit)="SubmitForm_Enlable()">
     <ion-row >
       <ion-col col-12 class="">
-        <p class="code">{{infomation.otp_secret}}</p>
-        <p class="text">If you have any problem with scanning the QR code enter this code manually into the APP.</p>
+        <p class="code" (click)="CopyCode2FA(infomation.otp_secret)">{{infomation.otp_secret}}</p>
+        <p class="text" text-center>Click QR code to copy the code.</p>
       </ion-col>
       
         <ion-col col-6>

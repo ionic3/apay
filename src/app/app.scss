@@ -23,6 +23,7 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
 	box-shadow: none;
 	background: #fff;
 }
+
 .tabs-md .tab-button-text,.tabs-ios .tab-button-text {
     font-size: 10px;
 }
@@ -42,11 +43,17 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
     font-size: 16px;
 }
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon,.tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
-    color: #0a0a0a;
+    color: #8c8c8c;
 }
 .tabs-md .tab-button[aria-selected=true] .tab-button-text,.tabs-ios .tab-button[aria-selected=true] .tab-button-text{
-    color: #0a0a0a;
+    color: #8c8c8c;
     transform: none;
+}
+.tabs-ios .tab-button-icon {
+    margin-top: 0px;
+}
+.tabs-ios .tab-button-text {
+    margin-top: -10px;
 }
 .scroll-content{
     margin-bottom: 45px;
@@ -95,12 +102,24 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
     padding: 10px;
     
 }
-.alert-md .alert-title {
+.alert-md .alert-title,.alert-ios .alert-title {
     font-size: 16px;
     font-weight: 400;
     color: #FFEB3B;
 }
-.alert-md .alert-wrapper{
+.alert-md .alert-message,.alert-ios .alert-message{
+    font-size: 13px;
+    color: #000;
+}
+.alert-md .alert-button-group{
+    padding: 0px;
+}
+
+.alert-ios .alert-title {
+   
+    margin-bottom: 12px;
+}
+.alert-md .alert-wrapper,.alert-ios .alert-wrapper{
     border-radius: 10px;
 }
 .alert-wrapper .alert-head {
@@ -169,4 +188,25 @@ ion-spinner {
     border:none;
     box-shadow: none;
     background: none;
+}
+
+.toolbar-content .left_heder.button-ios,.toolbar-content .right_heder.button-ios{
+    border-radius: 4px;
+    height: 75px;
+}
+
+.action-sheet-ios .action-sheet-button,.action-sheet-md .action-sheet-button{
+    padding: 12px;
+    min-height: 25px;
+}
+.toolbar-ios ion-title{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+ion-navbar .toolbar-title{
+    font-size: 12px !important;
+}
+.prompt_alert_customer.customs .alert-message {
+    
+    overflow-y: scroll !important;
 }

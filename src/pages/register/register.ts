@@ -191,5 +191,21 @@ export class RegisterPage {
 		});
 		confirm.present();
   	}
-	
+	ionViewWillEnter() {
+		
+		let elements = document.querySelectorAll(".tabbar.show-tabbar");
+		if (elements != null) {
+	        Object.keys(elements).map((key) => {
+	            elements[key].style.display = 'none';
+	        });
+	    }
+   	}
+  	ionViewWillLeave() {
+  		let elements = document.querySelectorAll(".tabbar.show-tabbar");
+		if (elements != null) {
+	        Object.keys(elements).map((key) => {
+	            elements[key].style.display = 'flex';
+	        });
+	    }
+  	}
 }

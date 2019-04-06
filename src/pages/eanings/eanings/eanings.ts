@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,InfiniteScroll,Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController,Refresher } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
-import { Screenshot } from '@ionic-native/screenshot';
+
 import { Storage } from '@ionic/storage';
 import { ProfitDailyPage } from '../../eanings/profit-daily/profit-daily';
 import { SystemCommissionPage } from '../../eanings/system-commission/system-commission';
@@ -24,8 +24,8 @@ export class EaningsPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		public AccountServer : AccountProvider
+		
 	) {
 		
 	}
@@ -48,7 +48,7 @@ export class EaningsPage {
 					if (data.status == 'complete')
 					{
 						this.wallet = data;
-						console.log(data);
+						
 					}
 					else
 					{
@@ -60,7 +60,20 @@ export class EaningsPage {
 		})
 				
 	}
-
+	doRefresh(refresher: Refresher) {
+  		this.AccountServer.GetInfomationUser(this.customer_id)
+        .subscribe((data) => {
+        	
+			if (data.status == 'complete')
+			{
+				this.wallet = data;
+				
+			}
+			refresher.complete();
+		})
+        
+  	}
+	
 	ionViewWillEnter() {
 		
 		let elements = document.querySelectorAll(".tabbar.show-tabbar");
