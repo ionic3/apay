@@ -11,9 +11,9 @@
         <ion-row text-center>
           <ion-col col-12 text-center>
             <div class="border-image">
-              <img *ngIf="img_camera == ''" (click)="clickImage()" class="img-profile"  src="{{infomation.img_profile}}" />
-              <img *ngIf="img_camera != ''" (click)="clickImage()" class="img-profile" src="{{img_camera}}">
-              <ion-icon (click)="clickImage()" class="icon-img" name="camera"></ion-icon>
+              <img *ngIf="img_camera == ''"  class="img-profile"  src="{{infomation.img_profile}}" />
+              <img *ngIf="img_camera != ''"  class="img-profile" src="{{img_camera}}">
+              <ion-icon  class="icon-img" name="camera"></ion-icon>
 
               <ion-select [(ngModel)]="form.type_photo" [selectOptions]="selectOptions"  (ionChange)="onChangeSelectFrom($event)" class="selecte_coin" interface="action-sheet" name="currency" >
                 <ion-option value="1" selected="true">Take Photo</ion-option>
@@ -29,86 +29,51 @@
 	</ion-card>
 	
 	<ion-card class="card_content">
-		<ion-row>
-       		<ion-col col-6 class="" (click)=ViewQrcodeAddPartner()>
-       			<div class="left">
-       				<img  src="assets/imgs/QR_code_for_QRpedia.png" />
-       			</div>
-        		<div class="right">
-        			<p>Qrcode Add Partner</p>
-        			<span>Qrcode Add Partner</span>
-        		</div>
-        	</ion-col>
-
-          <ion-col col-6 class="padding-right-none" (click)="ViewMyPartnerPage()">   
-            <div class="left">
-              <img  src="assets/imgs/business_parter_icon.png" />
-            </div>
-            <div class="right">
-              <p>My Business Partner</p>
-              <span>My Business Partner</span>
-            </div>
-          </ion-col>
-      	</ion-row>
-      	<ion-row >
-       		<ion-col col-6 class="" (click)="ViewEanings()">
-       			<div class="left">
-       				<img  src="assets/imgs/income_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Eanings</p>
-        			<span>Eanings</span>
-        		</div>
-        	</ion-col>
-       		<ion-col col-6 class="padding-right-none" (click)="ViewRecordsExchange()">   
-       			<div class="left">
-       				<img  src="assets/imgs/record_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Records of Exchange</p>
-        			<span>Records of Exchange</span>
-        		</div>
-       		</ion-col>
-      	</ion-row>
-      	<ion-row>
-       		<ion-col col-6 class="" (click)="ViewContactUs()">
-            <div class="left">
-              <img  src="assets/imgs/tel_icon.png" />
-            </div>
-            <div class="right">
-              <p>Contact Us</p>
-              <span>Contact Us</span>
-            </div>
-          </ion-col>
-       		<ion-col col-6 class="padding-right-none" (click)="ViewAddWalletAddress()">   
-       			<div class="left">
-       				<img  src="assets/imgs/wallet_address_icon.png" />
-       			</div>
-        		<div class="right">
-        			<p>Add Wallet Address</p>
-        			<span>Add Wallet Address</span>
-        		</div>
-       		</ion-col>
-      	</ion-row>
-      	<ion-row>
-       		<ion-col col-6 class="" (click)="ViewSettings()">
-            <div class="left">
-              <img  src="assets/imgs/sys_icon.png" />
-            </div>
-            <div class="right">
-              <p>Settings</p>
-              <span>Settings</span>
-            </div>
-          </ion-col>
-       		<ion-col col-6 class="padding-right-none">   
-       			
-       		</ion-col>
-      	</ion-row>
+  <!-- *ngIf="infomation.status_verityaccount == 0" -->
+    <p class="notification">Please verify your account to be able to perform all the functions of the program.</p>
+    <ion-list>
+      <ion-item class="background" (click)=ViewQrcodeAddPartner()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="barcode"></ion-icon>  Qrcode Add Partner</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewMyPartnerPage()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="people"></ion-icon>  My Business Partner</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewEanings()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="filing"></ion-icon>  Eanings</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewRecordsExchange()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="repeat"></ion-icon>  Records of Exchange</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewContactUs()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="help-buoy"></ion-icon> Contact Us</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewAddWalletAddress()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="paper"></ion-icon>  Add Wallet Address</h6>
+        </div>
+      </ion-item>
+      <ion-item class="background" (click)=ViewSettings()>
+        <div float-left text-left class="left">
+          <h6><ion-icon name="settings"></ion-icon>  Settings</h6>
+        </div>
+      </ion-item>
+    </ion-list>
+		
 	</ion-card>
 
 	<ion-card class="bottom_content">
 		<p text-center (click)="Logout_Click()">
-			<img  src="assets/imgs/loginout_icon.png" /> Login Out
+			Logout
 		</p>
 	</ion-card>
 </ion-content>

@@ -34,6 +34,14 @@ page-assets {
 		word-spacing: -2px;
 		
 	} 
+	.scroll-content{
+		overflow: hidden;
+		padding-top: 0px !important;
+	}
+	.currency_div{
+		overflow-y: scroll;
+	    padding-bottom: 10px;
+	}
 	.announcement{
 	 	background: #f1f1f1
 	}
@@ -45,7 +53,7 @@ page-assets {
 	    font-size: 13px;
 	}
 	.announcement .right{
-		color: red;
+		color: #FF5722;
 		height: 28px;
 		
 		overflow: hidden;
@@ -129,11 +137,15 @@ page-assets {
 	}
 
 	.card_header_cus{
-		padding: 30px 0;
+	    margin: 0px;
+	   
+	    width: calc(100% - 00px);
+		padding: 40px 0;
 	    margin-top: 0px;
-    	border-radius: 10px;
+    	border-radius: 0px;
     	background: url("../assets/imgs/bg_wallet.jpeg");
     	position: relative;
+    	margin-bottom: 10px
 	}
 	.card_header_cus:before {
 	    content: ' ';
@@ -154,10 +166,11 @@ page-assets {
     	z-index: 99999;
 	}
 	.card_header_cus h3{
-	    font-size: 20px;
-    	color: #FFC107;
-    	position: relative;
-    	z-index: 99999;
+        font-size: 24px;
+	    color: #ffffff;
+	    position: relative;
+	    z-index: 99999;
+	    font-weight: bold;
 	}
 	.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block {
 	    border-bottom: none !important;

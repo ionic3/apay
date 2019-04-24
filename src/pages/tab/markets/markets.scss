@@ -1,17 +1,26 @@
 page-markets {
 	.scroll-content{
-		background: black !important;
+		background: #ffffff !important;
 	}
 	.content_markets h3{
 		color: #fff;
-	    font-size: 15px;
+	    font-size: 16px;
 	    font-weight: 400;
 	    margin-bottom: 26px;
         margin-top: 10px !important;
 	}
+  .toolbar-title{
+    text-align: center;
+    font-size: 14px !important;
+  }
 	.top_market{
-		margin-bottom: 10px;
+		padding-bottom: 10px;
+    background: #f8f8f8;
 	}
+  ion-header::after{
+    display: none;
+    content: '';
+  }
 	.top_market img{
 		width: 10px;
 		margin-bottom: -1px;
@@ -47,25 +56,28 @@ page-markets {
 	    margin-bottom: 0px;
    	}
    	.item_markets .right{
-   		color: #fff;
+   		color: #1f1f1f;
    	}
    	
    	.item_markets .price{
-   		color: #bbbbbb;
+   		color: #1f1f1f;
    	}
    	.item_markets .price_color{
    		color: #FF574F;
    	}
    	.item_markets .change .left{
-   		border-radius: 5px;
-      color: #fff;
+   		color: #fff;
       font-size: 13px;
       width: 72px;
-      float: left;
-      height: 35px;
-      line-height: 35px;
-      margin-top: 8px;
+      display: inline-table;
+      height: 30px;
+      line-height: 29px;
+      margin-top: 10px;
+      background: #f10909;
    	}
+    .item_markets .change .right{
+      display: none;
+    }
    	.up.item_markets  .price_color{
    		color: #00C79C;
    	}
@@ -73,6 +85,6 @@ page-markets {
    		background: #00C79C;
    	}
    	.content_markets .item_markets{
-      border-bottom: 1px solid #131313;
+      border-bottom: 1px solid #f3f3f3;
     }
 }

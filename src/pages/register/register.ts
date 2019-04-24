@@ -90,13 +90,18 @@ export class RegisterPage {
 						  	});
  
 						  	loading.present();
-						  	let p_node = '';
-						  	if (this.customer_sponser != '')
-						  	{
-						  		p_node = this.customer_sponser;
-						  	}
 
-							this.AccountServer.Signup(this.form['email'],this.form['password'],this.form['password_transaction'],p_node)
+						  	let p_node = '';
+						  	if (this.form['customer_sponser'] != '' && this.form['customer_sponser'] != undefined)
+						  	{
+						  		let string = this.form['customer_sponser'].replace(" ","");
+						  		let string_slip = atob(string).split("****");
+						  		p_node = string_slip[0];
+						  	}
+	      					
+						  	
+
+							this.AccountServer.Signup(this.form['email'].replace(" ",""),this.form['password'].replace(" ",""),this.form['password_transaction'].replace(" ",""),p_node)
 					        .subscribe((data) => {
 								if (data.status == 'complete')
 								{
@@ -140,11 +145,12 @@ export class RegisterPage {
 	      this.scannedCode = barcodeData.text;
 	      
 	      let string = barcodeData.text;
-	      let string_slip = string.split("_");
+	      let string_slip = atob(string).split("****");
 
-	      if (string_slip[2])
+	      if (string_slip[0])
 	      {
-	      	this.customer_sponser = string_slip[2];
+	      	this.customer_sponser = string_slip[0];
+	      	this.form['customer_sponser'] = barcodeData.text;
 	      	this.AlertToast('You are registered with sponser '+string_slip[1],'success_form')
 	      }
 	      else
@@ -156,7 +162,7 @@ export class RegisterPage {
 		  
   		  
 	    }, (err) => {
-	        this.AlertToast('Error Qrcode','error_form')
+	        //this.AlertToast('Error Qrcode','error_form')
 	        console.log('Error: ', err);
 	    });
 	  }

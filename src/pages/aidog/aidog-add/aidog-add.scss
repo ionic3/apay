@@ -1,6 +1,6 @@
 page-aidog-add {
 	.toolbar-background{
-	    background: #181719;
+	    background: linear-gradient(to top, #160c56 0%, #052238 100%);
 		color: #fff;
 	}
 	.toolbar-title {
@@ -46,7 +46,7 @@ page-aidog-add {
 	    width: 80%;
 	    height: 115px;
 	    margin: 0 auto;
-	    background: rgba(0, 0, 0, 0.75);
+	    background: rgba(0, 0, 0, 0.87);
 	    -webkit-box-shadow: -2px -2px 105px 7px rgba(0, 0, 0, 0.64);
 	    box-shadow: -2px -2px 105px 7px rgba(0, 0, 0, 0.64);
 	    border-radius: 10px;
@@ -59,7 +59,7 @@ page-aidog-add {
 		width: 80%;
 		
 		margin: 0 auto;
-	    background: rgba(72, 70, 70, 0.4);
+	    background: rgba(23, 22, 22, 0.79);
 	    border: 5px solid rgba(76, 175, 80, 0.079);
 	    border-radius: 10px;
 	}

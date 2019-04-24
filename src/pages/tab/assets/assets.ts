@@ -6,6 +6,8 @@ import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
 import { WalletPage } from '../../wallet/wallet';
 import { ListNotificationPage } from '../../notification/list-notification/list-notification';
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 @IonicPage()
 @Component({
   selector: 'page-assets',
@@ -26,15 +28,56 @@ export class AssetsPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider
+		public AccountServer : AccountProvider,
+		public socket: Socket
 	) {
+		
+		this.getLoadTicker().subscribe(data => {
+			
+			if (data[0] == "btc_usd")
+				this.price_coin['bitcoin'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eth_usd")
+				this.price_coin['ethereum'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "ltc_usd")
+				this.price_coin['litecoin'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "dash_usd")
+				this.price_coin['dash'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eos_usd")
+				this.price_coin['eos'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "usdt_usd")
+				this.price_coin['tether'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "xrp_usd")
+				this.price_coin['ripple'] = parseFloat(data[1]).toFixed(2);
+
+
+			this.total_usd = ((parseFloat(this.balance['coin'])*parseFloat(this.price_coin['coin'])/100000000)+
+				(parseFloat(this.balance['bitcoin'])*parseFloat(this.price_coin['bitcoin'])/100000000)+
+				(parseFloat(this.balance['dash'])*parseFloat(this.price_coin['dash'])/100000000)+
+				(parseFloat(this.balance['eos'])*parseFloat(this.price_coin['eos'])/100000000)+
+				(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+
+				(parseFloat(this.balance['litecoin'])*parseFloat(this.price_coin['litecoin'])/100000000)+
+				(parseFloat(this.balance['ripple'])*parseFloat(this.price_coin['ripple'])/100000000)+
+				(parseFloat(this.balance['tether'])*parseFloat(this.price_coin['tether'])/100000000)
+			).toFixed(2);
+
+			
+	    });
 	}
 
 
-	
+	getLoadTicker() {
 
-	ionViewDidLoad() {
+		let observable = new Observable(observer => {
+		  this.socket.on('LoadTicker', (data) => {
+		    observer.next(data);
+		  });
+		})
+		return observable;
+	}
 
+	ionViewWillEnter() {
+		
+		document.querySelector(".currency_div")['style'].height = this.platform.height()-190+'px';
 		let loading = this.loadingCtrl.create({
 	    	content: 'Please wait...'
 	  	});
@@ -79,7 +122,15 @@ export class AssetsPage {
 							this.price_coin['ripple'] = data.xrp_usd;
 							this.price_coin['tether'] = data.usdt_usd;
 
-							this.total_usd = ((parseFloat(this.balance['coin'])*parseFloat(this.price_coin['coin'])/100000000)+(parseFloat(this.balance['bitcoin'])*parseFloat(this.price_coin['bitcoin'])/100000000)+(parseFloat(this.balance['dash'])*parseFloat(this.price_coin['dash'])/100000000)+(parseFloat(this.balance['eos'])*parseFloat(this.price_coin['eos'])/100000000)+(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+(parseFloat(this.balance['litecoin'])*parseFloat(this.price_coin['litecoin'])/100000000)+(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+(parseFloat(this.balance['ripple'])*parseFloat(this.price_coin['ripple'])/100000000)+(parseFloat(this.balance['tether'])*parseFloat(this.price_coin['tether'])/100000000)).toFixed(2);
+							this.total_usd = ((parseFloat(this.balance['coin'])*parseFloat(this.price_coin['coin'])/100000000)+
+								(parseFloat(this.balance['bitcoin'])*parseFloat(this.price_coin['bitcoin'])/100000000)+
+								(parseFloat(this.balance['dash'])*parseFloat(this.price_coin['dash'])/100000000)+
+								(parseFloat(this.balance['eos'])*parseFloat(this.price_coin['eos'])/100000000)+
+								(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+
+								(parseFloat(this.balance['litecoin'])*parseFloat(this.price_coin['litecoin'])/100000000)+
+								(parseFloat(this.balance['ripple'])*parseFloat(this.price_coin['ripple'])/100000000)+
+								(parseFloat(this.balance['tether'])*parseFloat(this.price_coin['tether'])/100000000)
+							).toFixed(2);
 						}
 						else
 						{
@@ -106,10 +157,7 @@ export class AssetsPage {
 	}
 
 
-	ionViewWillEnter() {
-		
-		
-   	}
+	
   	
 
 	ViewWallet(currency,amount,amount_usd){
@@ -171,7 +219,15 @@ export class AssetsPage {
 					this.price_coin['ripple'] = data.xrp_usd;
 					this.price_coin['tether'] = data.usdt_usd;
 
-					this.total_usd = ((parseFloat(this.balance['coin'])*parseFloat(this.price_coin['coin'])/100000000)+(parseFloat(this.balance['bitcoin'])*parseFloat(this.price_coin['bitcoin'])/100000000)+(parseFloat(this.balance['dash'])*parseFloat(this.price_coin['dash'])/100000000)+(parseFloat(this.balance['eos'])*parseFloat(this.price_coin['eos'])/100000000)+(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+(parseFloat(this.balance['litecoin'])*parseFloat(this.price_coin['litecoin'])/100000000)+(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+(parseFloat(this.balance['ripple'])*parseFloat(this.price_coin['ripple'])/100000000)+(parseFloat(this.balance['tether'])*parseFloat(this.price_coin['tether'])/100000000)).toFixed(2);
+					this.total_usd = ((parseFloat(this.balance['coin'])*parseFloat(this.price_coin['coin'])/100000000)+
+						(parseFloat(this.balance['bitcoin'])*parseFloat(this.price_coin['bitcoin'])/100000000)+
+						(parseFloat(this.balance['dash'])*parseFloat(this.price_coin['dash'])/100000000)+
+						(parseFloat(this.balance['eos'])*parseFloat(this.price_coin['eos'])/100000000)+
+						(parseFloat(this.balance['ethereum'])*parseFloat(this.price_coin['ethereum'])/100000000)+
+						(parseFloat(this.balance['litecoin'])*parseFloat(this.price_coin['litecoin'])/100000000)+
+						(parseFloat(this.balance['ripple'])*parseFloat(this.price_coin['ripple'])/100000000)+
+						(parseFloat(this.balance['tether'])*parseFloat(this.price_coin['tether'])/100000000)
+					).toFixed(2);
 				}
 				
 				refresher.complete();

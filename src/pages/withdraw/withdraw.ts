@@ -69,16 +69,21 @@ export class WithdrawPage {
 	    }
   	}
 
+  	MaxAmount(){
+  		this.form['amount'] = this.balance;
+  	}
+
 	SubmitForm() {
-		if (this.form['address'] == '' || this.form['address'] == undefined)
+		
+		if (this.form['amount'] == '' || this.form['amount'] == undefined)
 		{
-			this.AlertToast('Please enter a address.','error_form');
-		}
+			this.AlertToast('Please enter a amount.','error_form');
+		}	
 		else
 		{
-			if (this.form['amount'] == '' || this.form['amount'] == undefined)
+			if (this.form['address'] == '' || this.form['address'] == undefined)
 			{
-				this.AlertToast('Please enter a amount.','error_form');
+				this.AlertToast('Please enter a address.','error_form');
 			}
 			else
 			{

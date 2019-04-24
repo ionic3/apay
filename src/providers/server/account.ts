@@ -94,8 +94,8 @@ export class AccountProvider {
 		.map(this.extractData)
 		.catch(this.catchError)
 	}
-	GetHisroryWallet(customer_id : string,currency: string,start: number, limit: number){
-  		let body = {customer_id : customer_id,currency: currency,start: start, limit: limit};
+	GetHisroryWallet(customer_id : string,currency: string,types,start: number, limit: number){
+  		let body = {customer_id : customer_id,currency: currency,types: types,start: start, limit: limit};
 		return this.http.post(MyConfig.data.url+'/api/deposit/get-history-currency',body)
 		.do(this.logResponse)
 		.map(this.extractData)
@@ -321,6 +321,25 @@ export class AccountProvider {
       .map(this.extractData)
       .catch(this.catchError)
     }
+
+    EnlableFingerprint(customer_id:string){
+        let body = {customer_id: customer_id};
+      return this.http.post(MyConfig.data.url+'/api/enlable-fingerprint',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+
+    DisableFingerprint(customer_id:string){
+        let body = {customer_id: customer_id};
+      return this.http.post(MyConfig.data.url+'/api/disable-fingerprint',body)
+      .do(this.logResponse)
+      .map(this.extractData)
+      .catch(this.catchError)
+    }
+
+    
+
     Disable2FA(customer_id:string,code : string){
         let body = {customer_id: customer_id,code: code};
       return this.http.post(MyConfig.data.url+'/api/disable-2fa',body)

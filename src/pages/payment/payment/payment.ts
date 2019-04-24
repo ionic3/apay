@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController, Refresher, InfiniteScroll } from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
@@ -13,6 +13,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 })
 export class PaymentPage {
 	customer_id : any;
+	history : any;
+	count_history = 0;
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -26,16 +28,28 @@ export class PaymentPage {
 		) {
   	}
 
-	ionViewDidLoad() {
+	ionViewWillEnter() {
 		//this.PaymentSubmit('35k7m2fgn6tY1crs7qb7eLgofQKKBsmAhG','BTC',0.1);
+		let loading = this.loadingCtrl.create({
+	    content: 'Please wait...'
+	  	});
+	  	loading.present();
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
+				this.AccountServer.GetHisroryPayment(this.customer_id,0,10)
+		        .subscribe((data) => {
+		        	loading.dismiss();
+					if (data)
+					{
+				  		this.history =  data;
+				  		this.count_history = data.length;
+					}
+		        })
 			}
 		})
-		//this.PaymentSubmit('address','currency',1000);
 	}
 
 
@@ -57,10 +71,13 @@ export class PaymentPage {
 	    }).then(barcodeData => {
 	      
 	      let string = barcodeData.text;
-	      if (string)
+	      let string_split = atob(string).split("_");
+	      if (string_split.length == 4)
 	      {
 	      	
-	      	let string_split = string.split("_");
+	      	let string_split = atob(string).split("_");
+
+	      	//let string_split = string.split("_");
 	      	let address = string_split[0];
 	      	let currency = string_split[1];
 	      	let amount = string_split[2];
@@ -78,6 +95,42 @@ export class PaymentPage {
 	    });
 	}
 
+	doRefresh(refresher: Refresher) {
+  		this.AccountServer.GetHisroryPayment(this.customer_id,0,10)
+        .subscribe((data) => {
+        	refresher.complete()
+			if (data)
+			{
+		  		this.history =  data;
+		  		this.count_history = data.length;
+			}
+        })
+		
+  	}
+  	doInfinite(infiniteScroll : InfiniteScroll) {
+  		
+	  	this.AccountServer.GetHisroryPayment(this.customer_id,this.history.length,5)
+        .subscribe((data) => {
+        	
+			
+	  		if (data.length > 0)
+			{
+				for(let item of data) {
+				  	this.history.push({
+				  		"username" : item.username,
+				        "amount" : item.amount,
+				        "currency" : item.currency,
+				        "status" : item.status,
+				        "address" : item.address,
+				        "types" : item.types,
+				        "date_added" : item.date_added
+				  	})
+				}
+			}
+			infiniteScroll.complete();
+        })
+	}
+	
 	PaymentSubmit(address,currency,amount) {
 	
 	  let alert = this.alertCtrl.create({
@@ -138,7 +191,7 @@ export class PaymentPage {
 							if (data.status == 'complete')
 							{
 								this.AlertToast(data.message,'success_form');
-								
+								this.ReLoad_page();
 								return true;
 
 							}
@@ -168,6 +221,16 @@ export class PaymentPage {
 	  alert.present();
 	}
 
+	ReLoad_page(){
+		this.AccountServer.GetHisroryPayment(this.customer_id,0,10)
+        .subscribe((data) => {
+			if (data)
+			{
+		  		this.history =  data;
+		  		this.count_history = data.length;
+			}
+        })
+	}
 
 	AlertToast(message,class_customer) {
 	    let toast = this.toastCtrl.create({

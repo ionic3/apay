@@ -4,7 +4,8 @@ import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 @IonicPage()
 @Component({
   selector: 'page-collect',
@@ -20,7 +21,7 @@ export class CollectPage {
 	price_altcoin : any;
 	amount : any;
 	viewspecyfy : any;
-	
+	code : any;
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -30,12 +31,52 @@ export class CollectPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		private screenshot: Screenshot,
+		public socket: Socket
 	) {
 		this.selectOptions = {
 		  title: ' ',
 		  cssClass : 'select-customer'
 		};
+
+
+		this.getLoadTicker().subscribe(data => {
+			
+			if (this.currency == 'BTC' && data[0] == "btc_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'ETH' && data[0] == "eth_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'LTC' && data[0] == "ltc_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'EOS' && data[0] == "eos_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'USDT' && data[0] == "usdt_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'DASH' && data[0] == "dash_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'ASIC' && data[0] == "coin_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+			if (this.currency == 'XRP' && data[0] == "xrp_usd")
+				this.price_coin = parseFloat(data[1]).toFixed(2);
+
+			if (this.form['amount_usd'] != '')
+			{
+				this.form['amount_currency'] = (parseFloat(this.form['amount_usd'])/parseFloat(this.price_coin)).toFixed(8);
+			}
+
+	    });
+
+	}
+
+
+	getLoadTicker() {
+
+		let observable = new Observable(observer => {
+		  this.socket.on('LoadTicker', (data) => {
+		    observer.next(data);
+		  });
+		})
+		return observable;
 	}
 
 	ionViewDidLoad() {
@@ -58,6 +99,8 @@ export class CollectPage {
 					if (data)
 					{
 				  		this.address =  data.address;
+
+				  		this.code = btoa(this.address+'_'+this.currency+'_'+this.amount+'_payment');
 					}
 
 					this.AccountServer.GetPriceAltcoin()
@@ -81,7 +124,6 @@ export class CollectPage {
 								this.price_coin = data.coin_usd;
 							if (this.currency == 'XRP')
 								this.price_coin = data.xrp_usd;
-							
 						}
 						
 			        })
@@ -119,6 +161,7 @@ export class CollectPage {
 			if (data)
 			{
 		  		this.address =  data.address;
+		  		this.code = btoa(this.address+'_'+this.currency+'_'+this.amount+'_payment');
 			}
         })
 
@@ -161,7 +204,11 @@ export class CollectPage {
 		else
 		{
 			this.amount = this.form['amount_currency'];
+			this.form['amount_usd'] = '';
+			this.form['amount_currency'] = '';
 			this.viewspecyfy = false;
+			this.code = btoa(this.address+'_'+this.currency+'_'+this.amount+'_payment');
+
 		}
 		
 	}

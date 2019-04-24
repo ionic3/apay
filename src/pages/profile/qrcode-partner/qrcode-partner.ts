@@ -4,7 +4,7 @@ import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Screenshot } from '@ionic-native/screenshot';
 import { Storage } from '@ionic/storage';
-
+import { Clipboard } from '@ionic-native/clipboard';
 @IonicPage()
 @Component({
   selector: 'page-qrcode-partner',
@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 export class QrcodePartnerPage {
 	customer_id : any;
 	email : any;
+	code : any;
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -22,18 +23,21 @@ export class QrcodePartnerPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private screenshot: Screenshot
+		private screenshot: Screenshot,
+		private clipboard: Clipboard,
 	) {
 		
 	}
 
 	ionViewDidLoad() {
+
 		this.email = this.navParams.get("email");
 		this.storage.get('customer_id')
 		.then((customer_id) => {
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
+				this.code = btoa(this.customer_id+'****'+this.email);
 			}
 		})
 				
@@ -58,7 +62,19 @@ export class QrcodePartnerPage {
   	}
 
 
-  	
+  	CopyCode(code)
+  	{
+  		this.clipboard.copy(code);
+
+		this.clipboard.paste().then(
+			(resolve: string) => {
+				this.AlertToast('Coppy success','success_form');
+			},
+			(reject: string) => {
+				console.log('Error: ' + reject);
+			}
+		);
+  	}
 
 
 	Screenshot(){

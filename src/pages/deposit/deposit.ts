@@ -5,7 +5,7 @@ import { AccountProvider } from '../../providers/server/account';
 
 import { Storage } from '@ionic/storage';
 import { Clipboard } from '@ionic-native/clipboard';
-
+import { Screenshot } from '@ionic-native/screenshot';
 @IonicPage()
 @Component({
   selector: 'page-deposit',
@@ -24,7 +24,8 @@ export class DepositPage {
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
 		public AccountServer : AccountProvider,
-		private clipboard: Clipboard
+		private clipboard: Clipboard,
+		private screenshot: Screenshot
 	) {
 	}
 
@@ -65,8 +66,50 @@ export class DepositPage {
 		})
 	}
 
+
+	ShowAddress() {
+	
+	  let alert = this.alertCtrl.create({
+	    title: this.currency+' Deposit Address',
+	    cssClass:'prompt_alert_customer deposit_address',
+	    
+	    message: '<div class"contentpaymentpopup">' +
+  			'<img class="chart" src="https://chart.googleapis.com/chart?chs=240x240&cht=qr&chl='+this.address+'&message='+this.currency+'">' +
+  			'<p class="address" text-center>'+this.address+'</p>' +
+  		'</div>',       
+	    buttons: [
+	      {
+	        text: 'Save Imgage',
+	       
+	        handler: data => {
+	        	this.Screenshot();
+	          
+	        }
+	      },
+	      {
+	        text: 'Copy',
+	        handler: data => {
+	        	this.CopyWallet(this.address)
+	        	
+	        }
+	      }
+	    ]
+	  });
+	  alert.present();
+	}
+
 	goback() {
 		this.navCtrl.pop();
+	}
+
+	Screenshot(){
+		this.screenshot.save('jpg', 80, 'myscreenshot.jpg').then(success=>{
+			this.AlertToast('Save img success','success_form');
+		},
+		onError=>{
+			this.AlertToast('Save img error','error_form');
+		});
+		
 	}
 
 	CopyWallet(address){

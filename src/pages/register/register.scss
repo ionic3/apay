@@ -210,6 +210,24 @@ page-register {
   .scroll-content {
        margin-bottom: 0px; 
   }
+  .icon_scan{
+    width: 44px;
+    text-align: center;
+    margin-right: -7px !important;
+    position: relative;
+    z-index: 9999999999;
+  }
+  .reffral .text-input {
+      color: #a7a7a7;
+      font-size: 9px;
+      margin-right: 0px;
+  }
+  .reffral ion-input{
+    padding-right: 0px;
+  }
+  .item-md,.item-ios{
+    padding-left: 0px;
+  }
 }
 .successqrcode .toast-bottom{
   background: #4caf50 !important;

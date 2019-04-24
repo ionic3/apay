@@ -48,6 +48,7 @@ page-add-new-wallet {
 		width: 100%;
 		margin: 0 auto;
 		margin-top: 30px;
+		min-height: 200px;
 	}
 	.list-md .item-block .item-inner,.list-ios .item-block .item-inner{
 		border-bottom: none;
@@ -69,25 +70,28 @@ page-add-new-wallet {
     	padding-left: 22px;
 	}
 	.content_withdraw .button_customer button{
-		background: #000 !important;
-		text-transform: capitalize !important;
-		margin-top: 20px !important;
-		padding: 5px 80px !important;
-		border-radius: 5px  !important;
-		width: 80%;
-		margin: 0 auto;
-	    margin-top: 0px !important;
+		background: #fff;
 	    height: 35px;
-    	font-size: 12px;
-    	line-height: 35px;
+	    line-height: 35px;
+	    font-weight: 400;
+	    color: #FF5722;
+	    width: 80%;
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    border: 1px solid #FF5722;
+	    
+	    box-shadow: none;
+	}
+	.content_withdraw .button_customer button:hover{
+		background: transparent !important;
 	}
 	.list-md .item-input:last-child,.list-ios .item-input:last-child{
 		border-bottom: none !important;
 	}
 	.content_withdraw ion-col img{
 		position: absolute;
-	    right: 20px;
-	    top: 19px;
+	    right: 30px;
+	    top: 20px;
 	    width: 20px;
 	}
 	.content_withdraw ion-col span.text{
@@ -104,6 +108,8 @@ page-add-new-wallet {
 	    min-width: 48px;
 	   color: #2b2929;
 	   font-size: 12px;
+       margin: 0px;
+    	margin-left: 10px;
 	}
 	.form ion-label.coin[fixed] {
 	    
@@ -113,7 +119,8 @@ page-add-new-wallet {
 	   
 	}
 	.form .input-wrapper{
-		border-bottom: 1px solid #efefef;
+		border: 1px solid #efefef;
+    	background: #f7f7f7;
 	}
 	.form .item-input .label-md,.form .item-input .label-ios{
 		color: #2b2929;

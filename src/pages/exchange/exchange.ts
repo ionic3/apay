@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertCont
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../providers/server/account';
 import { Storage } from '@ionic/storage';
-
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 @IonicPage()
 @Component({
   selector: 'page-exchange',
@@ -23,6 +24,8 @@ export class ExchangePage {
 	price_from : any;
 	data_balance : any;
 	data_price : any;
+	string_amount = '0';
+	string_estimate = '0';
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -31,13 +34,151 @@ export class ExchangePage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider
+		public AccountServer : AccountProvider,
+		public socket: Socket
 		) {
 		this.selectOptions = {
 		  title: ' ',
 		  cssClass : 'select-customer'
 		};
+
+		this.getLoadTicker().subscribe(data => {
+			
+
+			if (data[0] == "btc_usd" && this.to_currency == 'BTC')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eth_usd" && this.to_currency == 'ETH')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "ltc_usd" && this.to_currency == 'LTC')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "dash_usd" && this.to_currency == 'DASH')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eos_usd" && this.to_currency == 'EOS')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "usdt_usd" && this.to_currency == 'USDT')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "xrp_usd" && this.to_currency == 'XRP')
+				this.price_to = parseFloat(data[1]).toFixed(2);
+
+
+
+			if (data[0] == "btc_usd" && this.from_currency == 'BTC')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eth_usd" && this.from_currency == 'ETH')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "ltc_usd" && this.from_currency == 'LTC')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "dash_usd" && this.from_currency == 'DASH')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eos_usd" && this.from_currency == 'EOS')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "usdt_usd" && this.from_currency == 'USDT')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "xrp_usd" && this.from_currency == 'XRP')
+				this.price_from = parseFloat(data[1]).toFixed(2);
+
+
+			if (parseFloat(this.string_amount) > 0)
+			{
+				let form_usd = this.price_from * parseFloat(this.string_amount);
+				let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
+				this.string_estimate = (parseFloat(to_coin_exchange)*0.9975).toFixed(8).toString();
+			}
+	    });
+
 		
+		
+	}
+
+	Clicknumber(num : string){
+		let check_split = this.string_amount.split(".");
+		
+		if (check_split.length >=2)
+		{
+			if (check_split[1].length >= 8)
+				return false;
+		}	
+		
+		if (num == '.')
+		{
+			if (this.string_amount.indexOf('.') > -1)
+			{
+				let elements = document.querySelectorAll(".string_amount");
+				if (elements != null) {
+			        Object.keys(elements).map((key) => {
+			            elements[key].classList.add("error_number");
+			            setTimeout(function() {
+			            	elements[key].classList.remove("error_number");
+			            }, 1000);
+			            
+			        });
+			    }
+			}
+			else
+			{
+				if (this.string_amount == '0')
+				{
+					this.string_amount += num.toString();
+				}
+				else
+				{
+					this.string_amount += num.toString();
+				}
+			}
+		}
+		else
+		{
+			if (this.string_amount == '0')
+			{
+				this.string_amount = num.toString();
+			}
+			else
+			{
+				this.string_amount += num.toString();
+			}
+		}
+
+		if (parseFloat(this.string_amount) > 0)
+		{
+
+			let form_usd = this.price_from * parseFloat(this.string_amount);
+			let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
+			this.string_estimate = (parseFloat(to_coin_exchange)*0.9975).toFixed(8).toString();
+
+		}
+	}
+	Blackspace(){
+		
+		if (this.string_amount.length == 1)
+		{
+			this.string_amount = '0'
+		}
+		else
+		{
+			this.string_amount = this.string_amount.substr(0, this.string_amount.length-1);
+		}
+
+		if (parseFloat(this.string_amount) > 0)
+		{
+
+			let form_usd = this.price_from * parseFloat(this.string_amount);
+			let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
+			this.string_estimate = (parseFloat(to_coin_exchange)*0.9975).toFixed(8).toString();
+		}
+		else
+		{
+			this.string_estimate = '0';
+		}
+	}
+
+	getLoadTicker() {
+
+		let observable = new Observable(observer => {
+		  this.socket.on('LoadTicker', (data) => {
+		    observer.next(data);
+		  });
+		})
+		return observable;
 	}
 
 	ionViewWillEnter() {
@@ -202,11 +343,8 @@ export class ExchangePage {
 		if (this.from_currency == 'ASIC')
 			this.price_from = this.data_price.coin_usd;
 
-		if (this.form['amount']){
-			let form_usd = this.price_from * parseFloat(this.form['amount']);
-			let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
-			this.form['estimate'] = (parseFloat(to_coin_exchange)*0.9975).toFixed(8).toString();
-		}
+		this.string_amount = '0';
+		this.string_estimate = '0';
 	}
 
 	onChangeSelectTo(value){
@@ -247,11 +385,8 @@ export class ExchangePage {
 		if (this.to_currency == 'ASIC')
 			this.price_to = this.data_price.coin_usd;
 
-		if (this.form['amount']){
-			let form_usd = this.price_from * parseFloat(this.form['amount']);
-			let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
-			this.form['estimate'] = (parseFloat(to_coin_exchange)*0.9975).toFixed(8).toString();
-		}
+		this.string_amount = '0';
+		this.string_estimate = '0';
 	}
 
 
@@ -264,6 +399,110 @@ export class ExchangePage {
 			
 	}
 
+	ExchangeSubmitButon()
+	{
+		if (this.form['to_currency'] == this.form['from_currency'])
+		{
+			this.AlertToast('Two currencies must be different.','error_form');
+		}
+		else
+		{
+			if (parseFloat(this.string_amount) <= 0)
+			{
+				this.AlertToast('Please enter the currency conversion number','error_form');
+			}
+			else
+			{
+				this.SubmitEx()
+			}
+		}
+	}
+
+
+	SubmitEx() {
+	  let alert = this.alertCtrl.create({
+	    title: 'Confirm Exchange',
+	    cssClass:'prompt_alert_customer exchange',
+	    enableBackdropDismiss : false,
+	    message: '<div class"contentpaymentpopup">' +
+  			'<p class="" text-center>Do you want to exchange '+this.string_amount+' '+this.form['from_currency']+' to '+this.form['to_currency']+'?</p>' +
+  			'<p class="" text-left>Fee: 0.001 ASIC</p>' +
+  		'</div>', 
+	    inputs: [
+	      {
+	        name: 'password_transaction',
+	        placeholder: 'Please input the transaction password',
+	        type: 'password'
+	      }
+	    ],
+	    buttons: [
+	      {
+	        text: 'Cancel',
+	        role: 'cancel',
+	        handler: data => {
+	          
+	        }
+	      },
+	      {
+	        text: 'OK',
+	        handler: data => {
+	        	
+        		if (data.password_transaction == '' || data.password_transaction == undefined)
+	        	{
+	        		this.AlertToast('Please enter a password transaction','error_form');
+	        		return false;
+	        	}
+	        	else
+	        	{
+	        		let loading = this.loadingCtrl.create({
+				    content: 'Please wait...'
+				  	});
+
+				  	loading.present();
+
+				  	this.AccountServer.ExchangeSubmit(this.customer_id,this.form['from_currency'],this.form['to_currency'],parseFloat(this.string_amount),data.password_transaction)
+			        .subscribe((data) => {
+						if (data.status == 'complete')
+						{
+					  		
+	            			loading.dismiss();
+	            			this.AlertToast('The conversion process was successfuly','success_form');
+
+	            			this.from_balance = (parseFloat(this.from_balance) - parseFloat(this.string_amount)).toFixed(8);
+
+	            			let form_usd = this.price_from * parseFloat(this.string_amount);
+							let to_coin_exchange = (form_usd/this.price_to).toFixed(8);
+
+	            			this.to_balance = (parseFloat(this.to_balance) + parseFloat(to_coin_exchange)*0.9975).toFixed(8);
+	            			this.string_amount = '0';
+	            			this.string_estimate = '0';
+	            			
+						}
+						else
+						{
+							this.AlertToast(data.message,'error_form');
+							
+			          		loading.dismiss();
+			          	}
+			        },
+			        (err) => {
+			        	if (err)
+			        	{
+			        		loading.dismiss();
+			        		this.SeverNotLogin();
+			        	}
+			        })
+
+	        	}
+	        	
+				
+				
+	        }
+	      }
+	    ]
+	  });
+	  alert.present();
+	}
 
 	SubmitForm() {
 		

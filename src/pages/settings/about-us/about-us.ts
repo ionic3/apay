@@ -13,6 +13,7 @@ import { Storage } from '@ionic/storage';
 export class AboutUsPage {
 	customer_id : any;
 	infomation = {};
+	version : any;
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -35,22 +36,19 @@ export class AboutUsPage {
 	  	loading.present();
 		this.storage.get('customer_id')
 		.then((customer_id) => {
+			loading.dismiss();	
 			if (customer_id) 
 			{
 				this.customer_id = customer_id;
-				this.AccountServer.GetInfomationUser(this.customer_id)
-		        .subscribe((data) => {
-		        	loading.dismiss();	
-					if (data.status == 'complete')
-					{
-						this.infomation = data;
-						this.infomation['status_verited'] = data.security.email.status;
-					}
-					else
-					{
-						this.AlertToast(data.message,'error_form');
-					}
-				})
+				this.AccountServer.GetVersionApp()
+			    .subscribe((data) => {
+			        if (data) {
+			        	this.version = data.version;
+			           
+			        }
+			    })
+				
+				
 			}
 		})
 				

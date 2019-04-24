@@ -26,7 +26,7 @@ page-verify-email {
 	    width: 30px;
 	}
 	.scroll-content{
-		background: #eaeaea !important;
+		background: #FFFFFF !important;
 		margin-bottom: 0px !important;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
@@ -51,18 +51,17 @@ page-verify-email {
     	width: calc(100% - 0px) !important;
 	}
 	.contents .button_customer  button{
-		background: #000 !important;
-		text-transform: capitalize !important;
-		margin-top: 20px !important;
-		padding: 5px 80px !important;
-		border-radius: 5px  !important;
-		width: 80%;
-		margin: 0 auto;
-	    margin-top: 0px !important;
+		background: #fff;
 	    height: 35px;
-    	font-size: 12px;
-    	line-height: 35px;
-    	margin-bottom: 20px;
+	    line-height: 35px;
+	    font-weight: 400;
+	    color: #FF5722;
+	    width: 80%;
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    border: 1px solid #FF5722;
+	    box-shadow: none;
+
 	}
 	.item-md,
 	.item-ios {
@@ -72,18 +71,19 @@ page-verify-email {
 		margin-bottom: 15px;
 	}
 	.contents .button-md:hover:not(.disable-hover),.contents .button-ios:hover:not(.disable-hover),{
-		background: #000;
+		background: transparent;
 	}
 	.contend_send label{
 	    margin-top: 30px !important;
 	    float: left;
-	    padding-left: 25px;
+	    padding-left: 20px;
 	    color: #676464;
 	    margin-bottom: 5px;
+	    font-size: 12px;
 	}
 	.contend_send ion-input{
 		border: 1px solid #eee;
-    	border-radius: 5px;
+    	
     	font-size: 12px;
 	    background: #efefef;
 	}
@@ -95,11 +95,12 @@ page-verify-email {
 		float: left;
     	margin-right: 2%;
     	width: 15%;
+    	color: #FF5722;
     	
 	}
 	.step_2 p,.step_3 p{
 		text-align: center;
-		color: #080808;
+		color: #383636;
 	    font-size: 12px;
 	    margin-bottom: 30px;
 	}
@@ -115,17 +116,17 @@ page-verify-email {
 	    margin-top: 20px;
 	}
 	.contents .step_2 button,.contents .step_3 button{
-		background: #000 !important;
-		text-transform: capitalize !important;
-		margin-top: 20px !important;
-		padding: 5px 80px !important;
-		border-radius: 5px  !important;
-		width: 100%;
-		margin: 0 auto;
-	    margin-top: 0px !important;
+		background: #fff !important;
+		line-height: 35px;
 	    height: 35px;
-    	font-size: 12px;
-    	line-height: 35px;
+	    font-weight: 400;
+	    color: #FF5722;
+	    width: 80%;
+	    
+	    margin-top: 15px;
+	    border: 1px solid #FF5722;
+	    margin-left: 10%;
+	    box-shadow: none;
 	}
 
 	.step_3 .input_password{

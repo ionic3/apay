@@ -27,7 +27,7 @@ page-aidog-home {
 	}
 	.scroll-content{
 		background: #ffffff !important;
-		margin-bottom: 80px !important;
+		margin-bottom: 50px !important;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
 		background: none;
@@ -43,6 +43,11 @@ page-aidog-home {
 	}
 	.toolbar .right_heder img{
 		width: 25px;
+	}
+	img.img{
+		width: 100%;
+	    float: left;
+	    height: 129px;
 	}
 
 	.content_ai ion-item{
@@ -123,25 +128,25 @@ page-aidog-home {
 		width: 40px;
 	}
 	.content_ai .top_one .contents{ 
-		background: url('../assets/imgs/Information_Architecture.png');
+		background: #11214d;
 		position: relative;
 		overflow: hidden;
 	    background-size: cover;
 	}
 	.content_ai .center_one .contents{ 
-		background: url('../assets/imgs/capit_top_bg.png');
+		background: #11214d;
 		position: relative;
 		overflow: hidden;
 	    background-size: cover;
 	}
 	.content_ai .bottom_one .contents{ 
-		background: url('../assets/imgs/my_head_bg.png');
+		background: #11214d;
 		position: relative;
 		overflow: hidden;
 	    background-size: cover;
 	}
 	
-	.content_ai .contents:before {
+	/*.content_ai .contents:before {
 	    content: ' ';
 	    display: block;
 	    position: absolute;
@@ -152,7 +157,7 @@ page-aidog-home {
 	    z-index: 1;
 	    opacity: 0.7;
 	    background: #0d1f45;
-	}
+	}*/
 
 	
 

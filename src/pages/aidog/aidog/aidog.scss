@@ -1,6 +1,6 @@
 page-aidog {
 	.toolbar-background{
-		background: #0c0b0b;
+		background: linear-gradient(to top, #160c56 0%, #052238 100%);
 		color: #fff;
 	}
 	.toolbar-title {
@@ -26,7 +26,7 @@ page-aidog {
 	    width: 30px;
 	}
 	.scroll-content{
-		background: #0c0b0b !important;
+		background: #ffffff !important;
 		margin-bottom: 0px !important;
 		padding-top: 20px;
 	}
@@ -48,7 +48,7 @@ page-aidog {
 
 	.content_ai ion-item{
 		background: none;
-	    border-bottom: 1px solid #6d6b6b;
+	    border-bottom: 1px solid #f3f3f3;
 	}
 	.content_ai .left img{
 		width: 30px;
@@ -57,7 +57,7 @@ page-aidog {
 	}
 	.content_ai ion-row{
 		line-height: 32px;
-    	color: #fff;
+    	color: #2d2a2a;
 	}
 	.content_ai .left{
 		font-size: 15px;

@@ -43,10 +43,12 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
     font-size: 16px;
 }
 .tabs-md .tab-button[aria-selected=true] .tab-button-icon,.tabs-ios .tab-button[aria-selected=true] .tab-button-icon {
-    color: #8c8c8c;
+    color: #3a3737;
+
 }
 .tabs-md .tab-button[aria-selected=true] .tab-button-text,.tabs-ios .tab-button[aria-selected=true] .tab-button-text{
-    color: #8c8c8c;
+    color: #3a3737;
+    font-weight: 500;
     transform: none;
 }
 .tabs-ios .tab-button-icon {
@@ -90,11 +92,11 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
     bottom: 60px !important;
     width: 80%;
     text-align: center;
-    background: #3c3939;
-    border-radius: 10px;
+    background: #28353c;
+    border-radius: 5px;
 }
 .success_form .toast-wrapper{
-    background: #8BC34A;
+    background: #4CAF50;
 }
 .error_form .toast-message,.success_form .toast-message{
     font-size: 13px;
@@ -124,7 +126,7 @@ ion-app.md [padding] .scroll-content,ion-app.ios [padding] .scroll-content  {
 }
 .alert-wrapper .alert-head {
     border-radius: 10px 10px 0 0;
-    background: #4CAF50;
+    background: #11214d;
 }
 .alert-message {
     margin-top: 15px !important;

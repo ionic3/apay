@@ -62,7 +62,7 @@ import { ModifyPasswordPage } from '../pages/settings/modify-password/modify-pas
 import { AuthenticatorPage } from '../pages/settings/authenticator/authenticator';
 import { AuthenticatorLoginPage } from '../pages/settings/authenticator-login/authenticator-login';
 import { AboutUsPage } from '../pages/settings/about-us/about-us';
-
+import { VerifyAccountPage } from '../pages/settings/verify-account/verify-account';
 /*end Setting*/
 
 /*Contact us*/
@@ -99,6 +99,12 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { Camera } from '@ionic-native/camera';
 import { FileTransfer } from '@ionic-native/file-transfer'; 
+import { TouchID } from '@ionic-native/touch-id';
+import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
+
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+import { Device } from '@ionic-native/device';
+const config: SocketIoConfig = { url: 'http://192.254.73.26:59888', options: {} };
 
 @NgModule({
   declarations: [
@@ -145,13 +151,15 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     AuthenticatorLoginPage,
     AboutUsPage,
     ListNotificationPage,
-    NotificationPage
+    NotificationPage,
+    VerifyAccountPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+    SocketIoModule.forRoot(config)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -198,7 +206,8 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     AuthenticatorLoginPage,
     AboutUsPage,
     ListNotificationPage,
-    NotificationPage
+    NotificationPage,
+    VerifyAccountPage
   ],
   providers: [
     StatusBar,
@@ -213,8 +222,10 @@ import { FileTransfer } from '@ionic-native/file-transfer';
     Network,
     InAppBrowser,
     Camera,
-    FileTransfer
-    
+    FileTransfer,
+    TouchID,
+    AndroidFingerprintAuth,
+    Device
   ]
 })
 export class AppModule {}

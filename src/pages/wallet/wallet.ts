@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage';
 import { DepositPage } from '../deposit/deposit';
 import { WithdrawPage } from '../withdraw/withdraw';
 import { ExchangePage } from '../exchange/exchange';
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the WalletPage page.
  *
@@ -23,8 +25,11 @@ export class WalletPage {
 	amount : any;
 	amount_usd : any;
 	customer_id : any;
-	history : any;
-	count_history = 0;
+	history_deposit : any;
+	count_history_deposit = 0;
+	history_withdraw : any;
+	count_history_withdraw = 0;
+	tab_wallet: string = "deposit";
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -33,7 +38,36 @@ export class WalletPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider) {
+		public AccountServer : AccountProvider,
+		public socket: Socket) {
+
+		this.getLoadTicker().subscribe(data => {
+			if (data[0] == "btc_usd" && this.currency == 'BTC')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "eth_usd" && this.currency == 'ETH')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "ltc_usd" && this.currency == 'LTC')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "dash_usd" && this.currency == 'DASH')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "eos_usd" && this.currency == 'EOS')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "usdt_usd" && this.currency == 'USDT')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+			if (data[0] == "xrp_usd" && this.currency == 'XRP')
+				this.amount_usd = (parseFloat(this.amount) *  parseFloat(data[1])).toFixed(2);
+
+	    });
+	}
+
+	getLoadTicker() {
+
+		let observable = new Observable(observer => {
+		  this.socket.on('LoadTicker', (data) => {
+		    observer.next(data);
+		  });
+		})
+		return observable;
 	}
 
 	ionViewDidLoad() {
@@ -47,14 +81,24 @@ export class WalletPage {
 	  	loading.present();
 
 		
-		this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,0,10)
+		this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'deposit',0,10)
         .subscribe((data) => {
-        	loading.dismiss();
+        	
 			if (data)
 			{
-		  		this.history =  data;
-		  		this.count_history = data.length;
+		  		this.history_deposit =  data;
+		  		this.count_history_deposit = data.length;
 			}
+
+			this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'withdraw',0,10)
+	        .subscribe((data_withdraw) => {
+	        	loading.dismiss();
+				if (data_withdraw)
+				{
+			  		this.history_withdraw =  data_withdraw;
+			  		this.count_history_withdraw = data_withdraw.length;
+				}
+	        })
         })
 			
 
@@ -128,16 +172,14 @@ export class WalletPage {
 		});
 		confirm.present();
   	}
-  	doInfinite(infiniteScroll : InfiniteScroll) {
-  		
-	  	this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,this.history.length,5)
+  	doInfinite_depoist(infiniteScroll : InfiniteScroll) {
+  		 
+	  	this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'deposit',this.history_deposit.length,5)
         .subscribe((data) => {
-        	
-			
 	  		if (data.length > 0)
 			{
 				for(let item of data) {
-				  	this.history.push({
+				  	this.history_deposit.push({
 				  		"username" : item.username,
 				        "status" : item.status,
 				        "amount" : item.amount,
@@ -154,8 +196,33 @@ export class WalletPage {
 				}
 			}
 			infiniteScroll.complete();
-			
-			
+        })
+	}
+
+	doInfinite_withdraw(infiniteScroll : InfiniteScroll) {
+  		 
+	  	this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'withdraw',this.history_withdraw.length,5)
+        .subscribe((data) => {
+	  		if (data.length > 0)
+			{
+				for(let item of data) {
+				  	this.history_withdraw.push({
+				  		"username" : item.username,
+				        "status" : item.status,
+				        "amount" : item.amount,
+				        "txt_id" : item.txt_id,
+				        "address" : item.address,
+				        "date_added" : item.date_added,
+				        "type" : item.type,
+				        "currency" : item.currency,
+				        "confirmations" : item.confirmations,
+				        "amount_usd" : item.amount_usd,
+				        "price" : item.price
+
+				  	})
+				}
+			}
+			infiniteScroll.complete();
         })
 	}
 
@@ -206,17 +273,26 @@ export class WalletPage {
 						this.amount_usd = (parseFloat(this.amount)*data.coin_usd).toFixed(2);
 				
 				}
-				this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,0,10)
+
+
+				this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'deposit',0,10)
 		        .subscribe((data) => {
-		        	setTimeout(function() {
-		        		refresher.complete()
-		        	}, 1000);
 		        	
 					if (data)
 					{
-				  		this.history =  data;
-				  		this.count_history = data.length;
+				  		this.history_deposit =  data;
+				  		this.count_history_deposit = data.length;
 					}
+
+					this.AccountServer.GetHisroryWallet(this.customer_id,this.currency,'withdraw',0,10)
+			        .subscribe((data_withdraw) => {
+			        	refresher.complete()
+						if (data_withdraw)
+						{
+					  		this.history_withdraw =  data_withdraw;
+					  		this.count_history_withdraw = data_withdraw.length;
+						}
+			        })
 		        })
 	        })
 

@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertCont
 import { LoadingController } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
-
+import { Socket } from 'ng-socket-io';
+import { Observable } from 'rxjs/Observable';
 @IonicPage()
 @Component({
   selector: 'page-markets',
@@ -21,9 +22,56 @@ export class MarketsPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider
+		public AccountServer : AccountProvider,
+		public socket: Socket
 		) {
+		//this.socket.connect();
+		
+		this.getLoadTicker().subscribe(data => {
+			if (data[0] == "btc_change")
+				this.change_coin['bitcoin'] = parseFloat(data[1]);
+			if (data[0] == "eth_change")
+				this.change_coin['ethereum'] = parseFloat(data[1]);
+			if (data[0] == "ltc_change")
+				this.change_coin['litecoin'] = parseFloat(data[1]);
+			if (data[0] == "dash_change")
+				this.change_coin['dash'] = parseFloat(data[1]);
+			if (data[0] == "eos_change")
+				this.change_coin['eos'] = parseFloat(data[1]);
+			if (data[0] == "usdt_change")
+				this.change_coin['tether'] = parseFloat(data[1]);
+			if (data[0] == "xrp_change")
+				this.change_coin['ripple'] = parseFloat(data[1]);
+
+			if (data[0] == "btc_usd")
+				this.price_coin['bitcoin'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eth_usd")
+				this.price_coin['ethereum'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "ltc_usd")
+				this.price_coin['litecoin'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "dash_usd")
+				this.price_coin['dash'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "eos_usd")
+				this.price_coin['eos'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "usdt_usd")
+				this.price_coin['tether'] = parseFloat(data[1]).toFixed(2);
+			if (data[0] == "xrp_usd")
+				this.price_coin['ripple'] = parseFloat(data[1]).toFixed(2);
+	    });
+
 	}
+
+
+	getLoadTicker() {
+
+		let observable = new Observable(observer => {
+		  this.socket.on('LoadTicker', (data) => {
+		    observer.next(data);
+		  });
+		})
+		return observable;
+	}
+ 
 
 	ionViewDidLoad() {
 		let loading = this.loadingCtrl.create({

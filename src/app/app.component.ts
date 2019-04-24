@@ -2,9 +2,9 @@ import { Component,ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController ,ToastController,LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
+import { TouchID } from '@ionic-native/touch-id';
 import { TabsPage } from '../pages/tabs/tabs';
-
+//import { VerifyAccountPage } from '../pages/settings/verify-account/verify-account';
 /*AI DOG*/
 /*import { AidogPage } from '../pages/aidog/aidog/aidog';
 import { AidogAddPage } from '../pages/aidog/aidog-add/aidog-add';
@@ -59,7 +59,9 @@ import { Network } from '@ionic-native/network';
 import { Storage } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { AccountProvider } from '../providers/server/account';
-@Component({
+import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
+
+@Component({ 
   templateUrl: 'app.html'
 })
 export class MyApp {
@@ -74,6 +76,7 @@ export class MyApp {
 	splashScreen : any;
 	counter=0;
 	count_submit_2fa = 0;
+	system = 'not_check';
 	constructor(
 		platform: Platform, 
 		statusBar: StatusBar, 
@@ -85,12 +88,25 @@ export class MyApp {
     	public AccountServer : AccountProvider,
     	public loadingCtrl: LoadingController,
     	private iab: InAppBrowser,
+    	private touchId: TouchID,
+    	private androidFingerprintAuth: AndroidFingerprintAuth
     	
 	){
 		this.platform = platform;
 		this.splashScreen = splashScreen;
 		this.count_submit_2fa = 0;
 		this.versionApp = 2;
+
+		if (platform.is('ios'))
+		{
+			this.system = 'ios';
+		}
+		if (platform.is('android'))
+		{
+			this.system = 'android';
+		}
+
+
 
 		platform.ready().then(() => {
 			statusBar.styleDefault();
@@ -170,15 +186,16 @@ export class MyApp {
 		        if (customer_id) 
 		        {
 		        	this.customer_id = customer_id;
-		            this.AccountServer.CheckStatus2FA(customer_id)
+		            this.AccountServer.GetInfomationUser(customer_id)
 			        .subscribe((data) => {
 			        	splashScreen.hide();
 						if (data.status == 'complete')
-						{
-							if (parseInt(data.status_authen)==1)
+						{	
+							if (parseInt(data.security.fingerprint.status)==1)
 							{
-								this.AuthenLoginPopup();
+								this.Fingerprint_login();
 							}
+							
 							else
 							{
 								this.nav.setRoot(TabsPage);
@@ -187,7 +204,7 @@ export class MyApp {
 						else
 						{
 							this.AlertToast(data.message,'error_form');
-							this.platform.exitApp();
+							this.nav.setRoot(LoginPage);
 						}
 			        },
 			        (err) => {
@@ -200,14 +217,111 @@ export class MyApp {
 		        {
 		        	splashScreen.hide();
 		        }
-		        //this.platformReady()
+		        
 		    });
-
-
 		});
 
 	}
 
+	Fingerprint_login()
+	{
+		if (this.system == 'ios')
+		{ 
+			this.touchId.isAvailable()
+			.then(
+			    res => {
+
+			    	this.touchId.verifyFingerprint('Scan your fingerprint please')
+					.then(
+						res => {
+							this.nav.setRoot(TabsPage);
+						},
+						err => {
+							
+							if (err.code == -1)
+							{
+								this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+							}
+							if (err.code == -4)
+							{
+								this.AlertToast('The scan was cancelled by the system','error_form')
+							}
+							if (err.code == -6)
+							{
+								this.AlertToast('TouchID is not Available','error_form')
+							}
+							if (err.code == -8)
+							{
+								this.AlertToast('TouchID is locked out from too many tries','error_form')
+							}
+						}
+					)
+			    },
+			    err => {
+			    	
+					if (err.code == -1)
+					{
+						this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+					}
+					if (err.code == -4)
+					{
+						this.AlertToast('The scan was cancelled by the system','error_form')
+					}
+					if (err.code == -6)
+					{
+						this.AlertToast('TouchID is not Available','error_form')
+					}
+					if (err.code == -8)
+					{
+						this.AlertToast('TouchID is locked out from too many tries','error_form')
+					}
+				}
+			)
+		}
+		else if (this.system == 'android')
+		{	
+			this.androidFingerprintAuth.isAvailable()
+		    .then((result) => {
+		        
+		        if (result.isAvailable) {
+		            this.androidFingerprintAuth.encrypt({
+		                    clientId: 'kjgjkgjkgkjgkjgkjkgkjgkj',
+		                    username: 'myUsername',
+		                    password: 'myPassword',
+		                    locale : 'en_US'
+		                })
+		                .then(result => {
+		                    if (result.withFingerprint) 
+		                    {
+		                    	this.nav.setRoot(TabsPage);
+		                       
+		                    } else if (result.withBackup) 
+		                    {
+		                    	this.nav.setRoot(TabsPage);
+		                        
+		                    } else 
+		                    	this.AlertToast('Didn\'t authenticate!','error_form');
+		                })
+		                .catch(error => {
+		                    if (error === this.androidFingerprintAuth.ERRORS.FINGERPRINT_CANCELLED) {
+		                        console.log('Fingerprint authentication cancelled');
+		                    } else console.error(error)
+		                });
+
+		        } 
+		        else 
+		        {
+		            this.AlertToast('Fingerprint auth isn\'t available','error_form');
+		        }
+		    })
+		    .catch(error => this.AlertToast('Fingerprint auth isn\'t available','error_form'));
+		}
+		else
+		{
+			this.nav.setRoot(TabsPage);
+		}
+
+	}
 	AuthenLoginPopup()
 	{
 		let alert = this.alertCtrl.create({

@@ -26,7 +26,7 @@ page-collect {
 	    width: 30px;
 	}
 	.scroll-content{
-		background: #403e3e !important;
+		background: #ffffff !important;
 		margin-bottom: 0px !important;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
@@ -42,14 +42,15 @@ page-collect {
 		width: 10px;
 	}
 	.toolbar .right_heder img{
-		width: 20px;
+		width: 27px;
 	}
 
 	.content_collect ion-row{
 		width: 80%;
-		margin: 100px auto;
-		background: #fff;
-    	border-radius: 5px;
+	    margin: 100px auto;
+	    background: #fff;
+	    border-radius: 5px;
+        border: 1px solid #b9b9b9;
 	}
 	.content_collect ion-row ion-col{
 		padding: 0px;
@@ -79,25 +80,29 @@ page-collect {
 	    
 	}
 	.content_collect .bottom{
-		height: 45px;
-		background: #2a2a52;
+		height: 40px;
+		background: #FF5722;
 	}
 	.content_collect .bottom .left{
 		width: 50%;
 		float: left;
 		text-align: center;
-		line-height: 45px;
+		line-height: 40px;
 		border-right: 1px solid #FFF;
 		color: #FFEB3B;
 	    font-size: 12px;
+        overflow: hidden;
+    	white-space: nowrap;
 	}
 	.content_collect .bottom .right{
 		width: 50%;
 		float: left;
 		text-align: center;
-		line-height: 45px;
+		line-height: 40px;
 		color: #FFEB3B;
 		font-size: 12px;
+	    overflow: hidden;
+    	white-space: nowrap;
 	}
 
 	.content_collect ion-select.currency{
@@ -152,11 +157,17 @@ page-collect {
 	}
 	.bottom_customer .right{
 		width: 100% !important;  
-		color: #fff !important;
-		text-align: center;
+	    color: #FFEB3B !important;
+	    
+	    text-transform: uppercase;
 	}
 	.bottom_customer .bottom{
-		background: #060606;
-		margin-top: 15px;
+	    background: #FF5722;
+	    margin-top: 15px;
+	    color: #FF5722 !important;
+	    border: 1px solid #FF5722;
+	    margin-bottom: 0px;
+	    float: left;
+	    width: 100%;
 	}
 }

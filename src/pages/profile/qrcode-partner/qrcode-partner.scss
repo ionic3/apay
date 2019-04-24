@@ -26,7 +26,7 @@ page-qrcode-partner {
 	    width: 30px;
 	}
 	.scroll-content{
-		background: #403e3e !important;
+		background: #FFFFFF !important;
 		margin-bottom: 0px !important;
 	}
 	.toolbar .right_heder,.toolbar .left_heder{
@@ -47,7 +47,7 @@ page-qrcode-partner {
 
 	.content_collect ion-row{
 		width: 80%;
-		margin: 100px auto;
+		margin: 30px auto;
 		
     	border-radius: 5px;
 	}
@@ -179,5 +179,28 @@ page-qrcode-partner {
 	.bottom_customer .bottom{
 		background: #060606;
 		margin-top: 15px;
+	}
+	p.code{
+		
+		font-size: 12px;
+	    color: #FF5722;
+	    margin-top: -10px;
+	}
+	.content_collect  button{
+		background: #fff !important;
+	    height: 35px;
+	    font-weight: 400;
+	    color: #FF5722;
+	    width: 80%;
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    border: 1px solid #FF5722;
+	    
+	    line-height: 35px;
+        box-shadow: none;
+	}
+	.content_collect  button ion-icon{
+		margin-right: 6px;
+		margin-top: -3px;
 	}
 }

@@ -22,11 +22,20 @@
 			<div class="center"  text-center>
 				
 				<img class="logo"  src="assets/imgs/asipay.png"  />
-				<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&action=payment&chl=Register under sponser {{customer_id}}_{{email}}_{{customer_id}}" />
+				<img src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&action=payment&chl={{code}}" />
+
 			</div>
 			
+
 		</ion-col>
-		
+		<ion-col col-12 text-center>
+			<p class="code">{{code}}</p>
+		</ion-col>
+		<ion-col col-12 class="left">
+			<button class="button-customer" (click)="CopyCode(code)" ion-button full block><ion-icon name="copy"></ion-icon> Copy ID</button>
+        	
+        	
+      </ion-col>
 	</ion-row>
 
 	

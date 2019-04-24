@@ -6,9 +6,14 @@ import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
 import { VerifyEmailPage } from '../../settings/verify-email/verify-email';
 import { ModifyPasswordPage } from '../../settings/modify-password/modify-password';
+import { VerifyAccountPage } from '../../settings/verify-account/verify-account';
+
+
 import { AuthenticatorPage } from '../../settings/authenticator/authenticator';
 import { AuthenticatorLoginPage } from '../../settings/authenticator-login/authenticator-login';
 import { AboutUsPage } from '../../settings/about-us/about-us';
+import { TouchID } from '@ionic-native/touch-id';
+import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
 @IonicPage()
 @Component({
   selector: 'page-settings',
@@ -17,6 +22,7 @@ import { AboutUsPage } from '../../settings/about-us/about-us';
 export class SettingsPage {
 	customer_id : any;
 	infomation = {};
+	
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
@@ -25,7 +31,9 @@ export class SettingsPage {
 		public platform: Platform,
 		public loadingCtrl: LoadingController,
 		public storage: Storage,
-		public AccountServer : AccountProvider
+		public AccountServer : AccountProvider,
+		private touchId: TouchID,
+		private androidFingerprintAuth: AndroidFingerprintAuth
 	) {
 		
 	}
@@ -55,8 +63,9 @@ export class SettingsPage {
 						this.infomation = data;
 						this.infomation['status_verited'] = data.security.email.status;
 						this.infomation['status_2fa'] = data.security.authenticator.status;
+						this.infomation['status_fingerprint'] = data.security.fingerprint.status;
+						this.infomation['status_verityaccount'] = data.security.verifyaccount.status;
 						
-						console.log(this.infomation);
 					}
 					else
 					{
@@ -92,6 +101,17 @@ export class SettingsPage {
   	ViewModifyPassword(){
 		this.navCtrl.push(ModifyPasswordPage ,{'customer_id' : this.customer_id});
   	}
+
+  	ViewVerifyAccount(){
+  		if (parseInt(this.infomation['status_verityaccount']) != 2)
+  		{
+  			this.navCtrl.push(VerifyAccountPage ,{'customer_id' : this.customer_id});
+  		}
+  		
+		
+  	}
+  	
+
   	ViewAuthenticator(){
 		this.navCtrl.push(AuthenticatorPage ,{'customer_id' : this.customer_id});
   	}
@@ -104,7 +124,144 @@ export class SettingsPage {
   	}
   	
   	 
-  	
+  	Fingerprint_login(){
+  		if (this.platform.is('ios'))
+  		{
+  			this.touchId.isAvailable()
+			.then(
+			    res => {
+			    	this.touchId.verifyFingerprint('Scan your fingerprint please')
+					.then(
+						res => {
+							this.LoadFingerprint();
+						},
+						err => {
+							
+							if (err.code == -1)
+							{
+								this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+							}
+							if (err.code == -4)
+							{
+								this.AlertToast('The scan was cancelled by the system','error_form')
+							}
+							if (err.code == -6)
+							{
+								this.AlertToast('TouchID is not Available','error_form')
+							}
+							if (err.code == -8)
+							{
+								this.AlertToast('TouchID is locked out from too many tries','error_form')
+							}
+						}
+					)
+			    },
+			    err => {
+					if (err.code == -1)
+					{
+						this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+					}
+					if (err.code == -4)
+					{
+						this.AlertToast('The scan was cancelled by the system','error_form')
+					}
+					if (err.code == -6)
+					{
+						this.AlertToast('TouchID is not Available','error_form')
+					}
+					if (err.code == -8)
+					{
+						this.AlertToast('TouchID is locked out from too many tries','error_form')
+					}
+				}
+			)
+  		}
+	  	
+	  	else if (this.platform.is('android'))
+	  	{
+	  		this.androidFingerprintAuth.isAvailable()
+		    .then((result) => {
+		        
+		        if (result.isAvailable) {
+		            this.androidFingerprintAuth.encrypt({
+		                    clientId: 'kjgjkgjkgkjgkjgkjkgkjgkj',
+		                    username: 'myUsername',
+		                    password: 'myPassword',
+		                    locale : 'en_US'
+		                })
+		                .then(result => {
+		                    if (result.withFingerprint) 
+		                    {
+		                    	this.LoadFingerprint();
+		                       
+		                    } else if (result.withBackup) 
+		                    {
+		                    	this.LoadFingerprint();
+		                        
+		                    } else 
+		                    	this.AlertToast('Didn\'t authenticate!','error_form');
+		                })
+		                .catch(error => {
+		                    if (error === this.androidFingerprintAuth.ERRORS.FINGERPRINT_CANCELLED) {
+		                        console.log('Fingerprint authentication cancelled');
+		                    } else console.error(error)
+		                });
+
+		        } 
+		        else 
+		        {
+		            this.AlertToast('Fingerprint auth isn\'t available','error_form');
+		        }
+		    })
+		    .catch(error => this.AlertToast('Fingerprint auth isn\'t available','error_form'));
+	  	}	
+
+	  	else {
+	  		this.AlertToast('Fingerprint auth isn\'t available','error_form');
+	  	}
+  	}
+
+  	LoadFingerprint() {
+  		let loading = this.loadingCtrl.create({
+	    	content: 'Please wait...'
+	  	});
+	  	loading.present();
+	  	if (parseInt(this.infomation['status_fingerprint']) == 0)
+			{
+			this.AccountServer.EnlableFingerprint(this.customer_id)
+	        .subscribe((data) => {
+	        	loading.dismiss();	
+				if (data.status == 'complete')
+				{
+					this.AlertToast(data.message,'success_form');
+					this.infomation['status_fingerprint'] =  1;
+					
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+			})
+		}
+		else
+		{
+			this.AccountServer.DisableFingerprint(this.customer_id)
+	        .subscribe((data) => {
+	        	loading.dismiss();	
+				if (data.status == 'complete')
+				{
+					this.AlertToast(data.message,'success_form');
+					this.infomation['status_fingerprint'] =  0;
+					
+				}
+				else
+				{
+					this.AlertToast(data.message,'error_form');
+				}
+			})
+		}
+  	}
+
 
 	AlertToast(message,class_customer) {
 	    let toast = this.toastCtrl.create({

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams,ToastController,Platform ,AlertController} from 'ionic-angular';
-import { LoadingController } from 'ionic-angular';
+import { LoadingController,App } from 'ionic-angular';
 import { AccountProvider } from '../../../providers/server/account';
 import { Storage } from '@ionic/storage';
 
@@ -38,8 +38,8 @@ export class ProfilePage {
 		public storage: Storage,
 		public AccountServer : AccountProvider,
 		private camera: Camera,
-    	private transfer: FileTransfer
-    	
+    	private transfer: FileTransfer,
+    	public app : App
 		) {
 		this.selectOptions = {
 		  title: ' ',
@@ -47,8 +47,14 @@ export class ProfilePage {
 		};
 	}
 	private fileTransfer: FileTransferObject = this.transfer.create();
-	ionViewDidLoad() {
 
+	
+	ionViewDidLoad() {
+		
+		/*alert(btoa('123131323_trungdoanict@gmail.com'));
+		alert(atob('MTIzMTMxMzIzX3RydW5nZG9hbmljdEBnbWFpbC5jb20='));*/
+
+		
 		let loading = this.loadingCtrl.create({
 	    	content: 'Please wait...'
 	  	});
@@ -66,6 +72,7 @@ export class ProfilePage {
 					{
 						this.infomation['email'] = data.email;
 						this.infomation['img_profile'] =  data.img_profile;
+						this.infomation['status_verityaccount'] = data.security.verifyaccount.status;
 					}
 				})
 			}
@@ -77,46 +84,48 @@ export class ProfilePage {
 
 	clickImage(sourceType:number) {
 
-    this.camera.getPicture({
-        quality: 50,
-        destinationType: this.camera.DestinationType.FILE_URI,
-        sourceType: sourceType == 1 ? this.camera.PictureSourceType.CAMERA : this.camera.PictureSourceType.SAVEDPHOTOALBUM,
-        encodingType: this.camera.EncodingType.JPEG,
-        allowEdit : true,
-        targetWidth : 200,
-        targetHeight : 200,
-        mediaType: this.camera.MediaType.PICTURE,
-		correctOrientation: true
-		//sourceType:sourceType
-    }).then((imageData) => {
+	    this.camera.getPicture({
+	        quality: 50,
+	        destinationType: this.camera.DestinationType.FILE_URI,
+	        sourceType: sourceType == 0 ? this.camera.PictureSourceType.PHOTOLIBRARY : this.camera.PictureSourceType.CAMERA ,
+	        encodingType: this.camera.EncodingType.JPEG,
+	        allowEdit : true,
+	        targetWidth : 200,
+	        targetHeight : 200,
+	        mediaType: this.camera.MediaType.PICTURE,
+			correctOrientation: true
+			//sourceType:sourceType
+	    }).then((imageData) => {
 
-    	
-		let options: FileUploadOptions = {
-            fileKey: "file",
-            fileName: imageData.substr(imageData.lastIndexOf('/') + 1),
-            chunkedMode: false,
-            mimeType: "image/jpg"
-        }
-    	
-	        
-        let loading = this.loadingCtrl.create({
-            content: 'Please wait...'
-        });
-        loading.present();
+	    	
+			let options: FileUploadOptions = {
+	            fileKey: "file",
+	            fileName: imageData.substr(imageData.lastIndexOf('/') + 1),
+	            chunkedMode: false,
+	            mimeType: "image/jpg"
+	        }
+	    	
+		        
+	        let loading = this.loadingCtrl.create({
+	            content: 'Please wait...'
+	        });
+	        loading.present();
 
-        this.fileTransfer.upload(imageData, MyConfig.data.url+'/api/upload-img-profile/' + this.customer_id, options)
-            .then((data) => {
-            loading.dismiss();
-            this.AlertComplete('Successful update.');
-            this.img_camera = MyConfig.data.url+'/static/img/upload/' + options.fileName;
-        }, (err) => {
-            loading.dismiss();
-            this.AlertToast('Please try again.')
-        })
-    }, (err) => {
-        //this.AlertToast('Please try again.')
-    });
-}
+	        this.fileTransfer.upload(imageData, MyConfig.data.url+'/api/upload-img-profile/' + this.customer_id, options)
+	            .then((data) => {
+	            loading.dismiss();
+	            this.AlertComplete('Successful update.');
+	            //this.img_camera = MyConfig.data.url+'/static/img/upload/' + options.fileName;
+	            
+	            this.img_camera = JSON.parse(data.response).name_file;
+	        }, (err) => {
+	            loading.dismiss();
+	            this.AlertToast('Please try again.')
+	        })
+	    }, (err) => {
+	        //this.AlertToast('Please try again.')
+	    });
+	}
 
 	ViewQrcodeAddPartner(){
 		this.navCtrl.push(QrcodePartnerPage ,{'email' : this.infomation['email']});
@@ -161,8 +170,8 @@ export class ProfilePage {
           text: 'Logout',
           handler: () => {
             this.storage.remove('customer_id');
-           
-            this.navCtrl.setRoot(LoginPage);
+           	this.app.getRootNav().setRoot(LoginPage);
+            //this.navCtrl.setRoot(LoginPage);
           }
         }
       ]

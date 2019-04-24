@@ -6,6 +6,9 @@ import { RegisterPage } from '../register/register';
 import { TabsPage } from '../tabs/tabs';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { Storage } from '@ionic/storage';
+import { TouchID } from '@ionic-native/touch-id';
+import { AndroidFingerprintAuth } from '@ionic-native/android-fingerprint-auth';
+
 /**
  * Generated class for the LoginPage page.
  *
@@ -32,11 +35,14 @@ export class LoginPage {
 		public loadingCtrl: LoadingController,
 		public AccountServer : AccountProvider,
 		public storage: Storage,
+		private touchId: TouchID,
+		private androidFingerprintAuth: AndroidFingerprintAuth
 		) {
 	}
 	ionViewDidLoad() {
 		this.count_submit_2fa = 0;
 		this.count_login = 0;
+
 	}
 	SignUp(){
 		this.navCtrl.setRoot(RegisterPage);
@@ -84,21 +90,21 @@ export class LoginPage {
 
 				  	loading.present();
 
-				  	this.AccountServer.Login(this.form['email'],this.form['password'])
+				  	this.AccountServer.Login(this.form['email'].replace(" ",""),this.form['password'].replace(" ",""))
 			        .subscribe((data) => {
 			        	loading.dismiss();
 						if (data.status == 'complete')
 						{
 							this.storage.set('customer_id', data.customer_id); 
 							this.customer_id = data.customer_id;
-							if (parseInt(data.status_authen) == 0)
+							if (parseInt(data.status_fingerprint) == 0)
 							{
 								this.navCtrl.setRoot(TabsPage);
 								
 							}
 							else
 							{
-								this.AuthenLoginPopup();
+								this.Fingerprint_login();
 							}
 							
 
@@ -125,6 +131,106 @@ export class LoginPage {
         	}.bind(this), 3000);
 			this.AlertToast('You have entered the wrong number too many times','error_form');
 		}
+	}
+
+	Fingerprint_login()
+	{
+		if (this.platform.is('ios'))
+		{ 
+			this.touchId.isAvailable()
+			.then(
+			    res => {
+
+			    	this.touchId.verifyFingerprint('Scan your fingerprint please')
+					.then(
+						res => {
+							this.navCtrl.setRoot(TabsPage);
+						},
+						err => {
+							
+							if (err.code == -1)
+							{
+								this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+							}
+							if (err.code == -4)
+							{
+								this.AlertToast('The scan was cancelled by the system','error_form')
+							}
+							if (err.code == -6)
+							{
+								this.AlertToast('TouchID is not Available','error_form')
+							}
+							if (err.code == -8)
+							{
+								this.AlertToast('TouchID is locked out from too many tries','error_form')
+							}
+						}
+					)
+			    },
+			    err => {
+			    	
+					if (err.code == -1)
+					{
+						this.AlertToast('Fingerprint scan failed more than 3 times','error_form')
+					}
+					if (err.code == -4)
+					{
+						this.AlertToast('The scan was cancelled by the system','error_form')
+					}
+					if (err.code == -6)
+					{
+						this.AlertToast('TouchID is not Available','error_form')
+					}
+					if (err.code == -8)
+					{
+						this.AlertToast('TouchID is locked out from too many tries','error_form')
+					}
+				}
+			)
+		}
+		else if  (this.platform.is('android'))
+		{
+			this.androidFingerprintAuth.isAvailable()
+		    .then((result) => {
+		        
+		        if (result.isAvailable) {
+		            this.androidFingerprintAuth.encrypt({
+		                    clientId: 'kjgjkgjkgkjgkjgkjkgkjgkj',
+		                    username: 'myUsername',
+		                    password: 'myPassword',
+		                    locale : 'en_US'
+		                })
+		                .then(result => {
+		                    if (result.withFingerprint) 
+		                    {
+		                    	this.navCtrl.setRoot(TabsPage);
+		                       
+		                    } else if (result.withBackup) 
+		                    {
+		                    	this.navCtrl.setRoot(TabsPage);
+		                        
+		                    } else 
+		                    	this.AlertToast('Didn\'t authenticate!','error_form');
+		                })
+		                .catch(error => {
+		                    if (error === this.androidFingerprintAuth.ERRORS.FINGERPRINT_CANCELLED) {
+		                        console.log('Fingerprint authentication cancelled');
+		                    } else console.error(error)
+		                });
+
+		        } 
+		        else 
+		        {
+		            this.AlertToast('Fingerprint auth isn\'t available','error_form');
+		        }
+		    })
+		    .catch(error => this.AlertToast('Fingerprint auth isn\'t available','error_form'));
+		}
+		else 
+		{
+			this.navCtrl.setRoot(TabsPage);
+		}
+
 	}
 
 	AuthenLoginPopup()

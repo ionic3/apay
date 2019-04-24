@@ -46,13 +46,14 @@ page-withdraw {
 	}
 	.content_withdraw form{
 		width: 100%;
-		margin-top: 30px;
+		margin-top: 10px;
 	}
 	.list-md .item-block .item-inner,.list-ios .item-block .item-inner{
 		border-bottom: none;
 	}
 	.content_withdraw .item-input ion-input{
-	    border-bottom: 1px solid #efefef;
+	    border: 1px solid #efefef;
+    	background: #f7f7f7;
 	}
 	.item-md.item-block .item-inner,.item-ios.item-block .item-inner{
 		padding-right: 16px;
@@ -70,36 +71,64 @@ page-withdraw {
     	border: 1px solid #cac8c8;
 	} 
 	.content_withdraw .fee{
-		font-size: 12px;
-    	padding-left: 22px;
+		font-size: 11px;
+	    padding-left: 22px;
+	    margin: 0;
+	    color: #4c4949;
+	    margin-bottom: 10px;
 	}
 	.content_withdraw button{
-		background: #000 !important;
-		text-transform: capitalize !important;
-		margin-top: 20px !important;
-		padding: 5px 80px !important;
-		border-radius: 5px  !important;
-		width: 80%;
-		margin: 0 auto;
-	    margin-top: 0px !important;
+		background: #fff !important;
 	    height: 35px;
-    	font-size: 12px;
-    	line-height: 35px;
+	    font-weight: 400;
+	    color: #FF5722;
+	    width: 80%;
+	    line-height: 35px;
+	    margin: 0 auto;
+	    margin-top: 15px;
+	    border: 1px solid #FF5722;
+	    
+	    box-shadow: none;
 	}
 	.list-md .item-input:last-child,.list-ios .item-input:last-child{
 		border-bottom: none !important;
 	}
 	.content_withdraw ion-col img{
 		position: absolute;
-	    right: 20px;
-	    top: 19px;
+        right: 27px;
+    	top: 18px;
 	    width: 20px;
 	}
 	.content_withdraw ion-col span.text{
 	    position: absolute;
-	    right: 20px;
-	    top: 19px;
-	    color: #969696;
+	    right: 35px;
+    	top: 40px;
+	    color: #FF9800;
 	    font-size: 12px;
+	    z-index: 999999;
+	}
+	.top_withdraw p{
+		color: #383838;
+		font-size: 12px;
+		margin: 0;
+	}
+	.top_withdraw h3{
+		color: #0c0c0c;
+	    font-size: 20px;
+	    margin: 0;
+	    font-weight: 400;
+	    margin-top: 5px;
+	    margin-bottom: 20px;
+	}
+	.amount ion-input{
+	    border: 1px solid #FF9800 !important;
+    	padding: 0 10px;
+	}
+	.label_text{
+		padding-left: 16px;
+	    color: #464242;
+	    font-size: 12px;
+	    margin-bottom: 5px;
+	    float: left;
 	}
 }

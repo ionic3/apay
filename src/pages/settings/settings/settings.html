@@ -16,15 +16,15 @@
 	
 	<ion-card class="">
 	   <ion-list>
-  			<ion-item class="background">
+  			<!-- <ion-item class="background">
 			    <div float-left text-left class="left">
 			    	<h6>Language type</h6>
 			    </div>
-		  	</ion-item>
+		  	</ion-item> -->
 
 		  	<ion-item  [ngClass]="{'background': infomation.status_verited == 0}" (click)="ViewVerifyEmail()">
 			    <div float-left text-left class="left">
-			    	<h6>Verify Email</h6>
+			    	<h6><ion-icon name="mail"></ion-icon> Verify Email</h6>
 			    </div>
 			    <div class="infomation">
 			    	<h6 >{{infomation.email}}</h6>
@@ -33,30 +33,41 @@
 			    <div float-right class="right">
 			    	<h6 *ngIf="infomation.status_verited == 0" class="not_active">Not Verified</h6>
 			    	<h6 *ngIf="infomation.status_verited == 1" class="active">Verified</h6>
-			    	
+			    </div>
+		  	</ion-item>
+
+		  	<ion-item  class="background" (click)="ViewVerifyAccount()">
+			    <div float-left text-left class="left">
+			    	<h6><ion-icon name="document"></ion-icon> Verify account</h6>
+			    </div>
+			    <div float-right class="right">
+			    	<h6 *ngIf="infomation.status_verityaccount == 0" class="not_active">Not Verified</h6>
+			    	<h6 *ngIf="infomation.status_verityaccount == 1" class="pending">Pending</h6>
+			    	<h6 *ngIf="infomation.status_verityaccount == 2" class="active">Verified</h6>
 			    </div>
 		  	</ion-item>
 
 		  	<ion-item  class="background" (click)="ViewModifyPassword()">
 			    <div float-left text-left class="left">
-			    	<h6>Modify the password</h6>
+			    	<h6><ion-icon name="construct"></ion-icon> Modify the password</h6>
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item  class="" >
+		  	<ion-item  class="" (click)="Fingerprint_login()">
 			    <div float-left text-left class="left customer">
-			    	<h6 float-left>Fingerprint login</h6>
-			    	<img src="assets/imgs/off.png" float-right>
+			    	<h6 float-left><ion-icon name="finger-print"></ion-icon> Fingerprint login</h6>
+			    	<img *ngIf="infomation.status_fingerprint == 1" src="assets/imgs/on.png" float-right>
+			    	<img *ngIf="infomation.status_fingerprint == 0" src="assets/imgs/off.png" float-right>
 			    </div>
 		  	</ion-item>
 
-		  	<ion-item  class="" (click)="ViewAuthenticator()">
+		  	<!-- <ion-item  class="" (click)="ViewAuthenticator()">
 			    <div float-left text-left class="left customer">
 			    	<h6 float-left>Login google authenticator</h6> 
 			    	<img *ngIf="infomation.status_2fa == 0" src="assets/imgs/off.png" float-right>
 			    	<img *ngIf="infomation.status_2fa == 1" src="assets/imgs/on.png" float-right>
 			    </div>
-		  	</ion-item>
+		  	</ion-item> -->
 
 		  	<!-- <ion-item  class="background" (click)="AuthenticatorLogin()">
 			    <div float-left text-left class="left">
@@ -66,7 +77,7 @@
 
 		  	<ion-item  class="background" (click)="AboutUs()">
 			    <div float-left text-left class="left">
-			    	<h6>About Us</h6>
+			    	<h6><ion-icon name="basketball"></ion-icon> About Us</h6>
 			    </div>
 		  	</ion-item>
 		</ion-list>
