@@ -137,9 +137,10 @@ export class RegisterPage {
     
 	    this.barcodeScanner.scan({
 	      preferFrontCamera : false,
-	      showFlipCameraButton : true,
-	      showTorchButton : true,
+	      showFlipCameraButton : false,
+	      showTorchButton : false,
 	      disableSuccessBeep : true,
+	      resultDisplayDuration : 0,
 	      prompt : ''
 	    }).then(barcodeData => {
 	      this.scannedCode = barcodeData.text;

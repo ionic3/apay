@@ -82,7 +82,8 @@ page-payment {
 	}
 	.content_transaction ion-row ion-col{
 		padding: 12px 0;
-		font-size: 12px;
+	    font-size: 13px;
+	    color: #333333;
 	} 
 
 	.content_transaction ion-row{
@@ -104,6 +105,7 @@ page-payment {
 	}
 	.content_transaction .top_header ion-col {
 	    padding: 5px 0;
+	    color: #0a0a0a;
 	}
 	.content_transaction .button_click ion-col img{
 		width: 35px;

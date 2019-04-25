@@ -77,7 +77,7 @@ export class AssetsPage {
 
 	ionViewWillEnter() {
 		
-		document.querySelector(".currency_div")['style'].height = this.platform.height()-190+'px';
+		document.querySelector(".currency_div")['style'].height = this.platform.height()-240+'px';
 		let loading = this.loadingCtrl.create({
 	    	content: 'Please wait...'
 	  	});

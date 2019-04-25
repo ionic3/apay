@@ -20,21 +20,25 @@
 		<ion-row >
 			<ion-col col-6 >
 				<div class="top">
-			    	<p text-left>Total Eanings</p>
+			    	<p text-left>Today Eanings</p>
 			    	<span float-left>$ {{(wallet.total_earn *1).toFixed(2)}}</span>	
 			    </div>
-			    <div class="bottom">
-			    	<p float-left>Total value: {{wallet.percent_daily}}%</p>
+			   <div class="top">
+			    	<p text-left>Total value</p>
+			    	<span float-left>{{wallet.percent_daily}}%</span>	
 			    </div>
+			    
 			</ion-col>
 			<ion-col col-6 >
 				<div class="top">
 			    	<p text-left>Total System</p>
 			    	<span float-left>$ {{(wallet.total_node *1).toFixed(2)}}</span>	
 			    </div>
-			    <div class="bottom">
-			    	<span  class="member">● {{wallet.level}}</span>
+			     <div class="top">
+			    	<p text-left>Total System Eanings</p>
+			    	<span float-left>$ {{(wallet.total_earn *1).toFixed(2)}}</span>	
 			    </div>
+			   
 			</ion-col>
 		</ion-row>
   	</ion-card>

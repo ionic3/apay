@@ -32,10 +32,12 @@ page-markets {
     	
     	color: #f39a38;
     	font-size: 11px;
+      font-weight: 500;
     }
     .top_market .right{
     	margin-top: 3px;
     	margin-left: 2px;
+      font-weight: 500;
     }
     .top_market ion-col{
     	padding: 0px;
@@ -64,6 +66,7 @@ page-markets {
    	}
    	.item_markets .price_color{
    		color: #FF574F;
+      font-weight: 500;
    	}
    	.item_markets .change .left{
    		color: #fff;
